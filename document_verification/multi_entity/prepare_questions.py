@@ -1,7 +1,7 @@
 import json
 import random
 
-pathQuestions = "/nfs/home/ernstd/data/news400/document_verification/questions.jsonl"
+pathQuestions = "/nfs/home/ernstd/data/news400/document_verification/multi_entity/questions.jsonl"
 
 subsample_datasets= [
     {
@@ -87,23 +87,13 @@ def extractNames(lineObject, entityDataset, entityLabel, entityLabelTest, test_l
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-def createQuestionsForSingleEntities():
-    # delete questions
-    open(pathQuestions, 'w').close()
-
-    # create subsamples from news400 for each entity
-    createSubSamples()
-
-    # load entity datasets
-    loadEntityDatasets()
-
+def createQuestionsForSingleEntityType():
     for subsample in subsample_datasets:
         with open(subsample['path'], 'r') as file:
             for line in file:
                 # extract line
                 lineObject = json.loads(line)
 
-                counter = 0
                 for test_label in subsample['test_labels']:
                     entities = extractNames(lineObject, subsample['entities'], "text_" + subsample['name'], "test_" + subsample['name'], test_label)
 
@@ -113,21 +103,19 @@ def createQuestionsForSingleEntities():
                                     subsample['name'], ','.join(entities["text"]),
                                     subsample['name'], ','.join(entities["test"])
                                     ))
-                        saveQuestion(str(lineObject['id']), str(counter), str(lineObject['id']), str(question), "A", subsample['name'], test_label)
+                        saveQuestion(str(lineObject['id']), subsample['name'], test_label, str(question), "A", "B")
 
                     else:
                         question = ("""\"Decide which set of entities is more consistent to the image. Information about the given entity sets: A=%s - (%s), B=%s - (%s). Answer only with A or B.\"""" % (
                                     subsample['name'], ','.join(entities["test"]),
                                     subsample['name'], ','.join(entities["text"])
                                     ))
-                        saveQuestion(str(lineObject['id']), str(counter), str(lineObject['id']), str(question), "B", subsample['name'], test_label)
-
-                    counter += 1
+                        saveQuestion(str(lineObject['id']), subsample['name'], test_label, str(question), "B", "A")
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
                     
-def createQuestionsForAllEntities():
+def createQuestionsForAllEntityTypes():
     # run trough dataset
     with open('/nfs/home/ernstd/data/news400/news400.jsonl', 'r') as file:
         for line in file:
@@ -137,37 +125,46 @@ def createQuestionsForAllEntities():
 
             # entity ids
             entities = {
-                "persons": extractNames(lineObject, subsample_datasets['persons']['entities'], "text_persons", "test_persons"),
-                "locations": extractNames(lineObject, subsample_datasets['locations']['entities'], "text_locations", "test_locations"),
-                "events": extractNames(lineObject, subsample_datasets['events']['entities'], "text_events", "test_events")
+                "persons": extractNames(lineObject, subsample_datasets[0]['entities'], "text_persons", "test_persons", "random"),
+                "locations": extractNames(lineObject, subsample_datasets[1]['entities'], "text_locations", "test_locations", "random"),
+                "events": extractNames(lineObject, subsample_datasets[2]['entities'], "text_events", "test_events", "random")
             }
 
             if random.randint(0,1) == 1:
                 question = ("""\"Decide which set of entities is more consistent to the image. Information about the given entity sets: A=[%s - (%s), %s - (%s), %s - (%s)], B=[%s - (%s), %s - (%s), %s - (%s)]. Answer only with A or B.\"""" % (
-                            entities.keys()[0], ','.join(entities["persons"]["text"]), entities.keys()[1], ','.join(entities["locations"]["text"]), entities.keys()[2], ','.join(entities["events"]["text"]),
-                            entities.keys()[0], ','.join(entities["persons"]["test"]), entities.keys()[1], ','.join(entities["locations"]["test"]), entities.keys()[2], ','.join(entities["events"]["test"]),
+                            list(entities.keys())[0], ','.join(entities["persons"]["text"]), list(entities.keys())[1], ','.join(entities["locations"]["text"]), list(entities.keys())[2], ','.join(entities["events"]["text"]),
+                            list(entities.keys())[0], ','.join(entities["persons"]["test"]), list(entities.keys())[1], ','.join(entities["locations"]["test"]), list(entities.keys())[2], ','.join(entities["events"]["test"]),
                             ))
-                saveQuestion(str(lineObject['id']), 0, str(lineObject['id']), str(question), "A", "multi", "multi")
+                saveQuestion(str(lineObject['id']), "multi", "random", str(question), "A", "B")
 
             else:
                 question = ("""\"Decide which set of entities is more consistent to the image. Information about the given entity sets: A=[%s - (%s), %s - (%s), %s - (%s)], B=[%s - (%s), %s - (%s), %s - (%s)]. Answer only with A or B.\"""" % (
-                            ','.join(entities["persons"]["test"]), ','.join(entities["locations"]["test"]), ','.join(entities["events"]["test"]),
-                            ','.join(entities["persons"]["text"]), ','.join(entities["locations"]["text"]), ','.join(entities["events"]["text"]),
+                            list(entities.keys())[0], ','.join(entities["persons"]["test"]), list(entities.keys())[1], ','.join(entities["locations"]["test"]), list(entities.keys())[2], ','.join(entities["events"]["test"]),
+                            list(entities.keys())[0], ','.join(entities["persons"]["text"]), list(entities.keys())[1], ','.join(entities["locations"]["text"]), list(entities.keys())[2], ','.join(entities["events"]["text"]),
                             ))
-                saveQuestion(str(lineObject['id']), 0, str(lineObject['id']), str(question), "B", "multi", "multi")
+                saveQuestion(str(lineObject['id']), "multi", "random", str(question), "B", "A")
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-def saveQuestion(id, counter, question, truth_label, subsample, test_label):
+def saveQuestion(id, entity, category, question, truth_label, wrong_label):
     with open(pathQuestions, "a") as outfile:
-        outfile.write("""{\"question_id\": \"%s_%s\", \"image\": \"%s.png\", \"text\": %s, \"truth_label\": \"%s\", \"test_entity\": \"%s\", \"test_label\": \"%s\"}\n""" % (id, counter, id, question, truth_label, subsample, test_label))
+        outfile.write("""{\"question_id\": \"%s\", \"image\": \"%s.png\", \"text\": %s, \"entity\": \"%s\", \"category\": \"%s\", \"truth_label\": \"%s\", \"wrong_label\": \"%s\"}\n""" % (id, id, question, entity, category, truth_label, wrong_label))
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 if __name__ == "__main__":
-    createQuestionsForSingleEntities()
-    createQuestionsForAllEntities()
+    # delete questions
+    open(pathQuestions, 'w').close()
+
+    # create subsamples from news400 for each entity
+    createSubSamples()
+
+    # load entity datasets
+    loadEntityDatasets()
+
+    createQuestionsForSingleEntityType()
+    createQuestionsForAllEntityTypes()
 
 
