@@ -1,86 +1,123 @@
-import requests
 import argparse
 from PIL import Image
-import os
 import json
 import torch
-import numpy as np
+from transformers import AutoProcessor, Blip2ForConditionalGeneration
 from torch import nn
-import torch.nn.functional as F
-from transformers import AutoProcessor, AutoModelForVisualQuestionAnswering, AutoTokenizer
 
-def run_model(args):
-    device = "cuda"
-    answerFile = f"{args.answer_file_path}blip_2_answers_{args.iteration}.jsonl"
-    open(answerFile, "w").close()
 
-    processor = AutoProcessor.from_pretrained(args.model_path, local_files_only=True)
-    model = AutoModelForVisualQuestionAnswering.from_pretrained(args.model_path, local_files_only=True, torch_dtype=torch.float16).to(device)
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+
+answerFullSet = {
+    "A": {
+        'index': 0,
+        'token': [' A']
+    },
+    "B": {
+        'index': 1,
+        'token': [' B']
+    },
+    "yes": {
+        'index': 0,
+        'token': [' yes', ' Yes']
+    },
+    "no": {
+        'index': 1,
+        'token': [' no', ' No']
+    },
+}
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+
+class blipInstance:
+    def __init__(self, args):
+        self._processor = AutoProcessor.from_pretrained(args.model_path)
+        self._model = Blip2ForConditionalGeneration.from_pretrained(args.model_path, torch_dtype=torch.float16)
+        self._model.to(args.device)
+
+
+    # clean up answer file
+    def cleanAnswers(self, answerFile):
+        open(answerFile, "w").close()
+        
+
+    # return answer of model
+    def getResponse(self, args, prompt, image):
+        inputs = self._processor(images=image, text=prompt, return_tensors="pt").to(args.device, torch.float16)
+        with torch.no_grad():
+            outputs = self._model.generate(**inputs, max_new_tokens=1)
+        return self._processor.batch_decode(outputs, skip_special_tokens=True)[0]
+
+
+    # set token ids for token probability
+    def setTokenIDs(self, label1, label2):
+    
+        self.index2label = {
+            answerFullSet[label1]['index']: label1,
+            answerFullSet[label2]['index']: label2
+        }
+        self.answer_sets = {
+            label1: answerFullSet[label1]['token'],
+            label2: answerFullSet[label2]['token']
+        }
+
+        self.index2label = dict(sorted(self.index2label.items()))
+        self.answer_sets = dict(sorted(self.answer_sets.items()))
+
+        self.answer_sets_token_id = {}
+        for label, answer_set in self.answer_sets.items():
+            self.answer_sets_token_id[label] = []
+            for answer in answer_set:
+                self.answer_sets_token_id[label] += self._processor.tokenizer.encode(answer, add_special_tokens=False)
+
+    # return probability
+    def getResponsePBC(self, args, prompt, image):   
+        inputs = self._processor(images=image, text=prompt, return_tensors="pt").to(args.device, torch.float16)
+        with torch.no_grad():
+            outputs = self._model.generate(**inputs, max_new_tokens=1, output_scores=True, return_dict_in_generate=True)
+            
+        pbc_probas = outputs.scores[0][:, self.answer_sets_token_id[self.index2label.get(0)] + self.answer_sets_token_id[self.index2label.get(1)]].softmax(-1)
+        yes_proba_matrix = pbc_probas[:, :len(self.answer_sets[self.index2label.get(0)])].sum(dim=1)
+        no_proba_matrix = pbc_probas[:, len(self.answer_sets[self.index2label.get(0)]):].sum(dim=1)
+        probas = torch.cat((yes_proba_matrix.reshape(-1, 1), no_proba_matrix.reshape(-1, 1)), -1)
+
+        max_probas_token = torch.max(probas, dim=1)
+        sequence_probas = [float(proba) for proba in max_probas_token.values]
+        sequences = [self.index2label.get(int(indice)) for indice in max_probas_token.indices]
+        return sequences, sequence_probas
+    
+
+    # save answer from model
+    def saveAnswer(self, answerFile, question, TR, PBTR, PB):
+        with open(answerFile, "a") as outfile:
+            outfile.write("""{\"question_id\": \"%s_%s_%s\", \"questionType\": \"%s\", \"image\": \"%s\", \"entity\": \"%s\", \"category\": \"%s\", \"question\": \"%s\", \"TR\": \"%s\", \"PBTR\": \"%s\", \"PB\": \"%s\", \"truth_label\": \"%s\", \"wrong_label\": \"%s\"}\n""" % (str(question['question_id']), str(question['entity']), str(question['category']), str(question['questionType']), str(question['image']), str(question['entity']), str(question['category']), str(question['text']), str(TR), str(PBTR), str(PB), str(question['truth_label']), str(question['wrong_label'])))
+
+
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
+
+
+# run model
+def run(args, answerFile):
+
+    blip = blipInstance(args)
+    blip.cleanAnswers(answerFile)
 
     with open(args.question_file, 'r') as file:
         for line in file:
             question = json.loads(line)
-
-            # load content
-            image = Image.open(f"{args.image_folder}/{question['image']}")
             prompt = f"Question: {question['text']} Answer:"
+            blip.setTokenIDs(question["truth_label"], question["wrong_label"])            
+            TR = blip.getResponse(args, prompt, Image.open(f"{args.image_folder}/{question['image']}")).replace("\n", "")
+            PBTR, PB = blip.getResponsePBC(args, prompt, Image.open(f"{args.image_folder}/{question['image']}"))
+            blip.saveAnswer(answerFile, question, TR, PBTR[0], round(PB[0], 2))
 
-            inputs = processor(text=prompt, images=image, return_tensors="pt").to(device, torch.float16)
-
-            outputs = model.generate(**inputs)
-            generated_text = processor.batch_decode(outputs, skip_special_tokens=True)[0].strip()
-
-            with open(answerFile, "a") as outfile:
-                outfile.write("""{\"question_id\": \"%s\", \"image\": \"%s\", \"question\": \"%s\", \"text\": \"%s\", \"truth_label\": \"%s\", \"wrong_label\": \"%s\", \"entity\": \"%s\", \"category\": \"%s\"}\n""" % (str(question['question_id']), str(question['image']), str(question['text']), str(generated_text), str(question['truth_label']), str(question['wrong_label']), str(question['entity']), str(question['category'])))
-
-def run_model_single_entity(args):
-    device = "cuda"
-    answerFile = f"{args.answer_file_path}blip_2_answers_{args.iteration}.jsonl"
-    open(answerFile, "w").close()
-
-    processor = AutoProcessor.from_pretrained(args.model_path, local_files_only=True)
-    model = AutoModelForVisualQuestionAnswering.from_pretrained(args.model_path, local_files_only=True, torch_dtype=torch.float16).to(device)
-    tokenizer = AutoTokenizer.from_pretrained(args.model_path, local_files_only=True)
-
-    with open(args.question_file, 'r') as file:
-        for line in file:
-            question = json.loads(line)
-
-            # load content
-            image = Image.open(f"{args.image_folder}/{question['image']}")
-            prompt = f"Question: {question['text']} Answer:"
-            inputs = processor(image, text=prompt, return_tensors="pt").to(device, torch.float16)
-
-            # ---------------
-
-            output = model.generate(**inputs)
-            answer = processor.batch_decode(output, skip_special_tokens=True)[0].strip()
-
-            # ---------------
-
-            # Scores für beide Antworten (Ja und Nein) erhalten
-
-            output = model(**inputs)
-            logits = output.logits
-            scores = nn.functional.softmax(logits, dim=-1)
-            max_probabilities, max_indices = torch.max(scores, dim=1)
-
-            scoreA = max_probabilities[0][processor.tokenizer.convert_tokens_to_ids("A")] * 100
-            scoreB = max_probabilities[0][processor.tokenizer.convert_tokens_to_ids("B")] * 100
-
-            # Scores für Ja und Nein ausgeben
-            print(f"ID: {question['question_id']}")
-            print("Score für 'a'  :", scoreA)
-            print("Score für 'b'  :", scoreB)
-
-            # Ausgeben der Antwort
-            print("Antwort:", answer)
+            print("Reponse:'" + str(TR) + "' '" + str(PBTR[0]) + " " + str(round(PB[0], 2)) + "'")
             print()
 
-            # ---------------
-
-           # with open(answerFile, "a") as outfile:
-           #     outfile.write("""{\"question_id\": \"%s\", \"image\": \"%s\", \"question\": \"%s\", \"text\": \"%s\", \"entity\": \"%s\", \"category\": \"%s\"}\n""" % (str(question['question_id']), str(question['image']), str(question['text']), str(generated_text), str(question['entity']), str(question['category'])))
+# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 
 if __name__ == "__main__":
@@ -89,7 +126,10 @@ if __name__ == "__main__":
     parser.add_argument("--image-folder", type=str, default="/nfs/home/ernstd/data/news400/images")
     parser.add_argument("--question-file", type=str, default="")
     parser.add_argument("--answer-file-path", type=str, default="")
+    parser.add_argument("--answer-file-name", type=str, default="")
     parser.add_argument("--iteration", type=int, default=0)
+    parser.add_argument("--device", type=str, default="cuda")
     args = parser.parse_args()
 
-    run_model_single_entity(args)
+    answerFile = f"{args.answer_file_path}{args.answer_file_name}_{args.iteration}.jsonl"
+    run(args, answerFile)

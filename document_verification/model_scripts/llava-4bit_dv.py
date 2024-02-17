@@ -7,7 +7,7 @@ import torch
 from transformers import AutoProcessor, AutoModelForPreTraining, BitsAndBytesConfig
 
 def run_model(args):
-    answerFile = f"{args.answer_file_path}llava_1_5_13_answers_{args.iteration}.jsonl"
+    answerFile = f"{args.answer_file_path}{args.answer_file_name}_{args.iteration}.jsonl"
     open(answerFile, "w").close()
 
     processor = AutoProcessor.from_pretrained(args.model_path, local_files_only=True)
@@ -23,10 +23,10 @@ def run_model(args):
 
             # load content
             image = Image.open(f"{args.image_folder}/{question['image']}")
-            prompt = f"USER: <image>{question['text']} ASSISTANT:"
+            prompt = f"<image> USER:{question['text']} ASSISTANT:"
 
             inputs = processor(text=prompt, images=image, return_tensors="pt").to('cuda')
-            output = model.generate(**inputs, do_sample=False, max_new_tokens=20)
+            output = model.generate(**inputs, max_new_tokens=20)
             generated_text = processor.batch_decode(output, skip_special_tokens=True)[0].strip()
             answer = generated_text[str(generated_text).find("ASSISTANT: ") + len("ASSISTANT: "):]
 
@@ -40,6 +40,7 @@ if __name__ == "__main__":
     parser.add_argument("--image-folder", type=str, default="/nfs/home/ernstd/data/news400/images")
     parser.add_argument("--question-file", type=str, default="")
     parser.add_argument("--answer-file-path", type=str, default="")
+    parser.add_argument("--answer-file-name", type=str, default="")
     parser.add_argument("--iteration", type=int, default=0)
     args = parser.parse_args()
 
