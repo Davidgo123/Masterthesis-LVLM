@@ -130,13 +130,13 @@ def createPairLabelQuestions(args):
                     entities = extractNames(lineObject, subsample['entities'], "text_" + subsample['name'], "test_" + subsample['name'], test_label)
 
                     #randomize truth and test entities in question
-                    baseQuestion = "\"Which set of entities is more related to the given image? Information about the entity sets: A=[{}-({})] or B=[{}-({})].\""
+                    baseQuestion = "\"Which set of {} is more consistent to the image: A=({}) or B=({})?\""
                     if random.randint(0,1) == 1:
-                        question = baseQuestion.format(subsample['name'], ','.join(entities["text"]), subsample['name'], ','.join(entities["test"]))
+                        question = baseQuestion.format(subsample['name'], ','.join(entities["text"]), ','.join(entities["test"]))
                         saveQuestion(args, str(lineObject['id']), "pairLabel", subsample['name'], test_label, str(question), "A", "B")
 
                     else:
-                        question = baseQuestion.format(subsample['name'], ','.join(entities["test"]), subsample['name'], ','.join(entities["text"]))
+                        question = baseQuestion.format(subsample['name'], ','.join(entities["test"]), ','.join(entities["text"]))
                         saveQuestion(args, str(lineObject['id']), "pairLabel", subsample['name'], test_label, str(question), "B", "A")
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -155,11 +155,11 @@ def createPairEntityQuestions(args):
                     baseQuestion = "\"Which {} is more consistent to the image: A=({}) or B=({})?\""
                     for i in range(len(entities["text"])):
                         if random.randint(0,1) == 1:
-                            question = baseQuestion.format(subsample['name'], entities["text"][i], entities["test"][i])
+                            question = baseQuestion.format(subsample['name'][:-1], entities["text"][i], entities["test"][i])
                             saveQuestion(args, str(lineObject['id']), "pairEntity", subsample['name'], test_label, str(question), "A", "B")
 
                         else:
-                            question = baseQuestion.format(subsample['name'], entities["test"][i], entities["text"][i])
+                            question = baseQuestion.format(subsample['name'][:-1], entities["test"][i], entities["text"][i])
                             saveQuestion(args, str(lineObject['id']), "pairEntity", subsample['name'], test_label, str(question), "B", "A")
 
 

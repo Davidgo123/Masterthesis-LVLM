@@ -12,19 +12,19 @@ from torch import nn
 answerFullSet = {
     "A": {
         'index': 0,
-        'token': [' A']
+        'token': [' A', ' a']
     },
     "B": {
         'index': 1,
-        'token': [' B']
+        'token': [' B', ' b']
     },
     "yes": {
         'index': 0,
-        'token': [' yes', ' Yes']
+        'token': [' Yes', ' yes']
     },
     "no": {
         'index': 1,
-        'token': [' no', ' No']
+        'token': [' No', ' no']
     },
 }
 
@@ -34,9 +34,9 @@ answerFullSet = {
 
 class blipInstance:
     def __init__(self, args):
-        self._processor = AutoProcessor.from_pretrained(args.model_path)
-        self._model = Blip2ForConditionalGeneration.from_pretrained(args.model_path, torch_dtype=torch.float16)
-        self._model.to(args.device)
+        self.processor = AutoProcessor.from_pretrained(args.model_path)
+        self.model = Blip2ForConditionalGeneration.from_pretrained(args.model_path, torch_dtype=torch.float16)
+        self.model.to(args.device)
 
 
     # clean up answer file
@@ -46,15 +46,14 @@ class blipInstance:
 
     # return answer of model
     def getResponse(self, args, prompt, image):
-        inputs = self._processor(images=image, text=prompt, return_tensors="pt").to(args.device, torch.float16)
+        inputs = self.processor(images=image, text=prompt, return_tensors="pt").to(args.device, torch.float16)
         with torch.no_grad():
-            outputs = self._model.generate(**inputs, max_new_tokens=1)
-        return self._processor.batch_decode(outputs, skip_special_tokens=True)[0]
+            outputs = self.model.generate(**inputs, max_new_tokens=1)
+        return self.processor.batch_decode(outputs, skip_special_tokens=True)[0]
 
 
     # set token ids for token probability
     def setTokenIDs(self, label1, label2):
-    
         self.index2label = {
             answerFullSet[label1]['index']: label1,
             answerFullSet[label2]['index']: label2
@@ -71,13 +70,13 @@ class blipInstance:
         for label, answer_set in self.answer_sets.items():
             self.answer_sets_token_id[label] = []
             for answer in answer_set:
-                self.answer_sets_token_id[label] += self._processor.tokenizer.encode(answer, add_special_tokens=False)
+                self.answer_sets_token_id[label] += self.processor.tokenizer.encode(answer, add_special_tokens=False)
 
     # return probability
     def getResponsePBC(self, args, prompt, image):   
-        inputs = self._processor(images=image, text=prompt, return_tensors="pt").to(args.device, torch.float16)
+        inputs = self.processor(images=image, text=prompt, return_tensors="pt").to(args.device, torch.float16)
         with torch.no_grad():
-            outputs = self._model.generate(**inputs, max_new_tokens=1, output_scores=True, return_dict_in_generate=True)
+            outputs = self.model.generate(**inputs, max_new_tokens=1, output_scores=True, return_dict_in_generate=True)
             
         pbc_probas = outputs.scores[0][:, self.answer_sets_token_id[self.index2label.get(0)] + self.answer_sets_token_id[self.index2label.get(1)]].softmax(-1)
         yes_proba_matrix = pbc_probas[:, :len(self.answer_sets[self.index2label.get(0)])].sum(dim=1)
@@ -101,7 +100,6 @@ class blipInstance:
 
 # run model
 def run(args, answerFile):
-
     blip = blipInstance(args)
     blip.cleanAnswers(answerFile)
 
@@ -114,8 +112,6 @@ def run(args, answerFile):
             PBTR, PB = blip.getResponsePBC(args, prompt, Image.open(f"{args.image_folder}/{question['image']}"))
             blip.saveAnswer(answerFile, question, TR, PBTR[0], round(PB[0], 2))
 
-            print("Reponse:'" + str(TR) + "' '" + str(PBTR[0]) + " " + str(round(PB[0], 2)) + "'")
-            print()
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
