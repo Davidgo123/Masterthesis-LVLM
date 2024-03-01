@@ -112,9 +112,9 @@ def run(args, answerFile):
             question = json.loads(line)
             prompt = f"<image> USER:{question['text']} ASSISTANT:"
             blip.setTokenIDs(question["truth_label"], question["wrong_label"])            
-            TR = blip.getResponse(args, prompt, Image.open(f"{args.image_folder}/{question['image']}")).replace("\n", "")
+            TR = blip.getResponse(args, prompt, Image.open(f"{question['image']}")).replace("\n", "")
             TR = TR[str(TR).find("ASSISTANT: ") + len("ASSISTANT: "):]
-            PBTR, PB = blip.getResponsePBC(args, prompt, Image.open(f"{args.image_folder}/{question['image']}"))
+            PBTR, PB = blip.getResponsePBC(args, prompt, Image.open(f"{question['image']}"))
             blip.saveAnswer(answerFile, question, TR, PBTR[0], round(PB[0], 2))
 
 
@@ -124,7 +124,6 @@ def run(args, answerFile):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--model-path", type=str, default="/nfs/home/ernstd/models/llava-1.5-13b-hf/")
-    parser.add_argument("--image-folder", type=str, default="/nfs/home/ernstd/data/news400/images")
     parser.add_argument("--question-file", type=str, default="")
     parser.add_argument("--answer-file-path", type=str, default="")
     parser.add_argument("--answer-file-name", type=str, default="")

@@ -36,7 +36,7 @@ def analyzeAnswer(args):
 
         # save answers of each iteration
         for i in range(args.iterations):
-            with open(f"/nfs/home/ernstd/data/news400/document_verification/{modelname}_{i}.jsonl", 'r') as file:
+            with open(f"/nfs/home/ernstd/masterthesis_scripts/document_verification/model_answers/{modelname}_{i}.jsonl", 'r') as file:
                 for line in file:
                     answerObject = json.loads(line)
                     if answerObject['questionType'] not in modelAnswers:
@@ -50,7 +50,7 @@ def analyzeAnswer(args):
             modelAnswers[questionType] = sorted(modelAnswers[questionType], key=lambda x: x['question_id'])
             
             # prepare evaluation file for questionType
-            answerFile = open(f"/nfs/home/ernstd/data/news400/document_verification/answers_TR/TR_{questionType}_{modelname}.csv", 'w', newline ='')
+            answerFile = open(f"/nfs/home/ernstd/masterthesis_scripts/document_verification/model_answers/answers_TR/TR_{questionType}_{modelname}.csv", 'w', newline ='')
             with answerFile:
                 header = ['entity', 'category', 'modelname', 'correct', 'wrong', 'undefinied']
                 writer = csv.DictWriter(answerFile, fieldnames = header)
@@ -93,7 +93,7 @@ def analyzePropabilityAnswer(args):
 
         # save answers of each iteration
         for i in range(args.iterations):
-            with open(f"/nfs/home/ernstd/data/news400/document_verification/{modelname}_{i}.jsonl", 'r') as file:
+            with open(f"/nfs/home/ernstd/masterthesis_scripts/document_verification/model_answers/{modelname}_{i}.jsonl", 'r') as file:
                 for line in file:
                     answerObject = json.loads(line)
                     if answerObject['questionType'] not in modelAnswers:
@@ -107,7 +107,7 @@ def analyzePropabilityAnswer(args):
             modelAnswers[questionType] = sorted(modelAnswers[questionType], key=lambda x: x['question_id'])
             
             # prepare evaluation file for questionType
-            answerFile = open(f"/nfs/home/ernstd/data/news400/document_verification/answers_PBTR/PBTR_{questionType}_{modelname}.csv", 'w', newline ='')
+            answerFile = open(f"/nfs/home/ernstd/masterthesis_scripts/document_verification/model_answers/answers_PBTR/PBTR_{questionType}_{modelname}.csv", 'w', newline ='')
             with answerFile:
                 header = ['entity', 'category', 'modelname', 'correct', 'wrong', 'undefinied']
                 writer = csv.DictWriter(answerFile, fieldnames = header)
