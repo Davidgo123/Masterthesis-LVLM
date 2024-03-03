@@ -1,0 +1,2 @@
+entity,category,modelname,correct,wrong,undefinied
+locations,random,llava_1_5_7b_answers,0.68,0.32,-0.0

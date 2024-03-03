@@ -3,6 +3,13 @@ import csv
 import re
 
 models = ['instructBlip_answers', 'blip_2_answers', 'llava_1_5_7b_answers', 'llava_1_5_13b_answers']
+
+#types = ['singleEntity']
+#Entity = ['locations']
+#category = ['random']
+#category_mapping = ['random']
+#eric_res = ['0.85']
+
 types = ['singleEntity', 'pairEntity', 'pairLabel']
 Entity = ['persons', 'persons', 'persons', 'persons', 'locations', 'locations', 'locations', 'locations', 'events', 'events']
 category = ['random', 'country-sensitive', 'gender-sensitive', 'country-gender-sensitive', 'random', 'city-region', 'country-continent', 'region-country', 'random', 'same_instance']
@@ -20,7 +27,7 @@ for type in types:
 
     data_PBTR = []
     for model in models:
-        with open(f"/nfs/home/ernstd/masterthesis_scripts/document_verification/model_answers/PBTR_{type}_{model}.csv", encoding = 'utf-8') as file:
+        with open(f"/nfs/home/ernstd/masterthesis_scripts/document_verification/model_answers/answers_PBTR/PBTR_{type}_{model}.csv", encoding = 'utf-8') as file:
             reader = csv.DictReader(file)
             for row in reader:
                 data_PBTR.append(row)

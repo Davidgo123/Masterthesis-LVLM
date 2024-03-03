@@ -1,6 +1,7 @@
 import json
 import random
 import argparse
+import geopy.distance
 
 subsample_datasets= [
     {
@@ -184,36 +185,6 @@ def createSingleEntityQuestions(args):
                         question = baseQuestion.format(subsample['name'][:-1], entity)
                         saveQuestion(args, str(lineObject['id']), "singleEntity", subsample['name'], test_label, str(question), "no", "yes")
 
-
-# - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
-
-
-def createGolsaLocationQuestions(args):
-    subsample_datasets
-    with open('/nfs/home/ernstd/data/golsa/golsa.jsonl', 'r') as file:
-        for line in file:
-            # extract line
-            lineObject = json.loads(line)
-            print(lineObject)
-            randName = random.choice(subsample_datasets[1]['entities'])['wd_label']
-            print(randName)
-
-            realName=""
-            for entity in subsample_datasets[1]['entities']:
-                if entity['wd_id'] == lineObject['image_label']['city']['id']:
-                    realName = entity['wd_label']                
-
-            #randomize truth and test entities in question
-            baseQuestion = "\"Which {} is more consistent to the image: A=({}) or B=({})?\""
-            if random.randint(0,1) == 1:
-                question = baseQuestion.format('location', realName, randName)
-                saveQuestionGolsa(args, str(lineObject['id']), "singleEntity", 'locations', 'random', str(question), "A", "B")
-
-            else:
-                question = baseQuestion.format('location', randName, realName)
-                saveQuestionGolsa(args, str(lineObject['id']), "singleEntity", 'locations', 'random', str(question), "B", "A")
-
-
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
 
@@ -243,9 +214,8 @@ if __name__ == "__main__":
     # load entity datasets
     loadEntityDatasets()
 
-    #createMultiLabelQuestions(args)
-    #createPairLabelQuestions(args)
-    #createPairEntityQuestions(args)
-    #createSingleEntityQuestions(args)
-    createGolsaLocationQuestions(args)
+    createMultiLabelQuestions(args)
+    createPairLabelQuestions(args)
+    createPairEntityQuestions(args)
+    createSingleEntityQuestions(args)
 
