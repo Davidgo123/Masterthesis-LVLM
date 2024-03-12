@@ -1,0 +1,14 @@
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:03<00:03,  3.35s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.11s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:04<00:00,  2.30s/it]
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:02<00:08,  2.90s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:05,  2.66s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:06<00:02,  2.14s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.41s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.80s/it]
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:01<00:02,  1.03s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:02<00:01,  1.11s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:03<00:00,  1.08s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:03<00:00,  1.08s/it]
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:01<00:06,  1.34s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:02<00:04,  1.20s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:03<00:03,  1.20s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:04<00:02,  1.17s/it]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:05<00:01,  1.16s/it]Loading checkpoint shards: 100%|██████████| 6/6 [00:06<00:00,  1.07it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:06<00:00,  1.07s/it]
+        random & 0.85 & \textbf{0.97} & 0.09 & 0.78 & 0.31 \\
+        city-region & 0.74 & \textbf{0.95} & 0.1 & 0.75 & 0.26 \\
+        country-continent & 0.84 & \textbf{0.96} & 0.1 & 0.79 & 0.3 \\
+        region-country & 0.80 & \textbf{0.95} & 0.1 & 0.76 & 0.27 \\
+
+        random & 1.00 & \textbf{0.86} & 0.39 & 0.66 & 0.54 \\
+        same-instance & 0.74 & \textbf{0.8} & 0.39 & 0.68 & 0.59 \\
+

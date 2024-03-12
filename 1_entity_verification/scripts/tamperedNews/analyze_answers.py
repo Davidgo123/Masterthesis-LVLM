@@ -17,6 +17,8 @@ statisticObject = {
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
+def simplifyAnswer(answer):
+    return str(answer).lower().strip().replace('.', '').replace('=', '')
 
 def computeAnswer(args):
     # iterate over all models
@@ -61,11 +63,11 @@ def computeAnswer(args):
                         current_tuple = model['statistic'][entityType][testlabel]
 
                         # check if model answer is correct
-                        if question['gTruth'] == question['text']:
+                        if question['gTruth'] == simplifyAnswer(question['text']):
                             model['statistic'][entityType][testlabel] = (current_tuple[0]+1, current_tuple[1]+1, current_tuple[2])
 
                         # check if model answer is wrong
-                        elif question['gWrong'] == question['text']:
+                        elif question['gWrong'] == simplifyAnswer(question['text']):
                             model['statistic'][entityType][testlabel] = (current_tuple[0]+1, current_tuple[1], current_tuple[2]+1)
 
                         # check if model answer is undefinied 

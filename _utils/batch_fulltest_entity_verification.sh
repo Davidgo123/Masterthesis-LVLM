@@ -1,3 +1,3 @@
-sbatch -w devbox5 -c 12 --mem 32G --gres=gpu:a3090:1 --output=./masterthesis_scripts/_utils/_SLURM/EV-MMG.out /nfs/home/ernstd/masterthesis_scripts/1_entity_verification/entity_verification_mmg.sh
-sbatch -w devbox5 -c 12 --mem 32G --gres=gpu:a3090:1 --output=./masterthesis_scripts/_utils/_SLURM/EV-News400.out /nfs/home/ernstd/masterthesis_scripts/1_entity_verification/entity_verification_news400.sh
-sbatch -w devbox5 -c 12 --mem 32G --gres=gpu:a3090:1 --output=./masterthesis_scripts/_utils/_SLURM/EV-TampNews.out /nfs/home/ernstd/masterthesis_scripts/1_entity_verification/entity_verification_tamperedNews.sh
+sbatch -w devbox5 -c 12 --mem 32G --gres=gpu:a3090:1 --output=/nfs/home/ernstd/masterthesis_scripts/_utils/_SLURM/EV-MMG.out /nfs/home/ernstd/masterthesis_scripts/1_entity_verification/entity_verification_mmg.sh
+sbatch -w devbox5 -c 12 --mem 32G --gres=gpu:a3090:1 --output=/nfs/home/ernstd/masterthesis_scripts/_utils/_SLURM/EV-News400.out /nfs/home/ernstd/masterthesis_scripts/1_entity_verification/entity_verification_news400.sh
+sbatch -w devbox5 -c 12 --mem 32G --gres=gpu:a3090:1 --output=/nfs/home/ernstd/masterthesis_scripts/_utils/_SLURM/EV-TampNews.out /nfs/home/ernstd/masterthesis_scripts/1_entity_verification/entity_verification_tamperedNews.sh

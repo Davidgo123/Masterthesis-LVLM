@@ -17,6 +17,8 @@ statisticObject = {
 
 # - - - - - - - - - - - - - - - - - - - - - -
 
+def simplifyAnswer(answer):
+    return str(answer).lower().strip().replace('.', '').replace('=', '')
 
 def computeAnswer(args):
     # iterate over all models
@@ -58,9 +60,9 @@ def computeAnswer(args):
                     oneVisibleText = False
                     oneVisibleTest = False
                     for question in groupedModelAnswers[entityType][testlabel][questionID]:
-                        if (question['set'] == 'text') and (question['text'] == 'yes'):
+                        if (question['set'] == 'text') and (simplifyAnswer(question['text']) == 'yes'):
                             oneVisibleText = True
-                        if (question['set'] == 'test') and (question['text'] == 'yes'):
+                        if (question['set'] == 'test') and (simplifyAnswer(question['text']) == 'yes'):
                             oneVisibleTest = True
                     
                     # iterate over each question of same id and compute score
@@ -69,27 +71,27 @@ def computeAnswer(args):
                     for question in groupedModelAnswers[entityType][testlabel][questionID]:
 
                         if question['set'] == 'text':
-                            if question['text'] == 'yes':
+                            if simplifyAnswer(question['text']) == 'yes':
                                 scoreText.append(float(question['textPB']))
-                            elif question['text'] == 'no':
+                            elif simplifyAnswer(question['text']) == 'no':
                                 scoreText.append(1.0 - float(question['textPB']))
 
                         elif question['set'] == 'text' and not oneVisibleText:
-                            if question['text'] == 'yes':
+                            if simplifyAnswer(question['text']) == 'yes':
                                 scoreText.append(1.0 - float(question['textPB']))
-                            elif question['text'] == 'no':
+                            elif simplifyAnswer(question['text']) == 'no':
                                 scoreText.append(float(question['textPB']))
 
                         elif question['set'] == 'test':
-                            if question['text'] == 'yes':
+                            if simplifyAnswer(question['text']) == 'yes':
                                 scoreTest.append(float(question['textPB']))
-                            elif question['text'] == 'no':
+                            elif simplifyAnswer(question['text']) == 'no':
                                 scoreTest.append(1.0 - float(question['textPB']))
 
                         elif question['set'] == 'test' and not oneVisibleTest:
-                            if question['text'] == 'yes':
+                            if simplifyAnswer(question['text']) == 'yes':
                                 scoreTest.append(1.0 - float(question['textPB']))
-                            elif question['text'] == 'no':
+                            elif simplifyAnswer(question['text']) == 'no':
                                 scoreTest.append(float(question['textPB']))
 
                     # add counter to statistic if not exist
