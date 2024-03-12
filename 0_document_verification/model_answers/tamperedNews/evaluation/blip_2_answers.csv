@@ -1,0 +1,7 @@
+entity,category,modelname,correct,wrong,undefinied,documents
+locations,random,blip_2_answers,0.78,0.22,-0.0,9
+locations,country-continent,blip_2_answers,0.67,0.22,0.11,9
+locations,region-country,blip_2_answers,0.67,0.22,0.11,9
+locations,city-region,blip_2_answers,0.78,0.22,-0.0,9
+events,random,blip_2_answers,0.65,0.29,0.06,17
+events,same_instance,blip_2_answers,0.53,0.29,0.18,17

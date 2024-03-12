@@ -1,1 +1,0 @@
-sbatch -w devbox5 -c 12 --mem 32G --gres=gpu:a3090:1 /nfs/home/ernstd/masterthesis_scripts/document_verification/document_verification.sh

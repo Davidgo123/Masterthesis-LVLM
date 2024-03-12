@@ -1,0 +1,11 @@
+entity,category,modelname,correct,wrong,undefinied
+persons,random,llava_1_5_13b_answers,0.78,0.17,0.05
+persons,gender-sensitive,llava_1_5_13b_answers,0.78,0.19,0.03
+persons,country-sensitive,llava_1_5_13b_answers,0.66,0.33,0.01
+persons,country-gender-sensitive,llava_1_5_13b_answers,0.67,0.3,0.03
+locations,random,llava_1_5_13b_answers,0.97,0.03,0.0
+locations,country-continent,llava_1_5_13b_answers,0.88,0.04,0.08
+locations,region-country,llava_1_5_13b_answers,0.76,0.06,0.18
+locations,city-region,llava_1_5_13b_answers,0.75,0.07,0.18
+events,random,llava_1_5_13b_answers,0.88,0.12,0.0
+events,same_instance,llava_1_5_13b_answers,0.72,0.2,0.08

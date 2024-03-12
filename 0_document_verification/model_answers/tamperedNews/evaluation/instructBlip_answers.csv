@@ -1,0 +1,7 @@
+entity,category,modelname,correct,wrong,undefinied,documents
+locations,random,instructBlip_answers,1.0,0.0,0.0,9
+locations,country-continent,instructBlip_answers,0.89,0.11,-0.0,9
+locations,region-country,instructBlip_answers,0.78,0.11,0.11,9
+locations,city-region,instructBlip_answers,0.78,0.11,0.11,9
+events,random,instructBlip_answers,1.0,0.0,0.0,17
+events,same_instance,instructBlip_answers,1.0,0.0,0.0,17

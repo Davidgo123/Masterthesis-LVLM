@@ -1,0 +1,11 @@
+entity,category,modelname,correct,wrong,undefinied
+persons,random,blip_2_answers,0.55,0.37,0.08
+persons,gender-sensitive,blip_2_answers,0.5,0.44,0.06
+persons,country-sensitive,blip_2_answers,0.51,0.43,0.06
+persons,country-gender-sensitive,blip_2_answers,0.39,0.5,0.11
+locations,random,blip_2_answers,0.64,0.25,0.11
+locations,country-continent,blip_2_answers,0.66,0.22,0.12
+locations,region-country,blip_2_answers,0.54,0.31,0.15
+locations,city-region,blip_2_answers,0.63,0.3,0.07
+events,random,blip_2_answers,0.64,0.36,0.0
+events,same_instance,blip_2_answers,0.6,0.28,0.12
