@@ -1,5 +1,5 @@
-entity,category,modelname,correct,wrong,undefinied
-locations,random,blip_2_answers,0.45,0.45,0.1
-locations,country-continent,blip_2_answers,0.41,0.43,0.16
-locations,region-country,blip_2_answers,0.46,0.39,0.15
-locations,city-region,blip_2_answers,0.46,0.38,0.16
+entity,category,modelname,correct,wrong,undefinied,documents
+locations,random,blip_2_answers,0.5,0.5,0.0,1058
+locations,country-continent,blip_2_answers,0.51,0.49,0.0,1058
+locations,region-country,blip_2_answers,0.5,0.5,0.0,1058
+locations,city-region,blip_2_answers,0.51,0.49,0.0,1058

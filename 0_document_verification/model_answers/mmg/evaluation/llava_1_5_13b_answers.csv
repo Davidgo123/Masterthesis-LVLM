@@ -1,5 +1,5 @@
 entity,category,modelname,correct,wrong,undefinied,documents
-locations,region-country,llava_1_5_13b_answers,0.8,0.09,0.11,200
-locations,city-region,llava_1_5_13b_answers,0.82,0.09,0.09,200
-locations,random,llava_1_5_13b_answers,0.86,0.12,0.02,200
-locations,country-continent,llava_1_5_13b_answers,0.78,0.1,0.12,200
+locations,random,llava_1_5_13b_answers,0.92,0.07,0.01,200
+locations,country-continent,llava_1_5_13b_answers,0.88,0.06,0.06,200
+locations,region-country,llava_1_5_13b_answers,0.88,0.06,0.06,200
+locations,city-region,llava_1_5_13b_answers,0.85,0.08,0.07,200

@@ -41,12 +41,19 @@ python /nfs/home/ernstd/masterthesis_scripts/model_scripts/llava-4bit_dv.py --qu
 pid6=$!
 wait $pid6
 
-# - - - - - - - - - -
-
-python /nfs/home/ernstd/masterthesis_scripts/0_document_verification/scripts/news400/analyze_answers.py --models ${activeModels[@]} &
+modelPath=/nfs/home/ernstd/models/llava-v1.6-mistral-7b-hf/
+answerFile=llava_1_6_7b_answers
+activeModels+=(${answerFile})
+python /nfs/home/ernstd/masterthesis_scripts/model_scripts/llava_dv.py --question-file $questionFile --answer-file-path $answerFilePath --model-path $modelPath --answer-file-name $answerFile &
 pid7=$!
 wait $pid7
 
-python /nfs/home/ernstd/masterthesis_scripts/0_document_verification/scripts/news400/printResultTable.py --models ${activeModels[@]} &
+# - - - - - - - - - -
+
+python /nfs/home/ernstd/masterthesis_scripts/0_document_verification/scripts/mmg/analyze_answers.py --models ${activeModels[@]} &
 pid8=$!
 wait $pid8
+
+python /nfs/home/ernstd/masterthesis_scripts/0_document_verification/scripts/mmg/printResultTable.py --models ${activeModels[@]} &
+pid9=$!
+wait $pid9

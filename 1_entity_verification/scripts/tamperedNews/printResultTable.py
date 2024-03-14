@@ -33,7 +33,7 @@ def printResults(args):
             resultsVLM[modelname] = []
 
         # read csv content
-        with open(f"/nfs/home/ernstd/masterthesis_scripts/0_document_verification/model_answers/tamperedNews/evaluation/{modelname}.csv", 'r') as file:
+        with open(f"/nfs/home/ernstd/masterthesis_scripts/1_entity_verification/model_answers/tamperedNews/evaluation/{modelname}.csv", 'r') as file:
             csv_reader = csv.DictReader(file)
             for row in csv_reader:
                 resultsVLM[modelname].append(row)

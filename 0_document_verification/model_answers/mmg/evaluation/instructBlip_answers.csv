@@ -1,5 +1,5 @@
 entity,category,modelname,correct,wrong,undefinied,documents
-locations,country-continent,instructBlip_answers,0.86,0.04,0.1,200
-locations,region-country,instructBlip_answers,0.82,0.07,0.11,200
-locations,city-region,instructBlip_answers,0.84,0.04,0.12,200
-locations,random,instructBlip_answers,0.93,0.07,-0.0,200
+locations,random,instructBlip_answers,0.96,0.04,0.0,200
+locations,country-continent,instructBlip_answers,0.91,0.03,0.06,200
+locations,region-country,instructBlip_answers,0.91,0.04,0.05,200
+locations,city-region,instructBlip_answers,0.92,0.03,0.05,200
