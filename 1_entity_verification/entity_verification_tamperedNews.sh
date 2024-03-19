@@ -50,10 +50,10 @@ activeModels+=(${answerFile})
 
 # - - - - - - - - - -
 
-python /nfs/home/ernstd/masterthesis_scripts/0_document_verification/scripts/tamperedNews/analyze_answers.py --models ${activeModels[@]} &
+python /nfs/home/ernstd/masterthesis_scripts/1_entity_verification/scripts/tamperedNews/analyze_answers.py --models ${activeModels[@]} &
 pid8=$!
 wait $pid8
 
-python /nfs/home/ernstd/masterthesis_scripts/0_document_verification/scripts/tamperedNews/printResultTable.py --models ${activeModels[@]} &
+python /nfs/home/ernstd/masterthesis_scripts/1_entity_verification/scripts/tamperedNews/printResultTable.py --models ${activeModels[@]} &
 pid9=$!
 wait $pid9

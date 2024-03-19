@@ -1,0 +1,7 @@
+entity,category,modelname,correct,wrong,undefinied,documents
+locations,random,llava_1_6_7b_answers,0.7,0.3,0.0,128
+locations,country-continent,llava_1_6_7b_answers,0.59,0.41,0.0,128
+locations,region-country,llava_1_6_7b_answers,0.59,0.41,0.0,128
+locations,city-region,llava_1_6_7b_answers,0.59,0.41,0.0,128
+events,random,llava_1_6_7b_answers,0.71,0.29,0.0,56
+events,same_instance,llava_1_6_7b_answers,0.66,0.34,-0.0,56

@@ -1,8 +1,8 @@
-        random & 0.85 & \textbf{1.0} & 0.78 & 0.89 & 0.78 & 0.67 \\
-        city-region & 0.74 & 0.78 & 0.78 & \textbf{1.0} & 0.78 & 0.67 \\
-        country-continent & 0.84 & \textbf{0.89} & 0.67 & \textbf{0.89} & 0.78 & 0.67 \\
-        region-country & 0.80 & \textbf{0.78} & 0.67 & \textbf{0.78} & \textbf{0.78} & 0.67 \\
+        random & 0.85 & \textbf{0.97} & 0.09 & 0.78 & 0.31 & 0.7 \\
+        city-region & 0.74 & \textbf{0.95} & 0.1 & 0.75 & 0.26 & 0.59 \\
+        country-continent & 0.84 & \textbf{0.96} & 0.1 & 0.79 & 0.3 & 0.59 \\
+        region-country & 0.80 & \textbf{0.95} & 0.1 & 0.76 & 0.27 & 0.59 \\
 
-        random & 1.00 & \textbf{1.0} & 0.65 & 0.88 & 0.76 & \textbf{1.0} \\
-        same-instance & 0.74 & \textbf{1.0} & 0.53 & 0.94 & 0.65 & 0.76 \\
+        random & 1.00 & \textbf{0.86} & 0.39 & 0.66 & 0.54 & 0.71 \\
+        same-instance & 0.74 & \textbf{0.8} & 0.39 & 0.68 & 0.59 & 0.66 \\
 

@@ -30,7 +30,7 @@ def loadEntities():
 
 # todo
 def createMultiImage():
-    template_1_1 = Image.open('/nfs/home/ernstd/masterthesis_scripts/2_entity_verification_ib/template.png')
+    template_1_1 = Image.open('/nfs/home/ernstd/masterthesis_scripts/2_entity_verification_ib/images/template.png')
     img_untampered = Image.open('/nfs/home/ernstd/masterthesis_scripts/2_entity_verification_ib/images/1.png').resize((750, 533))
     img_tampered_1 = Image.open('/nfs/home/ernstd/masterthesis_scripts/2_entity_verification_ib/images/2.png').resize((750, 533)) #(350, 250)     
     template_1_1.paste(img_untampered, (25, 33))
