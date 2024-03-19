@@ -1,7 +1,7 @@
 import numpy
 import json
 
-subsamples = ['locations', 'events']
+subsamples = ['events']
 
 def createSubSample(subsample):
     open(f"/nfs/home/ernstd/masterthesis_scripts/_datasets/tamperedNews/_data/tamperedNews_{subsample}.jsonl", 'w').close()
@@ -15,9 +15,12 @@ def createSubSample(subsample):
     randomSelectionKeys = rng.choice(len(list(data)), size=1000, replace=False)
 
     with open(f"/nfs/home/ernstd/masterthesis_scripts/_datasets/tamperedNews/_data/tamperedNews_{subsample}.jsonl", 'a') as f:
-        for key in randomSelectionKeys:
-            if len(data[key]['text_' + subsample]) > 0:
-                f.write(json.dumps(data[key]) + "\n")
+        with open(f'/nfs/home/ernstd/masterthesis_scripts/_datasets/tamperedNews/images.json','r') as ids:
+            imageIDS = json.load(ids)
+            for key in randomSelectionKeys:
+                if len(data[key]['text_' + subsample]) > 0:
+                    if data[key]['id'] in imageIDS:
+                        f.write(json.dumps(data[key]) + "\n")
 
 if __name__ == "__main__":
     # delete questions

@@ -42,11 +42,12 @@ def printResults(args):
         for category in resultsCNN[entityType]:
 
             sentence_0 = ("%s & %s & " % (category, resultsCNN[entityType][category])).replace('_', '-')
-            sentence_1 = "%s & %s & %s & %s \\\\" % (
+            sentence_1 = "%s & %s & %s & %s & %s \\\\" % (
                 getValue(resultsVLM['instructBlip_answers'], entityType, category), 
                 getValue(resultsVLM['blip_2_answers'], entityType, category), 
                 getValue(resultsVLM['llava_1_5_7b_answers'], entityType, category), 
-                getValue(resultsVLM['llava_1_5_13b_answers'], entityType, category))
+                getValue(resultsVLM['llava_1_5_13b_answers'], entityType, category),
+                getValue(resultsVLM['llava_1_6_7b_answers'], entityType, category))
 
             maxValue = max([float(num) for num in re.findall(r'\d+\.\d+', sentence_1)])
             sentence_1 = sentence_1.replace(str(maxValue), r'\textbf{' + str(maxValue) + r'}')
