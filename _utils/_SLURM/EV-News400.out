@@ -1,24 +1,4 @@
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:01<00:01,  1.24s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:01<00:00,  1.12it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:01<00:00,  1.06it/s]
-Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:03,  1.21s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.13s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:04<00:01,  1.46s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.01it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.10s/it]
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [01:01<01:01, 61.10s/it]Loading checkpoint shards: 100%|██████████| 2/2 [01:55<00:00, 57.41s/it]Loading checkpoint shards: 100%|██████████| 2/2 [01:55<00:00, 57.96s/it]
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:03,  1.23s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.15s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:03<00:01,  1.14s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.26it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.08it/s]
 Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
-Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:00<00:01,  1.24it/s]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:01<00:00,  1.35it/s]Loading checkpoint shards: 100%|██████████| 3/3 [00:02<00:00,  1.49it/s]Loading checkpoint shards: 100%|██████████| 3/3 [00:02<00:00,  1.43it/s]
-Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
-Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [00:01<00:07,  1.41s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [00:02<00:05,  1.28s/it]Loading checkpoint shards:  50%|█████     | 3/6 [00:03<00:03,  1.24s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [00:04<00:02,  1.22s/it]Loading checkpoint shards:  83%|████████▎ | 5/6 [00:06<00:01,  1.21s/it]Loading checkpoint shards: 100%|██████████| 6/6 [00:06<00:00,  1.02it/s]Loading checkpoint shards: 100%|██████████| 6/6 [00:06<00:00,  1.12s/it]
-Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
-Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.28it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.40it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:02<00:00,  1.46it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  2.15it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.80it/s]
-Some weights of the model checkpoint at /nfs/home/ernstd/models/llava-v1.6-mistral-7b-hf/ were not used when initializing LlavaForConditionalGeneration: ['image_newline']
-- This IS expected if you are initializing LlavaForConditionalGeneration from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
-- This IS NOT expected if you are initializing LlavaForConditionalGeneration from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
-        random & 0.95 & \textbf{0.87} & 0.27 & 0.77 & 0.41 & 0.78 \\
-        country-sensitive & 0.92 & \textbf{0.86} & 0.27 & 0.72 & 0.36 & 0.76 \\
-        gender-sensitive & 0.95 & \textbf{0.87} & 0.27 & 0.76 & 0.42 & 0.76 \\
-        country-gender-sensitive & 0.92 & \textbf{0.87} & 0.26 & 0.72 & 0.36 & 0.75 \\
-
-        random & 0.85 & \textbf{0.85} & 0.18 & 0.64 & 0.34 & 0.62 \\
-        city-region & 0.74 & \textbf{0.79} & 0.17 & 0.55 & 0.28 & 0.56 \\
-        country-continent & 0.84 & \textbf{0.84} & 0.18 & 0.63 & 0.31 & 0.62 \\
-        region-country & 0.80 & \textbf{0.81} & 0.17 & 0.57 & 0.29 & 0.57 \\
-
-        random & 1.00 & 0.77 & 0.43 & 0.78 & 0.65 & \textbf{0.79} \\
-        same-instance & 0.74 & \textbf{0.75} & 0.41 & 0.71 & 0.53 & 0.7 \\
-
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]slurmstepd: error: *** JOB 2005 ON devbox5 CANCELLED AT 2024-04-03T16:43:52 ***
