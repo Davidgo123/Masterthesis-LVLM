@@ -1,7 +1,7 @@
 entity,category,modelname,correct,wrong,undefinied,documents
-locations,random,instructBlip_answers,0.97,0.03,0.0,128
-locations,country-continent,instructBlip_answers,0.96,0.04,0.0,128
-locations,region-country,instructBlip_answers,0.95,0.05,0.0,128
-locations,city-region,instructBlip_answers,0.95,0.05,0.0,128
-events,random,instructBlip_answers,0.86,0.14,0.0,56
-events,same_instance,instructBlip_answers,0.8,0.2,-0.0,56
+locations,random,instructBlip_answers,0.91,0.09,-0.0,611
+locations,country-continent,instructBlip_answers,0.91,0.09,-0.0,611
+locations,region-country,instructBlip_answers,0.9,0.1,-0.0,611
+locations,city-region,instructBlip_answers,0.89,0.11,-0.0,611
+events,random,instructBlip_answers,0.81,0.19,-0.0,144
+events,same_instance,instructBlip_answers,0.78,0.22,-0.0,144

@@ -1,7 +1,7 @@
 entity,category,modelname,correct,wrong,undefinied,documents,documents
-locations,random,llava_1_6_7b_answers,0.67,0.22,0.11,9,9
-locations,country-continent,llava_1_6_7b_answers,0.67,0.33,-0.0,9,9
-locations,region-country,llava_1_6_7b_answers,0.67,0.33,-0.0,9,9
-locations,city-region,llava_1_6_7b_answers,0.67,0.33,-0.0,9,9
-events,random,llava_1_6_7b_answers,1.0,0.0,0.0,17,17
-events,same_instance,llava_1_6_7b_answers,0.76,0.24,0.0,17,17
+locations,random,llava_1_6_7b_answers,0.84,0.11,0.05,44,44
+locations,country-continent,llava_1_6_7b_answers,0.84,0.16,0.0,44,44
+locations,region-country,llava_1_6_7b_answers,0.86,0.14,0.0,44,44
+locations,city-region,llava_1_6_7b_answers,0.75,0.2,0.05,44,44
+events,random,llava_1_6_7b_answers,0.94,0.06,0.0,49,49
+events,same_instance,llava_1_6_7b_answers,0.78,0.2,0.02,49,49

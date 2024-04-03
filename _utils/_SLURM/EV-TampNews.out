@@ -1,8 +1,28 @@
-        random & 0.85 & \textbf{0.97} & 0.09 & 0.78 & 0.31 & 0.7 \\
-        city-region & 0.74 & \textbf{0.95} & 0.1 & 0.75 & 0.26 & 0.59 \\
-        country-continent & 0.84 & \textbf{0.96} & 0.1 & 0.79 & 0.3 & 0.59 \\
-        region-country & 0.80 & \textbf{0.95} & 0.1 & 0.76 & 0.27 & 0.59 \\
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:01<00:01,  1.43s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.03s/it]Loading checkpoint shards: 100%|██████████| 2/2 [00:02<00:00,  1.09s/it]
+Traceback (most recent call last):
+  File "/nfs/home/ernstd/masterthesis_scripts/model_scripts/blip2_dv.py", line 123, in <module>
+    run(args, answerFile)
+  File "/nfs/home/ernstd/masterthesis_scripts/model_scripts/blip2_dv.py", line 109, in run
+    blip.saveAnswer(answerFile, question, text, textPB)
+  File "/nfs/home/ernstd/masterthesis_scripts/model_scripts/blip2_dv.py", line 93, in saveAnswer
+    outfile.write("""{\"question_id\": \"%s\", \"image\": \"%s\", \"question\": \"%s\", \"entity\": \"%s\", \"testlabel\": \"%s\", \"set\": \"%s\", \"gTruth\": \"%s\", \"gWrong\": \"%s\", \"text\": \"%s\", \"textPB\": \"%s\"}\n""" 
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+UnicodeEncodeError: 'ascii' codec can't encode character '\xf3' in position 153: ordinal not in range(128)
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [01:43<05:09, 103.08s/it]Loading checkpoint shards:  50%|█████     | 2/4 [03:23<03:23, 101.60s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [05:06<01:41, 102.00s/it]Loading checkpoint shards: 100%|██████████| 4/4 [05:24<00:00, 68.89s/it] Loading checkpoint shards: 100%|██████████| 4/4 [05:24<00:00, 81.06s/it]
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [01:14<02:29, 74.61s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [02:33<01:16, 76.86s/it]Loading checkpoint shards: 100%|██████████| 3/3 [03:33<00:00, 69.24s/it]Loading checkpoint shards: 100%|██████████| 3/3 [03:33<00:00, 71.07s/it]
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+Loading checkpoint shards:   0%|          | 0/6 [00:00<?, ?it/s]Loading checkpoint shards:  17%|█▋        | 1/6 [01:35<07:59, 95.95s/it]Loading checkpoint shards:  33%|███▎      | 2/6 [02:49<05:30, 82.55s/it]Loading checkpoint shards:  50%|█████     | 3/6 [03:55<03:45, 75.13s/it]Loading checkpoint shards:  67%|██████▋   | 4/6 [05:03<02:24, 72.21s/it]Loading checkpoint shards:  83%|████████▎ | 5/6 [06:12<01:11, 71.18s/it]Loading checkpoint shards: 100%|██████████| 6/6 [06:40<00:00, 56.41s/it]Loading checkpoint shards: 100%|██████████| 6/6 [06:40<00:00, 66.71s/it]
+Special tokens have been added in the vocabulary, make sure the associated word embeddings are fine-tuned or trained.
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [01:26<04:20, 86.95s/it]Loading checkpoint shards:  50%|█████     | 2/4 [02:30<02:26, 73.43s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [03:34<01:09, 69.01s/it]Loading checkpoint shards: 100%|██████████| 4/4 [03:38<00:00, 43.40s/it]Loading checkpoint shards: 100%|██████████| 4/4 [03:38<00:00, 54.70s/it]
+Some weights of the model checkpoint at /nfs/home/ernstd/models/llava-v1.6-mistral-7b-hf/ were not used when initializing LlavaForConditionalGeneration: ['image_newline']
+- This IS expected if you are initializing LlavaForConditionalGeneration from the checkpoint of a model trained on another task or with another architecture (e.g. initializing a BertForSequenceClassification model from a BertForPreTraining model).
+- This IS NOT expected if you are initializing LlavaForConditionalGeneration from the checkpoint of a model that you expect to be exactly identical (initializing a BertForSequenceClassification model from a BertForSequenceClassification model).
+        random & 0.85 & \textbf{0.91} & 0.13 & 0.7 & 0.4 & 0.69 \\
+        city-region & 0.74 & \textbf{0.89} & 0.08 & 0.65 & 0.34 & 0.63 \\
+        country-continent & 0.84 & \textbf{0.91} & 0.13 & 0.72 & 0.38 & 0.68 \\
+        region-country & 0.80 & \textbf{0.9} & 0.14 & 0.66 & 0.35 & 0.64 \\
 
-        random & 1.00 & \textbf{0.86} & 0.39 & 0.66 & 0.54 & 0.71 \\
-        same-instance & 0.74 & \textbf{0.8} & 0.39 & 0.68 & 0.59 & 0.66 \\
+        random & 1.00 & \textbf{0.81} & None & 0.69 & 0.63 & 0.71 \\
+        same-instance & 0.74 & \textbf{0.78} & None & 0.69 & 0.6 & 0.66 \\
 

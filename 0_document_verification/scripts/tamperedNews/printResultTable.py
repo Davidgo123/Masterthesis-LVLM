@@ -8,6 +8,12 @@ from array import *
 
 
 resultsCNN = {
+    'persons': {
+        'random': '0.95',
+        'country-sensitive': '0.92',
+        'gender-sensitive': '0.95',
+        'country-gender-sensitive': '0.92',
+    },
     'locations': {
         'random': '0.85',
         'city-region': '0.74',

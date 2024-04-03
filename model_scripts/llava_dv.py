@@ -94,7 +94,7 @@ class llavaInstance:
 
     # save answer from model
     def saveAnswer(self, answerFile, question, text, textPB):
-        with open(answerFile, "a") as outfile:
+        with open(answerFile, encoding="utf-8", mode="a") as outfile:
             outfile.write("""{\"question_id\": \"%s\", \"image\": \"%s\", \"question\": \"%s\", \"entity\": \"%s\", \"testlabel\": \"%s\", \"set\": \"%s\", \"gTruth\": \"%s\", \"gWrong\": \"%s\", \"text\": \"%s\", \"textPB\": \"%s\"}\n""" 
                 % (str(question['question_id']), str(question['image']), str(question['question']), str(question['entity']), str(question['testlabel']), str(question['set']), str(question['gTruth']), str(question['gWrong']), str(text), str(textPB)))
 
@@ -107,7 +107,7 @@ def run(args, answerFile):
     llava = llavaInstance(args)
     llava.cleanAnswers(answerFile)
 
-    with open(args.question_file, 'r') as file:
+    with open(args.question_file, encoding="utf-8", mode='r') as file:
         for line in file:
             question = json.loads(line)
             prompt = f"<image> USER:{question['question']} ASSISTANT:"

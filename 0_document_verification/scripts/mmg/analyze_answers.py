@@ -22,7 +22,7 @@ def computeAnswer(args):
         groupedModelAnswers = {}
 
         # get all model answers and group them by entity type (location)
-        with open(f"/nfs/home/ernstd/masterthesis_scripts/0_document_verification/model_answers/mmg/{modelname}.jsonl", 'r') as file:
+        with open(f"/nfs/home/ernstd/masterthesis_scripts/0_document_verification/model_answers/mmg/{modelname}.jsonl", mode='r') as file:
             for line in file:
                 answerObject = json.loads(line)
                 entityType = answerObject['entity']

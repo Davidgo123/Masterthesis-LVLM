@@ -8,6 +8,8 @@ import itertools
 
 statisticObject = {
        "statistic": {
+            "persons": {
+            },
             "locations": {
             },
             "events": {
@@ -112,7 +114,7 @@ def computeAnswer(args):
         # prepare evaluation file for questionType
         answerFile = open(f"/nfs/home/ernstd/masterthesis_scripts/0_document_verification/model_answers/tamperedNews/evaluation/{modelname}.csv", 'w', newline ='')
         with answerFile:
-            header = ['entity', 'category', 'modelname', 'correct', 'wrong', 'undefinied', 'documents', 'documents']
+            header = ['entity', 'category', 'modelname', 'correct', 'wrong', 'undefinied', 'documents']
             writer = csv.DictWriter(answerFile, fieldnames = header)
             writer.writeheader()
 

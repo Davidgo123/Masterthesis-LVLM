@@ -8,6 +8,8 @@ import itertools
 
 statisticObject = {
        "statistic": {
+            "persons": {
+            },
             "locations": {
             },
             "events": {

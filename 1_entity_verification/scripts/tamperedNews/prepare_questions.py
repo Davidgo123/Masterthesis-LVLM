@@ -4,6 +4,12 @@ import argparse
 
 entityObjects = [
     {
+        "name": "persons",
+        "label": "annotation_persons",
+        "entities": [],
+        "test_labels": ["random", "gender-sensitive", "country-sensitive", "country-gender-sensitive"] 
+    },
+    {
         "name": "locations",
         "label": "annotation_locations",
         "entities": [],
