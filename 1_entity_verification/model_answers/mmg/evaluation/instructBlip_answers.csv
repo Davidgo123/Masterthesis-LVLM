@@ -1,5 +1,4 @@
-entity,category,modelname,correct,wrong,undefinied,documents
-locations,random,instructBlip_answers,0.79,0.21,-0.0,1058
-locations,country-continent,instructBlip_answers,0.77,0.23,-0.0,1058
-locations,region-country,instructBlip_answers,0.78,0.22,-0.0,1058
-locations,city-region,instructBlip_answers,0.77,0.23,-0.0,1058
+entity,testlabel,modelname,correct,wrong,undefinied,documents
+locations,city,instructBlip_answers,0.3,0.68,0.02,137
+locations,continent,instructBlip_answers,0.6,0.39,0.01,193
+locations,country,instructBlip_answers,0.59,0.4,0.01,199

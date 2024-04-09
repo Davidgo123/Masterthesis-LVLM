@@ -1,11 +1,4 @@
-entity,category,modelname,correct,wrong,undefinied,documents
-persons,random,instructBlip_answers,0.87,0.13,0.0,1318
-persons,gender-sensitive,instructBlip_answers,0.87,0.13,0.0,1318
-persons,country-sensitive,instructBlip_answers,0.86,0.14,0.0,1318
-persons,country-gender-sensitive,instructBlip_answers,0.87,0.13,0.0,1318
-locations,random,instructBlip_answers,0.85,0.15,0.0,968
-locations,country-continent,instructBlip_answers,0.84,0.16,0.0,968
-locations,region-country,instructBlip_answers,0.81,0.19,-0.0,968
-locations,city-region,instructBlip_answers,0.79,0.21,-0.0,968
-events,random,instructBlip_answers,0.77,0.23,-0.0,92
-events,same_instance,instructBlip_answers,0.75,0.25,0.0,92
+entity,testlabel,modelname,correct,wrong,undefinied,documents
+persons,orginal,instructBlip_answers,0.77,0.23,-0.0,659
+locations,orginal,instructBlip_answers,0.74,0.26,0.0,484
+events,orginal,instructBlip_answers,0.57,0.43,0.0,46

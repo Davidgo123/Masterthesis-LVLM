@@ -1,7 +1,4 @@
-entity,category,modelname,correct,wrong,undefinied,documents
-locations,random,llava_1_5_13b_answers,0.4,0.6,0.0,611
-locations,country-continent,llava_1_5_13b_answers,0.38,0.62,0.0,611
-locations,region-country,llava_1_5_13b_answers,0.35,0.65,0.0,611
-locations,city-region,llava_1_5_13b_answers,0.34,0.66,-0.0,611
-events,random,llava_1_5_13b_answers,0.63,0.37,0.0,144
-events,same_instance,llava_1_5_13b_answers,0.6,0.4,0.0,144
+entity,testlabel,modelname,correct,wrong,undefinied,documents
+persons,orginal,llava_1_5_13b_answers,0.45,0.55,0.0,215
+locations,orginal,llava_1_5_13b_answers,0.41,0.58,0.01,306
+events,orginal,llava_1_5_13b_answers,0.77,0.22,0.01,73

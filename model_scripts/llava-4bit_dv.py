@@ -1,9 +1,8 @@
-import requests
 import argparse
 from PIL import Image
-import os
 import json
 import torch
+import random
 from transformers import AutoProcessor, AutoModelForPreTraining, BitsAndBytesConfig
 
 
@@ -96,10 +95,10 @@ class llavaInstance:
     # - - - - - - - - - - - - - - - -
 
     # save answer from model
-    def saveAnswer(self, answerFile, question, text, textPB):
+    def saveAnswer(self, answerFile, question, response, probText, prob):
         with open(answerFile, encoding="utf-8", mode="a") as outfile:
-            outfile.write("""{\"question_id\": \"%s\", \"image\": \"%s\", \"question\": \"%s\", \"entity\": \"%s\", \"testlabel\": \"%s\", \"set\": \"%s\", \"gTruth\": \"%s\", \"gWrong\": \"%s\", \"text\": \"%s\", \"textPB\": \"%s\"}\n""" 
-                % (str(question['question_id']), str(question['image']), str(question['question']), str(question['entity']), str(question['testlabel']), str(question['set']), str(question['gTruth']), str(question['gWrong']), str(text), str(textPB)))
+            outfile.write("""{\"question_id\": \"%s\", \"image\": \"%s\", \"question\": \"%s\", \"entity\": \"%s\", \"testlabel\": \"%s\", \"set\": \"%s\", \"gTruth\": \"%s\", \"gWrong\": \"%s\", \"response\": \"%s\", \"probText\": \"%s\", \"prob\": \"%s\"}\n""" 
+                % (str(question['question_id']), str(question['image']), str(question['question']), str(question['entity']), str(question['testlabel']), str(question['set']), str(question['gTruth']), str(question['gWrong']), str(response), str(probText), str(prob)))
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -110,13 +109,19 @@ def run(args, answerFile):
     llava = llavaInstance(args)
     llava.cleanAnswers(answerFile)
 
+    questions = []
     with open(args.question_file, encoding="utf-8", mode='r') as file:
         for line in file:
-            question = json.loads(line)
+            questions.append(json.loads(line))
+        
+        random.shuffle(questions)
+        for question in questions:
             prompt = f"<image> USER:{question['question']} ASSISTANT:"
             llava.setTokenIDs(question["gTruth"], question["gWrong"])            
-            text, textPB = llava.getProbabilities(args, prompt, Image.open(f"{question['image']}"))
-            llava.saveAnswer(answerFile, question, text, textPB)
+            response = llava.getResponse(args, prompt, Image.open(f"{question['image']}")).replace("\n", "")
+            response = response[str(response).find("ASSISTANT: ") + len("ASSISTANT: "):]
+            probText, prob = llava.getProbabilities(args, prompt, Image.open(f"{question['image']}"))
+            llava.saveAnswer(answerFile, question, response, probText, prob) 
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 

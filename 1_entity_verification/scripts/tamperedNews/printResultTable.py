@@ -8,27 +8,14 @@ from array import *
 
 
 resultsCNN = {
-    'persons': {
-        'random': '0.95',
-        'country-sensitive': '0.92',
-        'gender-sensitive': '0.95',
-        'country-gender-sensitive': '0.92',
-    },
-    'locations': {
-        'random': '0.85',
-        'city-region': '0.74',
-        'country-continent': '0.84',
-        'region-country': '0.80',
-    },
-    'events': {
-        'random': '1.00',
-        'same_instance': '0.74'
-    },
+    "persons",
+    "locations",
+    "events"
 }
 
-def getValue(data, entity, category):
+def getValue(data, entity):
     for item in data:
-        if item['entity'] == entity and item['category'] == category:
+        if item['entity'] == entity:
             return item['correct']
 
 def printResults(args):
@@ -45,21 +32,17 @@ def printResults(args):
                 resultsVLM[modelname].append(row)
 
     for entityType in resultsCNN:
-        for category in resultsCNN[entityType]:
+        sentence_1 = "%s & %s & %s & %s & %s \\\\" % (
+            getValue(resultsVLM['instructBlip_answers'], entityType), 
+            getValue(resultsVLM['blip_2_answers'], entityType), 
+            getValue(resultsVLM['llava_1_5_7b_answers'], entityType), 
+            getValue(resultsVLM['llava_1_5_13b_answers'], entityType),
+            getValue(resultsVLM['llava_1_6_7b_answers'], entityType))
 
-            sentence_0 = ("%s & %s & " % (category, resultsCNN[entityType][category])).replace('_', '-')
-            sentence_1 = "%s & %s & %s & %s & %s \\\\" % (
-                getValue(resultsVLM['instructBlip_answers'], entityType, category), 
-                getValue(resultsVLM['blip_2_answers'], entityType, category), 
-                getValue(resultsVLM['llava_1_5_7b_answers'], entityType, category), 
-                getValue(resultsVLM['llava_1_5_13b_answers'], entityType, category),
-                getValue(resultsVLM['llava_1_6_7b_answers'], entityType, category))
+        maxValue = max([float(num) for num in re.findall(r'\d+\.\d+', sentence_1)])
+        sentence_1 = sentence_1.replace(str(maxValue), r'\textbf{' + str(maxValue) + r'}')
 
-            maxValue = max([float(num) for num in re.findall(r'\d+\.\d+', sentence_1)])
-            sentence_1 = sentence_1.replace(str(maxValue), r'\textbf{' + str(maxValue) + r'}')
-
-            print("        " + sentence_0 + sentence_1)
-        print()
+        print("        " + sentence_1)
         
 # - - - - - - - - - - - - - - - - - - - - - -
 

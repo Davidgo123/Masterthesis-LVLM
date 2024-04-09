@@ -16,6 +16,8 @@ resultsCNN = {
     }
 }
 
+# - - - - - - - - - - - - - - - - - - - - - - - - - 
+
 def getValue(data, entity, category):
     for item in data:
         if item['entity'] == entity and item['category'] == category:
@@ -37,7 +39,6 @@ def printResults(args):
     for entityType in resultsCNN:
         for category in resultsCNN[entityType]:
 
-            sentence_0 = ("%s & %s & " % (category, resultsCNN[entityType][category])).replace('_', '-')
             sentence_1 = "%s & %s & %s & %s & %s \\\\" % (
                 getValue(resultsVLM['instructBlip_answers'], entityType, category), 
                 getValue(resultsVLM['blip_2_answers'], entityType, category), 
@@ -48,7 +49,7 @@ def printResults(args):
             maxValue = max([float(num) for num in re.findall(r'\d+\.\d+', sentence_1)])
             sentence_1 = sentence_1.replace(str(maxValue), r'\textbf{' + str(maxValue) + r'}')
 
-            print("        " + sentence_0 + sentence_1)
+            print("        " + sentence_1)
         print()
         
 # - - - - - - - - - - - - - - - - - - - - - -

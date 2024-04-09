@@ -4,9 +4,10 @@ import argparse
 import numpy
 import shutil
 
+pathFulldataset = "/nfs/home/ernstd/masterthesis_scripts/_datasets/mmg/subsamples/mmg_locations.jsonl"
+
 entityObject = {
         "name": "locations",
-        "path": "/nfs/home/ernstd/masterthesis_scripts/_datasets/mmg/subsamples/mmg_locations.jsonl",
         "entities": [],
         "test_labels": ["city", "country", "continent"]
     }
@@ -14,7 +15,7 @@ entityObject = {
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 def createSubSample():
-    open(entityObject['path'], 'w').close()
+    open(pathFulldataset, 'w').close()
 
     with open('/nfs/home/ernstd/masterthesis_scripts/_datasets/mmg/test_dataset.json', 'r') as f:
         data = json.load(f)
@@ -22,7 +23,7 @@ def createSubSample():
     rng = numpy.random.default_rng()
     randomRows = rng.choice(len(list(data['city'].keys())), size=200, replace=False)
 
-    with open(entityObject['path'], 'a') as f:
+    with open(pathFulldataset, 'a') as f:
         for i in randomRows:
             keyIndex = list(data['city'].keys())[i]
             del data['city'][keyIndex]['body']
@@ -46,7 +47,7 @@ def extractNameById(id, entities):
 
 
 def createSingleEntityQuestions(args):
-    with open(entityObject['path'], 'r') as file:
+    with open(pathFulldataset, 'r') as file:
         for line in file:
             # extract line
             lineObject = json.loads(line)
@@ -61,7 +62,7 @@ def createSingleEntityQuestions(args):
                     continue
 
                 # save untampered question 
-                question = baseQuestion.format(entityObject['name'], extractNameById(entityID, entityObject['entities']))
+                question = baseQuestion.format(instance, extractNameById(entityID, entityObject['entities']))
                 saveQuestion(args, str(lineObject['id']), str(question), str(entityObject['name']), str(instance), "text", "yes", "no")
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

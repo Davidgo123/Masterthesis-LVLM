@@ -9,16 +9,15 @@ from array import *
 
 resultsCNN = {
     'locations': {
-        'random': '0.85',
-        'city-region': '0.74',
-        'country-continent': '0.84',
-        'region-country': '0.80',
+        'city',
+        'country',
+        'continent'
     }
 }
 
-def getValue(data, entity, category):
+def getValue(data, entity, testlabel):
     for item in data:
-        if item['entity'] == entity and item['category'] == category:
+        if item['entity'] == entity and item['testlabel'] == testlabel:
             return item['correct']
 
 def printResults(args):
@@ -35,21 +34,20 @@ def printResults(args):
                 resultsVLM[modelname].append(row)
 
     for entityType in resultsCNN:
-        for category in resultsCNN[entityType]:
+        for testlabel in resultsCNN[entityType]:
 
-            sentence_0 = ("%s & %s & " % (category, resultsCNN[entityType][category])).replace('_', '-')
             sentence_1 = "%s & %s & %s & %s & %s \\\\" % (
-                getValue(resultsVLM['instructBlip_answers'], entityType, category), 
-                getValue(resultsVLM['blip_2_answers'], entityType, category), 
-                getValue(resultsVLM['llava_1_5_7b_answers'], entityType, category), 
-                getValue(resultsVLM['llava_1_5_13b_answers'], entityType, category),
-                getValue(resultsVLM['llava_1_6_7b_answers'], entityType, category))
+                getValue(resultsVLM['instructBlip_answers'], entityType, testlabel), 
+                getValue(resultsVLM['blip_2_answers'], entityType, testlabel), 
+                getValue(resultsVLM['llava_1_5_7b_answers'], entityType, testlabel), 
+                getValue(resultsVLM['llava_1_5_13b_answers'], entityType, testlabel),
+                getValue(resultsVLM['llava_1_6_7b_answers'], entityType, testlabel))
 
 
             maxValue = max([float(num) for num in re.findall(r'\d+\.\d+', sentence_1)])
             sentence_1 = sentence_1.replace(str(maxValue), r'\textbf{' + str(maxValue) + r'}')
 
-            print("        " + sentence_0 + sentence_1)
+            print("        " + sentence_1)
         print()
         
 # - - - - - - - - - - - - - - - - - - - - - -

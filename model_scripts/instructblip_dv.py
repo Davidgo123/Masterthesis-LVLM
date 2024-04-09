@@ -2,8 +2,8 @@ import argparse
 from PIL import Image
 import json
 import torch
+import random
 from transformers import InstructBlipProcessor, InstructBlipForConditionalGeneration
-from torch import nn
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
@@ -92,25 +92,30 @@ class instructBlipInstance:
     # - - - - - - - - - - - - - - - -
 
     # save answer from model
-    def saveAnswer(self, answerFile, question, text, textPB):
+    def saveAnswer(self, answerFile, question, response, probText, prob):
         with open(answerFile, encoding="utf-8", mode="a") as outfile:
-            outfile.write("""{\"question_id\": \"%s\", \"image\": \"%s\", \"question\": \"%s\", \"entity\": \"%s\", \"testlabel\": \"%s\", \"set\": \"%s\", \"gTruth\": \"%s\", \"gWrong\": \"%s\", \"text\": \"%s\", \"textPB\": \"%s\"}\n""" 
-                % (str(question['question_id']), str(question['image']), str(question['question']), str(question['entity']), str(question['testlabel']), str(question['set']), str(question['gTruth']), str(question['gWrong']), str(text), str(textPB)))
+            outfile.write("""{\"question_id\": \"%s\", \"image\": \"%s\", \"question\": \"%s\", \"entity\": \"%s\", \"testlabel\": \"%s\", \"set\": \"%s\", \"gTruth\": \"%s\", \"gWrong\": \"%s\", \"response\": \"%s\", \"probText\": \"%s\", \"prob\": \"%s\"}\n""" 
+                % (str(question['question_id']), str(question['image']), str(question['question']), str(question['entity']), str(question['testlabel']), str(question['set']), str(question['gTruth']), str(question['gWrong']), str(response), str(probText), str(prob)))
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 # run model
 def run(args, answerFile):
-    blip = instructBlipInstance(args)
-    blip.cleanAnswers(answerFile)
+    instBlip = instructBlipInstance(args)
+    instBlip.cleanAnswers(answerFile)
 
+    questions = []
     with open(args.question_file, encoding="utf-8", mode='r') as file:
         for line in file:
-            question = json.loads(line)
+            questions.append(json.loads(line))
+
+        random.shuffle(questions)
+        for question in questions:
             prompt = f"Question: {question['question']} Answer:"
-            blip.setTokenIDs(question["gTruth"], question["gWrong"])
-            text, textPB = blip.getProbabilities(args, prompt, Image.open(f"{question['image']}"))
-            blip.saveAnswer(answerFile, question, text, textPB)  
+            instBlip.setTokenIDs(question["gTruth"], question["gWrong"])
+            response = instBlip.getResponse(args, prompt, Image.open(f"{question['image']}"))
+            probText, prob = instBlip.getProbabilities(args, prompt, Image.open(f"{question['image']}"))
+            instBlip.saveAnswer(answerFile, question, response, probText, prob)  
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 

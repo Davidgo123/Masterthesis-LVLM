@@ -65,11 +65,11 @@ def computeAnswer(args):
                         current_tuple = model['statistic'][entityType][testlabel]
 
                         # check if model answer is correct
-                        if question['gTruth'] == simplifyAnswer(question['text']):
+                        if question['gTruth'] == simplifyAnswer(question['response']) and question['gTruth'] == simplifyAnswer(question['probText']):
                             model['statistic'][entityType][testlabel] = (current_tuple[0]+1, current_tuple[1]+1, current_tuple[2])
 
                         # check if model answer is wrong
-                        elif question['gWrong'] == simplifyAnswer(question['text']):
+                        elif question['gWrong'] == simplifyAnswer(question['response']) and question['gWrong'] == simplifyAnswer(question['probText']):
                             model['statistic'][entityType][testlabel] = (current_tuple[0]+1, current_tuple[1], current_tuple[2]+1)
 
                         # check if model answer is undefinied 
@@ -79,7 +79,7 @@ def computeAnswer(args):
         # prepare evaluation file for questionType
         answerFile = open(f"/nfs/home/ernstd/masterthesis_scripts/1_entity_verification/model_answers/news400/evaluation/{modelname}.csv", 'w', newline ='')
         with answerFile:
-            header = ['entity', 'category', 'modelname', 'correct', 'wrong', 'undefinied', 'documents']
+            header = ['entity', 'testlabel', 'modelname', 'correct', 'wrong', 'undefinied', 'documents']
             writer = csv.DictWriter(answerFile, fieldnames = header)
             writer.writeheader()
 
@@ -89,7 +89,7 @@ def computeAnswer(args):
                     correctPercent = round(model['statistic'][item][item2][1] / model['statistic'][item][item2][0], 2)
                     wrongPercent = round(model['statistic'][item][item2][2] / model['statistic'][item][item2][0], 2)
                     undefiniedPercent = round(1 - correctPercent - wrongPercent, 2)
-                    writer.writerows([{'entity': item, 'category': item2, 'modelname': modelname, 'correct': correctPercent, 'wrong': wrongPercent, 'undefinied': undefiniedPercent, 'documents': model['statistic'][item][item2][0]}])
+                    writer.writerows([{'entity': item, 'testlabel': item2, 'modelname': modelname, 'correct': correctPercent, 'wrong': wrongPercent, 'undefinied': undefiniedPercent, 'documents': model['statistic'][item][item2][0]}])
 
 # - - - - - - - - - - - - - - - - - - - - - -
 

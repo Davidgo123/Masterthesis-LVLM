@@ -7,19 +7,16 @@ entityObjects = [
         "name": "persons",
         "label": "annotation_persons",
         "entities": [],
-        "test_labels": ["random", "gender-sensitive", "country-sensitive", "country-gender-sensitive"] 
     },
     {
         "name": "locations",
         "label": "annotation_locations",
         "entities": [],
-        "test_labels": ["random", "country-continent", "region-country", "city-region"] 
     },
     {
         "name": "events",
         "label": "annotation_events",
         "entities": [],
-        "test_labels": ["random", "same_instance"]
     }
 ]
 
@@ -50,26 +47,18 @@ def createSingleEntityQuestions(args):
 
                     baseQuestion = "\"Is the {} {} visible in this photo ?\""
 
-                    # random, ...
-                    for testLabel in entityObject['test_labels']:
-                        if testLabel in lineObject['test_' + entityObject['name']]:
-                            # text entites
-                            if 'untampered' in lineObject['test_' + entityObject['name']]:
-                                for entityID in lineObject['test_' + entityObject['name']]['untampered']:
-                                    question = baseQuestion.format(entityObject['name'][:-1], extractNameById(entityID, entityObject['entities']))
-                                    # text entites (validated visible)
-                                    if 'visible' in lineObject['test_' + entityObject['name']]:
-                                        if entityID in lineObject['test_' + entityObject['name']]['visible']:
-                                            saveQuestion(args, str(lineObject['id']), str(question), str(entityObject['name']), str(testLabel), "text", "yes", "no")
-                                        else:
-                                            saveQuestion(args, str(lineObject['id']), str(question), str(entityObject['name']), str(testLabel), "text", "no", "yes")
-                                    else:
-                                        saveQuestion(args, str(lineObject['id']), str(question), str(entityObject['name']), str(testLabel), "text", "no", "yes")
-                            
-                            # test entites
-                            for entityID in lineObject['test_' + entityObject['name']][testLabel]:
-                                question = baseQuestion.format(entityObject['name'][:-1], extractNameById(entityID, entityObject['entities']))
-                                saveQuestion(args, str(lineObject['id']), str(question), entityObject['name'], testLabel, "test", "no", "yes")
+                    # text entites
+                    if 'untampered' in lineObject['test_' + entityObject['name']]:
+                        for entityID in lineObject['test_' + entityObject['name']]['untampered']:
+                            question = baseQuestion.format(entityObject['name'][:-1], extractNameById(entityID, entityObject['entities']))
+                            # text entites (validated visible)
+                            if 'visible' in lineObject['test_' + entityObject['name']]:
+                                if entityID in lineObject['test_' + entityObject['name']]['visible']:
+                                    saveQuestion(args, str(lineObject['id']), str(question), str(entityObject['name']), "orginal", "text", "yes", "no")
+                                else:
+                                    saveQuestion(args, str(lineObject['id']), str(question), str(entityObject['name']), "orginal", "text", "no", "yes")
+                            else:
+                                saveQuestion(args, str(lineObject['id']), str(question), str(entityObject['name']), "orginal", "text", "no", "yes")
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     

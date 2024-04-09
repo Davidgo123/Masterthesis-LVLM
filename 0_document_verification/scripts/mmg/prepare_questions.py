@@ -109,12 +109,12 @@ def createSingleEntityQuestions(args):
                 # random, ... 
                 for testLabel in entityObject['test_labels']:                    
                     # save untampered question
-                    question = baseQuestion.format(entityObject['name'], extractNameById(entityID, entityObject['entities']))
+                    question = baseQuestion.format(instance, extractNameById(entityID, entityObject['entities']))
                     saveQuestion(args, str(lineObject['id']), str(question), str(instance), str(testLabel), "text", "yes", "no")
 
                     # save tampered question 
                     entity = extractNameById(getTamperedIDByInstance(entityObject['entities'], instance, testLabel, entityID), entityObject['entities'])
-                    question = baseQuestion.format(entityObject['name'], entity)
+                    question = baseQuestion.format(instance, entity)
                     saveQuestion(args, str(lineObject['id']), str(question), str(instance), str(testLabel), "test", "no", "yes")
 
 
