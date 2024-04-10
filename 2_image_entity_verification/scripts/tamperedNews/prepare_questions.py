@@ -27,7 +27,7 @@ entityObjects = [
 
 def loadEntities():
     for entityObject in entityObjects:
-        with open(f"/nfs/home/ernstd/masterthesis_scripts/_datasets/news400/entities/{entityObject['name']}.jsonl", 'r') as file:
+        with open(f"/nfs/home/ernstd/masterthesis_scripts/_datasets/tamperedNews/entities/{entityObject['name']}.jsonl", 'r') as file:
             for line in file:
                 entityObject['entities'].append(json.loads(line))
 
@@ -66,7 +66,7 @@ def generate1x1Image(newsImage, entityImage, questionID, entityID):
         drawer.rectangle(shape[1], fill ="blue") 
         combinedImage.paste(newsImage, (int(w_max * 0.05), int(h_max * 0.025)))
         combinedImage.paste(entityImage, (int((w_max - w_2) / 2), int(1.1 * h_1 + 0.05 * h_2)))
-        combinedImage.save(f"/nfs/home/ernstd/masterthesis_scripts/2_image_entity_verification/images/news400/{questionID}_{entityID}.jpg", quality=95)    
+        combinedImage.save(f"/nfs/home/ernstd/masterthesis_scripts/2_image_entity_verification/images/tamperedNews/{questionID}_{entityID}.jpg", quality=95)    
     
     # newsImage is portrait (left/right split)
     else:
@@ -80,7 +80,7 @@ def generate1x1Image(newsImage, entityImage, questionID, entityID):
         if w_1 * 1.5 < w_2:
             scale_factor = w_1 / w_2
             scaled_height = int(h_2 * scale_factor)
-            entityImage = entityImage.resize((w_1 * 1.3, scaled_height * 1.3))
+            entityImage = entityImage.resize((int(w_1 * 1.3), int(scaled_height * 1.3)))
             w_2, h_2 = entityImage.size
 
         # create combined image with colored background
@@ -93,7 +93,7 @@ def generate1x1Image(newsImage, entityImage, questionID, entityID):
         drawer.rectangle(shape[1], fill ="blue") 
         combinedImage.paste(newsImage, (int(w_max * 0.025), int(h_max * 0.05)))
         combinedImage.paste(entityImage, (int(1.1 * w_1 + 0.05 * w_2), int((h_max - h_2) / 2)))
-        combinedImage.save(f"/nfs/home/ernstd/masterthesis_scripts/2_image_entity_verification/images/news400/{questionID}_{entityID}.jpg", quality=95)
+        combinedImage.save(f"/nfs/home/ernstd/masterthesis_scripts/2_image_entity_verification/images/tamperedNews/{questionID}_{entityID}.jpg", quality=95)
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -103,7 +103,7 @@ def extractNameById(id, entities):
             return str(entity['wd_label']).replace("\"", "'").replace("'", "").lower()
 
 def createSingleEntityQuestions(args):
-    with open(f"/nfs/home/ernstd/masterthesis_scripts/_datasets/news400/news400_merged.jsonl", 'r') as file:
+    with open(f"/nfs/home/ernstd/masterthesis_scripts/_datasets/tamperedNews/tamperednews.jsonl", 'r') as file:
         for line in file:
             # extract line
             lineObject = json.loads(line)
@@ -118,12 +118,12 @@ def createSingleEntityQuestions(args):
                     if 'untampered' in lineObject['test_' + entityObject['name']]:
                         for entityID in lineObject['test_' + entityObject['name']]['untampered']:
                             if entityObject['name'] == "locations":
-                                entityFiles = glob.glob(f"/nfs/data/image_repurposing/News400/reference_images/wd_PLACES/{entityID}/google_*.jpg")
+                                entityFiles = glob.glob(f"/nfs/data/image_repurposing/BreakingNews/reference_images/wd_PLACES/{entityID}/google_*.jpg")
                             else:
-                                entityFiles = glob.glob(f"/nfs/data/image_repurposing/News400/reference_images/wd_{str(entityObject['name']).upper()}/{entityID}/google_*.jpg")
+                                entityFiles = glob.glob(f"/nfs/data/image_repurposing/BreakingNews/reference_images/wd_{str(entityObject['name']).upper()}/{entityID}/google_*.jpg")
                             
                             if len(entityFiles) > 0:
-                                generate1x1Image(f"/nfs/home/ernstd/masterthesis_scripts/_datasets/news400/images/{str(lineObject['id'])}.png", entityFiles[0], str(lineObject['id']), str(entityID))
+                                generate1x1Image(f"/nfs/home/ernstd/masterthesis_scripts/_datasets/tamperedNews/images/{str(lineObject['id'])}.jpg", entityFiles[0], str(lineObject['id']), str(entityID))
                             else:
                                 continue
 
@@ -141,7 +141,7 @@ def createSingleEntityQuestions(args):
     
 def saveQuestion(args, id, entityID, question, entity, testlabel, set, ground_truth, ground_wrong):
     with open(args.question_file, "a") as outfile:
-        outfile.write("""{\"question_id\": \"%s\", \"image\": \"/nfs/home/ernstd/masterthesis_scripts/2_image_entity_verification/images/%s_%s.jpg\", \"question\": %s, \"entity\": \"%s\", \"testlabel\": \"%s\", \"set\": \"%s\", \"gTruth\": \"%s\", \"gWrong\": \"%s\"} \n""" 
+        outfile.write("""{\"question_id\": \"%s\", \"image\": \"/nfs/home/ernstd/masterthesis_scripts/2_image_entity_verification/images/tamperedNews/%s_%s.jpg\", \"question\": %s, \"entity\": \"%s\", \"testlabel\": \"%s\", \"set\": \"%s\", \"gTruth\": \"%s\", \"gWrong\": \"%s\"} \n""" 
                       % (id, id, entityID, question, entity, testlabel, set, ground_truth, ground_wrong))
 
 

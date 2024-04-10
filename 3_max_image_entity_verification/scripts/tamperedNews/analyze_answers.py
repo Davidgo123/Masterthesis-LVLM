@@ -4,7 +4,6 @@ import csv
 import copy
 import argparse
 from array import *
-import itertools
 
 statisticObject = {
        "statistic": {
@@ -28,7 +27,7 @@ def computeAnswer(args):
         groupedModelAnswers = {}
 
         # get all model answers and group them by entity type (person, location, event)
-        with open(f"/nfs/home/ernstd/masterthesis_scripts/2_image_entity_verification/model_answers/news400/{modelname}.jsonl", 'r') as file:
+        with open(f"/nfs/home/ernstd/masterthesis_scripts/3_max_image_entity_verification/model_answers/tamperedNews/{modelname}.jsonl", 'r') as file:
             for line in file:
                 answerObject = json.loads(line)
                 entityType = answerObject['entity']
@@ -57,27 +56,37 @@ def computeAnswer(args):
         for entityType in groupedModelAnswers:
             for testlabel in groupedModelAnswers[entityType]:
                 for questionID in groupedModelAnswers[entityType][testlabel]:
+
+                    # iterate over each question of same id and compute score
+                    maxValues = {
+                        "yes": 0.0,
+                        "no": 0.0
+                    }
                     for question in groupedModelAnswers[entityType][testlabel][questionID]:
+                        if simplifyAnswer(question['response']) == 'yes' and simplifyAnswer(question['probText']) == 'yes':
+                            if maxValues['yes'] < float(question['prob']):
+                                maxValues['yes'] = float(question['prob'])
+                        elif simplifyAnswer(question['response']) == 'no' and simplifyAnswer(question['probText']) == 'no':
+                            if maxValues['no'] < float(question['prob']):
+                                maxValues['no'] = float(question['prob'])
 
-                        # add counter to statistic if not exist
-                        if testlabel not in model['statistic'][entityType]:
-                            model['statistic'][entityType][testlabel] = (0, 0, 0)
-                        current_tuple = model['statistic'][entityType][testlabel]
+                    # add counter to statistic if not exist
+                    if testlabel not in model['statistic'][entityType]:
+                        model['statistic'][entityType][testlabel] = (0, 0, 0)
+                    current_tuple = model['statistic'][entityType][testlabel]
 
-                        # check if model answer is correct
-                        if question['gTruth'] == simplifyAnswer(question['response']) and question['gTruth'] == simplifyAnswer(question['probText']):
-                            model['statistic'][entityType][testlabel] = (current_tuple[0]+1, current_tuple[1]+1, current_tuple[2])
-
-                        # check if model answer is wrong
-                        elif question['gWrong'] == simplifyAnswer(question['response']) and question['gWrong'] == simplifyAnswer(question['probText']):
-                            model['statistic'][entityType][testlabel] = (current_tuple[0]+1, current_tuple[1], current_tuple[2]+1)
-
-                        # check if model answer is undefinied 
-                        else:
-                            model['statistic'][entityType][testlabel] = (current_tuple[0]+1, current_tuple[1], current_tuple[2])
-                    
+                    # check if model answer is undefinied  
+                    if max(maxValues.values()) == 0.0:
+                        model['statistic'][entityType][testlabel] = (current_tuple[0]+1, current_tuple[1], current_tuple[2])
+                    # check if model answer is correct
+                    elif max(maxValues, key=maxValues.get) == question['gTruth']:
+                        model['statistic'][entityType][testlabel] = (current_tuple[0]+1, current_tuple[1]+1, current_tuple[2])
+                    # check if model answer is wrong
+                    elif max(maxValues, key=maxValues.get) == question['gWrong']: 
+                        model['statistic'][entityType][testlabel] = (current_tuple[0]+1, current_tuple[1], current_tuple[2]+1)
+                
         # prepare evaluation file for questionType
-        answerFile = open(f"/nfs/home/ernstd/masterthesis_scripts/2_image_entity_verification/model_answers/news400/evaluation/{modelname}.csv", 'w', newline ='')
+        answerFile = open(f"/nfs/home/ernstd/masterthesis_scripts/3_max_image_entity_verification/model_answers/tamperedNews/evaluation/{modelname}.csv", 'w', newline ='')
         with answerFile:
             header = ['entity', 'testlabel', 'modelname', 'correct', 'wrong', 'undefinied', 'documents']
             writer = csv.DictWriter(answerFile, fieldnames = header)

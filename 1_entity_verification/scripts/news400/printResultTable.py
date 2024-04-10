@@ -24,6 +24,11 @@ def getValue(data, entity):
         if item['entity'] == entity:
             return item['correct']
 
+def getDocuments(data, entity):
+    for item in data:
+        if item['entity'] == entity:
+            return item['documents']
+        
 def printResults(args):
     resultsVLM = {}
     for modelname in args.models:
@@ -48,8 +53,7 @@ def printResults(args):
         maxValue = max([float(num) for num in re.findall(r'\d+\.\d+', sentence_1)])
         sentence_1 = sentence_1.replace(str(maxValue), r'\textbf{' + str(maxValue) + r'}')
 
-        print("        " + sentence_1)
-
+        print(f"        {entityType} & {getDocuments(resultsVLM['instructBlip_answers'], entityType)} & {sentence_1}")
         
 # - - - - - - - - - - - - - - - - - - - - - -
 

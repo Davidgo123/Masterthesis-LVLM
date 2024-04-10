@@ -20,7 +20,6 @@ def createSubSample(subsample):
                 f.write(json.dumps(data[key]) + "\n")
 
 def countData():
-
     data = {
         "person": 0,
         "location": 0,
@@ -53,7 +52,7 @@ def countData():
 
 
 if __name__ == "__main__":
-    countData()
+    # countData()
     # delete questions
-    #for subsample in subsamples:
-    #    createSubSample(subsample)
+    for subsample in subsamples:
+        createSubSample(subsample)

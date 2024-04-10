@@ -8,7 +8,19 @@ from array import *
 
 
 resultsCNN = {
-    'locations': {
+    'city': {
+        'random': '0.85',
+        'city-region': '0.74',
+        'country-continent': '0.84',
+        'region-country': '0.80',
+    },
+    'country': {
+        'random': '0.85',
+        'city-region': '0.74',
+        'country-continent': '0.84',
+        'region-country': '0.80',
+    },
+    'continent': {
         'random': '0.85',
         'city-region': '0.74',
         'country-continent': '0.84',
@@ -39,6 +51,7 @@ def printResults(args):
     for entityType in resultsCNN:
         for category in resultsCNN[entityType]:
 
+            sentence_0 = ("%s & %s & " % (category, resultsCNN[entityType][category])).replace('_', '-')
             sentence_1 = "%s & %s & %s & %s & %s \\\\" % (
                 getValue(resultsVLM['instructBlip_answers'], entityType, category), 
                 getValue(resultsVLM['blip_2_answers'], entityType, category), 
@@ -49,7 +62,7 @@ def printResults(args):
             maxValue = max([float(num) for num in re.findall(r'\d+\.\d+', sentence_1)])
             sentence_1 = sentence_1.replace(str(maxValue), r'\textbf{' + str(maxValue) + r'}')
 
-            print("        " + sentence_1)
+            print("        " + sentence_0 + sentence_1)
         print()
         
 # - - - - - - - - - - - - - - - - - - - - - -

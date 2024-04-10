@@ -4,7 +4,6 @@ import csv
 import copy
 import argparse
 from array import *
-import itertools
 
 statisticObject = {
        "statistic": {
@@ -55,17 +54,29 @@ def computeAnswer(args):
 
         # evaluation for each entity type (person, location, event)
         for entityType in groupedModelAnswers:
+            # random, ...
             for testlabel in groupedModelAnswers[entityType]:
+                # 123
                 for questionID in groupedModelAnswers[entityType][testlabel]:
-                    
                     # iterate over each question of same id and compute score
                     scoreText = []
                     scoreTest = []
                     for question in groupedModelAnswers[entityType][testlabel][questionID]:
-                        if simplifyAnswer(question['response']) == 'yes' and simplifyAnswer(question['probText']) == 'yes':
-                            scoreText.append(float(question['prob']))
-                        elif simplifyAnswer(question['response']) == 'no' and simplifyAnswer(question['probText']) == 'no':
-                            scoreText.append(1.0 - float(question['prob']))
+                        if question['set'] == "text":
+                            if simplifyAnswer(question['response']) == 'yes' and simplifyAnswer(question['probText']) == 'yes':
+                                scoreText.append(float(question['prob']))
+                            elif simplifyAnswer(question['response']) == 'no' and simplifyAnswer(question['probText']) == 'no':
+                                scoreText.append(1.0 - float(question['prob']))
+                            else:
+                                scoreText.append(0.00)
+
+                        if question['set'] == "test":
+                            if simplifyAnswer(question['response']) == 'yes' and simplifyAnswer(question['probText']) == 'yes':
+                                scoreTest.append(float(question['prob']))
+                            elif simplifyAnswer(question['response']) == 'no' and simplifyAnswer(question['probText']) == 'no':
+                                scoreTest.append(1.0 - float(question['prob']))
+                            else:
+                                scoreTest.append(0.00)
 
                     # add counter to statistic if not exist
                     if testlabel not in model['statistic'][entityType]:

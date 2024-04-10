@@ -28,7 +28,7 @@ def computeAnswer(args):
         groupedModelAnswers = {}
 
         # get all model answers and group them by entity type (person, location, event)
-        with open(f"/nfs/home/ernstd/masterthesis_scripts/2_image_entity_verification/model_answers/news400/{modelname}.jsonl", 'r') as file:
+        with open(f"/nfs/home/ernstd/masterthesis_scripts/2_image_entity_verification/model_answers/tamperedNews/{modelname}.jsonl", 'r') as file:
             for line in file:
                 answerObject = json.loads(line)
                 entityType = answerObject['entity']
@@ -77,7 +77,7 @@ def computeAnswer(args):
                             model['statistic'][entityType][testlabel] = (current_tuple[0]+1, current_tuple[1], current_tuple[2])
                     
         # prepare evaluation file for questionType
-        answerFile = open(f"/nfs/home/ernstd/masterthesis_scripts/2_image_entity_verification/model_answers/news400/evaluation/{modelname}.csv", 'w', newline ='')
+        answerFile = open(f"/nfs/home/ernstd/masterthesis_scripts/2_image_entity_verification/model_answers/tamperedNews/evaluation/{modelname}.csv", 'w', newline ='')
         with answerFile:
             header = ['entity', 'testlabel', 'modelname', 'correct', 'wrong', 'undefinied', 'documents']
             writer = csv.DictWriter(answerFile, fieldnames = header)

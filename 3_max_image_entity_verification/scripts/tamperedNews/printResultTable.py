@@ -24,6 +24,11 @@ def getValue(data, entity):
         if item['entity'] == entity:
             return item['correct']
 
+def getDocuments(data, entity):
+    for item in data:
+        if item['entity'] == entity:
+            return item['documents']
+        
 def printResults(args):
     resultsVLM = {}
     for modelname in args.models:
@@ -32,7 +37,7 @@ def printResults(args):
             resultsVLM[modelname] = []
 
         # read csv content
-        with open(f"/nfs/home/ernstd/masterthesis_scripts/2_image_entity_verification/model_answers/news400/evaluation/{modelname}.csv", 'r') as file:
+        with open(f"/nfs/home/ernstd/masterthesis_scripts/3_max_image_entity_verification/model_answers/tamperedNews/evaluation/{modelname}.csv", 'r') as file:
             csv_reader = csv.DictReader(file)
             for row in csv_reader:
                 resultsVLM[modelname].append(row)
@@ -48,7 +53,7 @@ def printResults(args):
         maxValue = max([float(num) for num in re.findall(r'\d+\.\d+', sentence_1)])
         sentence_1 = sentence_1.replace(str(maxValue), r'\textbf{' + str(maxValue) + r'}')
 
-        print("        " + sentence_1)
+        print(f"        {entityType} & {getDocuments(resultsVLM['instructBlip_answers'], entityType)} & {sentence_1}")
 
         
 # - - - - - - - - - - - - - - - - - - - - - -

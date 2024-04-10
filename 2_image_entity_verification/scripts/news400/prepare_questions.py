@@ -80,7 +80,7 @@ def generate1x1Image(newsImage, entityImage, questionID, entityID):
         if w_1 * 1.5 < w_2:
             scale_factor = w_1 / w_2
             scaled_height = int(h_2 * scale_factor)
-            entityImage = entityImage.resize((w_1 * 1.3, scaled_height * 1.3))
+            entityImage = entityImage.resize((int(w_1 * 1.3), int(scaled_height * 1.3)))
             w_2, h_2 = entityImage.size
 
         # create combined image with colored background
@@ -141,7 +141,7 @@ def createSingleEntityQuestions(args):
     
 def saveQuestion(args, id, entityID, question, entity, testlabel, set, ground_truth, ground_wrong):
     with open(args.question_file, "a") as outfile:
-        outfile.write("""{\"question_id\": \"%s\", \"image\": \"/nfs/home/ernstd/masterthesis_scripts/2_image_entity_verification/images/%s_%s.jpg\", \"question\": %s, \"entity\": \"%s\", \"testlabel\": \"%s\", \"set\": \"%s\", \"gTruth\": \"%s\", \"gWrong\": \"%s\"} \n""" 
+        outfile.write("""{\"question_id\": \"%s\", \"image\": \"/nfs/home/ernstd/masterthesis_scripts/2_image_entity_verification/images/news400/%s_%s.jpg\", \"question\": %s, \"entity\": \"%s\", \"testlabel\": \"%s\", \"set\": \"%s\", \"gTruth\": \"%s\", \"gWrong\": \"%s\"} \n""" 
                       % (id, id, entityID, question, entity, testlabel, set, ground_truth, ground_wrong))
 
 
