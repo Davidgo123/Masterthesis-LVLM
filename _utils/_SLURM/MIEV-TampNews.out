@@ -1,3 +1,5 @@
+/nfs/home/ernstd/miniconda3/envs/transformer/lib/python3.12/site-packages/PIL/TiffImagePlugin.py:870: UserWarning: Corrupt EXIF data.  Expecting to read 2 bytes but only got 0. 
+  warnings.warn(str(msg))
         persons & 215 & 0.67 & 0.2 & \textbf{0.8} & 0.24 & 0.27 \\
         locations & 305 & 0.21 & 0.2 & \textbf{0.8} & 0.46 & 0.42 \\
         events & 71 & 0.63 & \textbf{0.75} & 0.55 & 0.72 & \textbf{0.75} \\

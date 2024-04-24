@@ -32,7 +32,7 @@ def countData():
         for line in f:
             counter = 0
             line = json.loads(line)
-            
+
             if line['annotation_persons'] == 1:
                 counter += 1
                 data["person"] += 1
@@ -52,7 +52,7 @@ def countData():
 
 
 if __name__ == "__main__":
-    # countData()
+    countData()
     # delete questions
     for subsample in subsamples:
         createSubSample(subsample)
