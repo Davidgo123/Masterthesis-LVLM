@@ -1,0 +1,4 @@
+entity,testlabel,modelname,correct,wrong,undefinied,documents
+locations,country,EV-mmg-blip_2_answers,0.68,0.25,0.07,199
+locations,continent,EV-mmg-blip_2_answers,0.72,0.2,0.08,193
+locations,city,EV-mmg-blip_2_answers,0.66,0.28,0.06,137

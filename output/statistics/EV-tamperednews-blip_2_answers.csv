@@ -1,0 +1,4 @@
+entity,testlabel,modelname,correct,wrong,undefinied,documents
+persons,orginal,EV-tamperednews-blip_2_answers,0.37,0.53,0.1,508
+locations,orginal,EV-tamperednews-blip_2_answers,0.3,0.66,0.04,608
+events,orginal,EV-tamperednews-blip_2_answers,0.71,0.28,0.01,138
