@@ -1,4 +1,0 @@
-entity,testlabel,modelname,correct,wrong,undefinied,documents
-persons,orginal,instructBlip_answers,0.67,0.33,-0.0,215
-locations,orginal,instructBlip_answers,0.21,0.79,0.0,305
-events,orginal,instructBlip_answers,0.63,0.37,0.0,71

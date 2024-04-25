@@ -1,4 +1,0 @@
-entity,testlabel,modelname,correct,wrong,undefinied,documents
-persons,orginal,llava_1_6_7b_answers,0.65,0.34,0.01,659
-locations,orginal,llava_1_6_7b_answers,0.49,0.34,0.17,484
-events,orginal,llava_1_6_7b_answers,0.41,0.15,0.44,46

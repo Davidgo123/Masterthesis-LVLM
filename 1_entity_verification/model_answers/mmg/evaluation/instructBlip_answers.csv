@@ -1,4 +1,0 @@
-entity,testlabel,modelname,correct,wrong,undefinied,documents
-locations,city,instructBlip_answers,0.3,0.68,0.02,137
-locations,continent,instructBlip_answers,0.6,0.39,0.01,193
-locations,country,instructBlip_answers,0.59,0.4,0.01,199

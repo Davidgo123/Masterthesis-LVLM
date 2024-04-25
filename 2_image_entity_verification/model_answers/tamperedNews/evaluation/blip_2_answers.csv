@@ -1,4 +1,0 @@
-entity,testlabel,modelname,correct,wrong,undefinied,documents
-persons,orginal,blip_2_answers,0.2,0.8,0.0,504
-locations,orginal,blip_2_answers,0.27,0.72,0.01,607
-events,orginal,blip_2_answers,0.73,0.26,0.01,135

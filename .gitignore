@@ -1,1 +1,5 @@
-./3_max_image_entity_verification/images/*
+./experiments/3_image_entity_verification/images/*
+./experiments/4_multi_image_entity_verification/images/*
+
+./models/*
+*.jpg
