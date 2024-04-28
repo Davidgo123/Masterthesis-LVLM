@@ -3,6 +3,3 @@
 
 ./models/*
 *.jpg
-
-./model_scripts/DeepSeek/*
-!./model_scripts/DeepSeek/deepseek.py
