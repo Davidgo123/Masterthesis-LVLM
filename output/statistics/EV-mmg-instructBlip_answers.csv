@@ -1,4 +1,0 @@
-entity,testlabel,modelname,correct,wrong,undefinied,documents
-locations,country,EV-mmg-instructBlip_answers,0.59,0.4,0.01,199
-locations,continent,EV-mmg-instructBlip_answers,0.6,0.39,0.01,193
-locations,city,EV-mmg-instructBlip_answers,0.3,0.68,0.02,137

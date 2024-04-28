@@ -1,4 +1,0 @@
-entity,testlabel,modelname,correct,wrong,undefinied,documents
-persons,orginal,EV-news400-blip_2_answers,0.28,0.63,0.09,659
-locations,orginal,EV-news400-blip_2_answers,0.31,0.67,0.02,484
-events,orginal,EV-news400-blip_2_answers,0.8,0.2,-0.0,46

@@ -1,4 +1,0 @@
-entity,testlabel,modelname,correct,wrong,undefinied,documents
-persons,orginal,IEV-news400-blip_2_answers,0.22,0.78,0.0,656
-locations,orginal,IEV-news400-blip_2_answers,0.3,0.7,0.0,483
-events,orginal,IEV-news400-blip_2_answers,0.8,0.2,-0.0,46

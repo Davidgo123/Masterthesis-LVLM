@@ -1,0 +1,13 @@
+entity,category,modelname,correct,wrong,undefinied,documents
+city,region-country,11_DV-mmg-instructBlip,0.91,0.08,0.01,137
+city,city-region,11_DV-mmg-instructBlip,0.88,0.12,0.0,137
+city,random,11_DV-mmg-instructBlip,0.88,0.07,0.05,137
+city,country-continent,11_DV-mmg-instructBlip,0.91,0.09,-0.0,137
+country,city-region,11_DV-mmg-instructBlip,0.96,0.02,0.02,199
+country,region-country,11_DV-mmg-instructBlip,0.95,0.03,0.02,199
+country,random,11_DV-mmg-instructBlip,0.93,0.06,0.01,199
+country,country-continent,11_DV-mmg-instructBlip,0.94,0.03,0.03,199
+continent,random,11_DV-mmg-instructBlip,0.93,0.07,-0.0,193
+continent,country-continent,11_DV-mmg-instructBlip,0.77,0.07,0.16,193
+continent,region-country,11_DV-mmg-instructBlip,0.81,0.07,0.12,193
+continent,city-region,11_DV-mmg-instructBlip,0.75,0.08,0.17,193

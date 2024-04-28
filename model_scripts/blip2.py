@@ -117,7 +117,7 @@ def run(args, answerFile):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    parser.add_argument("--model-path", type=str, default="./models/blip2-opt-2.7b/")
+    parser.add_argument("--model-path", type=str, default="./models/blip2-opt-6.7b/")
     parser.add_argument("--question-file", type=str, default="")
     parser.add_argument("--answer-file-path", type=str, default="")
     parser.add_argument("--answer-file-name", type=str, default="")

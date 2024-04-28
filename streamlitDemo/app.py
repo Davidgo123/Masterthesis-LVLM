@@ -2,13 +2,16 @@ import streamlit as st
 import pandas as pd
 import json
 import os
+import glob
 
-def wide_space_default():
-    st.set_page_config(layout="wide")
+st.set_page_config(layout="wide")
 
-wide_space_default()
-
-
+# - - - - - - - - - - - - - - - - - - - - - -
+#       Variables
+# - - - - - - - - - - - - - - - - - - - - - -
+for files in glob.glob("./outputs/"):
+    print(files)
+    
 # - - - - - - - - - - - - - - - - - - - - - -
 #       Select Mode & Dataset
 # - - - - - - - - - - - - - - - - - - - - - -
@@ -17,29 +20,35 @@ with col1:
     mode = st.selectbox(
         'Mode',
         (
-            'experiments/1_document_verification', 
-            'experiments/2_entity_verification', 
-            'experiments/3_image_entity_verification'
+            'experiments/01_without_comparative_images/11_document_verification', 
+            'experiments/01_without_comparative_images/12_entity_verification'
+            'experiments/02_with_comparative_images/21_single_input_models/entity_verification_1x1', 
+            'experiments/02_with_comparative_images/21_single_input_models/entity_verification_1xN', 
+            'experiments/02_with_comparative_images/22_multi_input_models/entity_verification_1x1', 
+            'experiments/02_with_comparative_images/22_multi_input_models/entity_verification_1xN', 
         )
     )
 with col2:
     datasets = ["news400", "tamperednews", "mmg"]
-    if mode == "experiments/1_document_verification" or "1_entity_verification":
-        datasets = ["news400", "tamperednews", "mmg"]
-    if mode == "experiments/3_image_entity_verification":
+    models = ['blip2', 'instructBlip', 'llava_15_7b', 'llava_15_13b', 'llava_16_7b']
+    if mode == "experiments/02_with_comparative_images/21_single_input_models/entity_verification_1x1":
         datasets = ["news400", "tamperednews"]
-    if mode == "3_max_image_entity_verification":
+    if mode == "experiments/02_with_comparative_images/21_single_input_models/entity_verification_1xN":
         datasets = ["tamperedNews"]
+    if  mode == "experiments/02_with_comparative_images/22_multi_input_models/entity_verification_1x1":
+        models = ['mantis', 'deepseek']
+        datasets = ["news400", "tamperednews"]
+    if mode == "experiments/02_with_comparative_images/22_multi_input_models/entity_verification_1xN":
+        datasets = ["tamperedNews"]
+        models = ['mantis', 'deepseek']
 
     dataset = st.selectbox(
         'Dataset',(datasets)
     )
 
-
 # - - - - - - - - - - - - - - - - - - - - - -
 #       extract Answers
 # - - - - - - - - - - - - - - - - - - - - - -
-models = ['blip_2', 'instructBlip', 'llava_1_5_7b', 'llava_1_5_13b', 'llava_1_6_7b']
 groupedModelAnswers = {}
 questionIDs = []
 imageIDs = []

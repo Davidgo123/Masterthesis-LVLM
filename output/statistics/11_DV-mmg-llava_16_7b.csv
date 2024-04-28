@@ -1,0 +1,13 @@
+entity,category,modelname,correct,wrong,undefinied,documents
+city,country-continent,11_DV-mmg-llava_16_7b,0.74,0.23,0.03,137
+city,city-region,11_DV-mmg-llava_16_7b,0.72,0.24,0.04,137
+city,random,11_DV-mmg-llava_16_7b,0.71,0.26,0.03,137
+city,region-country,11_DV-mmg-llava_16_7b,0.67,0.25,0.08,137
+country,country-continent,11_DV-mmg-llava_16_7b,0.88,0.1,0.02,199
+country,city-region,11_DV-mmg-llava_16_7b,0.88,0.11,0.01,199
+country,region-country,11_DV-mmg-llava_16_7b,0.89,0.08,0.03,199
+country,random,11_DV-mmg-llava_16_7b,0.9,0.09,0.01,199
+continent,region-country,11_DV-mmg-llava_16_7b,0.77,0.11,0.12,193
+continent,random,11_DV-mmg-llava_16_7b,0.86,0.14,0.0,193
+continent,city-region,11_DV-mmg-llava_16_7b,0.74,0.1,0.16,193
+continent,country-continent,11_DV-mmg-llava_16_7b,0.75,0.1,0.15,193
