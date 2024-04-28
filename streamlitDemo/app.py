@@ -9,61 +9,47 @@ st.set_page_config(layout="wide")
 # - - - - - - - - - - - - - - - - - - - - - -
 #       Variables
 # - - - - - - - - - - - - - - - - - - - - - -
-for files in glob.glob("./outputs/"):
-    print(files)
-    
+
+answerFiles = []
+for files in glob.glob("./output/model_answers/*"):
+    answerFiles.append(files.split("\\")[-1])
+
 # - - - - - - - - - - - - - - - - - - - - - -
 #       Select Mode & Dataset
 # - - - - - - - - - - - - - - - - - - - - - -
 col1, col2 = st.columns(2)
 with col1:
-    mode = st.selectbox(
-        'Mode',
-        (
-            'experiments/01_without_comparative_images/11_document_verification', 
-            'experiments/01_without_comparative_images/12_entity_verification'
-            'experiments/02_with_comparative_images/21_single_input_models/entity_verification_1x1', 
-            'experiments/02_with_comparative_images/21_single_input_models/entity_verification_1xN', 
-            'experiments/02_with_comparative_images/22_multi_input_models/entity_verification_1x1', 
-            'experiments/02_with_comparative_images/22_multi_input_models/entity_verification_1xN', 
-        )
-    )
-with col2:
-    datasets = ["news400", "tamperednews", "mmg"]
-    models = ['blip2', 'instructBlip', 'llava_15_7b', 'llava_15_13b', 'llava_16_7b']
-    if mode == "experiments/02_with_comparative_images/21_single_input_models/entity_verification_1x1":
-        datasets = ["news400", "tamperednews"]
-    if mode == "experiments/02_with_comparative_images/21_single_input_models/entity_verification_1xN":
-        datasets = ["tamperedNews"]
-    if  mode == "experiments/02_with_comparative_images/22_multi_input_models/entity_verification_1x1":
-        models = ['mantis', 'deepseek']
-        datasets = ["news400", "tamperednews"]
-    if mode == "experiments/02_with_comparative_images/22_multi_input_models/entity_verification_1xN":
-        datasets = ["tamperedNews"]
-        models = ['mantis', 'deepseek']
+    mode = st.selectbox('Mode',(sorted(set([i.split("-")[0] for i in answerFiles]))))
 
+with col2:
     dataset = st.selectbox(
-        'Dataset',(datasets)
+        'Dataset',(sorted(set([i.split("-")[1] for i in answerFiles if mode in i])))
     )
 
 # - - - - - - - - - - - - - - - - - - - - - -
 #       extract Answers
 # - - - - - - - - - - - - - - - - - - - - - -
+questions = []
 groupedModelAnswers = {}
-questionIDs = []
-imageIDs = []
 
 if mode and dataset:
-    with open(f"./{mode}/_questions/questions_{dataset}.jsonl", mode='r', encoding="utf-8") as file:
+    models = sorted(set([i.split("-")[2].split(".")[0] for i in answerFiles if mode in i and dataset in i]))
+    
+    questionPath = ""
+    for root, dirs, files in os.walk("./experiments/"):
+        questionPath = next((s for s in dirs if mode.split("_")[0] in s), None)
+        if questionPath:
+            questionPath = os.path.join(root, questionPath)
+            break
+        
+    with open(f"./{questionPath}/_questions/questions_{dataset}.jsonl", mode='r', encoding="utf-8") as file:
         for line in file:
-            questionObject = json.loads(line)
-            questionIDs.append(questionObject['question_id'])
-            imageIDs.append(questionObject['image'].split("/")[-1])
+            questions.append(json.loads(line))
 
     # iterate over all models
     for modelname in models:
         # get all model answers and group them by entity type (location)
-        with open(f"./{mode}/model_answers/{dataset}/{modelname}_answers.jsonl", mode='r', encoding="utf-8") as file:
+        with open(f"./output/model_answers/{mode}-{dataset}-{modelname}.jsonl", mode='r', encoding="utf-8") as file:
             for line in file:
                 answerObject = json.loads(line)
                 entityType = answerObject['entity']
@@ -91,55 +77,21 @@ if mode and dataset:
 # - - - - - - - - - - - - - - - - - - - - - -
 #       Select Question
 # - - - - - - - - - - - - - - - - - - - - - -
-if 'current_index' not in st.session_state:
-    st.session_state['current_index'] = 0
-
-def click_button1(list):
-    st.session_state['current_index'] = (st.session_state['current_index'] + 1) % len(list)
-    st.session_state.selectedQuestionID = list[st.session_state['current_index']]
-
-def click_button2(list):
-    st.session_state['current_index'] = (st.session_state['current_index'] - 1) % len(list)
-    st.session_state.selectedQuestionID = list[st.session_state['current_index']]
-
-def update_list(list):
-    st.session_state['current_index'] = list.index(st.session_state.selectedQuestionID)
-
-
 selectedQuestionID = st.selectbox(
     'questionID',
-    (list(set(questionIDs))),
-    key="selectedQuestionID",
-    on_change=update_list,
-    args=[list(set(questionIDs))]
+    (list(set(item["question_id"] for item in questions))),
+    key="selectedQuestionID"
 )
 
 # - - - - - - - - - - - - - - - - - - - - - -
 #       Show Image
 # - - - - - - - - - - - - - - - - - - - - - -
-png_path = f"./_datasets/{dataset}/images/{st.session_state.selectedQuestionID}.png"
-jpg_path = f"./_datasets/{dataset}/images/{st.session_state.selectedQuestionID}.jpg"
-
-if mode == "experiments/3_image_entity_verification":
-    selectedEntityID = st.selectbox(
-        'entityID',
-        list(filter(lambda x: selectedQuestionID in x, imageIDs)),
-        key="selectedEntityID",
-    )
-    png_path = f"./experiments/3_image_entity_verification/images/{dataset}/{selectedEntityID}"
-    jpg_path = f"./experiments/3_image_entity_verification/images/{dataset}/{selectedEntityID}"
-
-col1, col2 = st.columns([8, 1])
-with col1:
-    if os.path.exists(png_path):
-        st.image(png_path, width=800)
-    elif os.path.exists(jpg_path):
-        st.image(jpg_path, width=800)
-    else:
-        st.write("Image not found.")
-with col2:
-    st.button("Next", type="primary", on_click=click_button1, args=[list(set(questionIDs))])
-    st.button("Previous", type="primary", on_click=click_button2, args=[list(set(questionIDs))])
+if os.path.exists(f"./_datasets/{dataset}/images/{st.session_state.selectedQuestionID}.png"):
+    st.image(f"./_datasets/{dataset}/images/{st.session_state.selectedQuestionID}.png", width=800)
+elif os.path.exists(f"./_datasets/{dataset}/images/{st.session_state.selectedQuestionID}.jpg"):
+    st.image(f"./_datasets/{dataset}/images/{st.session_state.selectedQuestionID}.jpg", width=800)
+else:
+    st.write("Image not found.")
 
 
 # - - - - - - - - - - - - - - - - - - - - - -
@@ -187,7 +139,7 @@ for model in models:
 #       Content Table
 # - - - - - - - - - - - - - - - - - - - - - -
 sets = ["text"]
-if mode == "experiments/1_document_verification":
+if mode == "11_DV":
     sets.append("test")
 
 if mode == "2_image_entity_verification":
