@@ -33,7 +33,7 @@ def loadEntities():
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-def generate1x1Image(newsImage, entityImage, questionID, entityID, counter):
+def generate1x1Image(args, newsImage, entityImage, questionID, entityID, counter):
     
     newsImage = Image.open(newsImage)
     entityImage = Image.open(entityImage)
@@ -123,7 +123,7 @@ def createSingleEntityQuestions(args):
                                 entityFiles = glob.glob(f"/nfs/data/image_repurposing/BreakingNews/reference_images/wd_{str(entityObject['name']).upper()}/{entityID}/google_*.jpg")
                             
                             for counter, entityFile in enumerate(entityFiles):
-                                generate1x1Image(f"./_datasets/tamperednews/images/{str(lineObject['id'])}.jpg", entityFile, str(lineObject['id']), str(entityID), str(counter))
+                                generate1x1Image(args, f"./_datasets/tamperednews/images/{str(lineObject['id'])}.jpg", entityFile, str(lineObject['id']), str(entityID), str(counter))
                                 question = baseQuestion.format(entityObject['name'][:-1])
                                 # text entites (validated visible)
                                 if 'visible' in lineObject['test_' + entityObject['name']]:

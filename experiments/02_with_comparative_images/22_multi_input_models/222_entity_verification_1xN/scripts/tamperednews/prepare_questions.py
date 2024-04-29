@@ -83,6 +83,7 @@ if __name__ == "__main__":
     # delete questions
     parser = argparse.ArgumentParser()
     parser.add_argument("--question-file", type=str, default="")
+    parser.add_argument("--base-path", type=str, default="")
     args = parser.parse_args()
 
     open(args.question_file, 'w').close()

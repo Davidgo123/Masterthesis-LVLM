@@ -58,7 +58,7 @@ def createSingleEntityQuestions(args):
                             else:
                                 entityFiles = glob.glob(f"/nfs/data/image_repurposing/BreakingNews/reference_images/wd_{str(entityObject['name']).upper()}/{entityID}/google_*.jpg")
                             
-                            if len(entityFiles) > 0:
+                            if len(entityFiles) == 0:
                                 continue
 
                             news_image = f"./_datasets/tamperednews/images/{str(lineObject['id'])}.jpg"

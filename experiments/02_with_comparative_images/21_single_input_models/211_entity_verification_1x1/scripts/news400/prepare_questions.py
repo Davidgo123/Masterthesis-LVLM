@@ -33,7 +33,7 @@ def loadEntities():
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-def generate1x1Image(newsImage, entityImage, questionID, entityID):
+def generate1x1Image(args, newsImage, entityImage, questionID, entityID):
     
     newsImage = Image.open(newsImage)
     entityImage = Image.open(entityImage)
@@ -123,7 +123,7 @@ def createSingleEntityQuestions(args):
                                 entityFiles = glob.glob(f"/nfs/data/image_repurposing/News400/reference_images/wd_{str(entityObject['name']).upper()}/{entityID}/google_*.jpg")
                             
                             if len(entityFiles) > 0:
-                                generate1x1Image(f"./_datasets/news400/images/{str(lineObject['id'])}.png", entityFiles[0], str(lineObject['id']), str(entityID))
+                                generate1x1Image(args, f"./_datasets/news400/images/{str(lineObject['id'])}.png", entityFiles[0], str(lineObject['id']), str(entityID))
                             else:
                                 continue
 
