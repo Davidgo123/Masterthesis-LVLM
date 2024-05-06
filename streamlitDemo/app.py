@@ -3,11 +3,17 @@ import pandas as pd
 import json
 import os
 import glob
+from PIL import Image
 
 st.set_page_config(layout="wide")
 
 # - - - - - - - - - - - - - - - - - - - - - -
 #       Variables
+
+questions = []
+baseline = {}
+groupedModelAnswers = {}
+
 # - - - - - - - - - - - - - - - - - - - - - -
 
 answerFiles = []
@@ -19,7 +25,7 @@ for files in glob.glob("./output/model_answers/*"):
 # - - - - - - - - - - - - - - - - - - - - - -
 col1, col2 = st.columns(2)
 with col1:
-    mode = st.selectbox('Mode',(sorted(set([i.split("-")[0] for i in answerFiles]))))
+    mode = st.selectbox('Mode',(sorted(set([i.split("/")[-1].split("-")[0] for i in answerFiles]))))
 
 with col2:
     dataset = st.selectbox(
@@ -29,9 +35,6 @@ with col2:
 # - - - - - - - - - - - - - - - - - - - - - -
 #       extract Answers
 # - - - - - - - - - - - - - - - - - - - - - -
-questions = []
-groupedModelAnswers = {}
-
 if mode and dataset:
     models = sorted(set([i.split("-")[2].split(".")[0] for i in answerFiles if mode in i and dataset in i]))
     
@@ -46,15 +49,19 @@ if mode and dataset:
         for line in file:
             questions.append(json.loads(line))
 
+    if (mode == "11_DV" or mode == "12_EV") and (dataset == "news400" or dataset == "tamperednews"):
+        if "baseline" not in models:
+            models.append("baseline")
+
     # iterate over all models
-    for modelname in models:
+    for modelname in models:  
         # get all model answers and group them by entity type (location)
         with open(f"./output/model_answers/{mode}-{dataset}-{modelname}.jsonl", mode='r', encoding="utf-8") as file:
             for line in file:
                 answerObject = json.loads(line)
                 entityType = answerObject['entity']
                 testlabel = answerObject['testlabel']
-                questionID = answerObject['question_id']
+                questionID = answerObject['question_id']              
 
                 # filter by id
                 if questionID not in groupedModelAnswers:
@@ -71,7 +78,6 @@ if mode and dataset:
                 # filter by model
                 if modelname not in groupedModelAnswers[questionID][entityType][testlabel]:
                     groupedModelAnswers[questionID][entityType][testlabel][modelname] = []
-                
                 groupedModelAnswers[questionID][entityType][testlabel][modelname].append(answerObject)
 
 # - - - - - - - - - - - - - - - - - - - - - -
@@ -84,14 +90,75 @@ selectedQuestionID = st.selectbox(
 )
 
 # - - - - - - - - - - - - - - - - - - - - - -
-#       Show Image
+#       Images
 # - - - - - - - - - - - - - - - - - - - - - -
-if os.path.exists(f"./_datasets/{dataset}/images/{st.session_state.selectedQuestionID}.png"):
-    st.image(f"./_datasets/{dataset}/images/{st.session_state.selectedQuestionID}.png", width=800)
-elif os.path.exists(f"./_datasets/{dataset}/images/{st.session_state.selectedQuestionID}.jpg"):
-    st.image(f"./_datasets/{dataset}/images/{st.session_state.selectedQuestionID}.jpg", width=800)
-else:
-    st.write("Image not found.")
+def resize_image(image_path, new_height):
+    with Image.open(image_path) as img:
+        width_percent = (new_height / float(img.size[1]))
+        new_width = int((float(img.size[0]) * float(width_percent)))
+        resized_img = img.resize((new_width, new_height))
+        return resized_img
+
+if mode == "11_DV" or mode == "12_EV":
+    st.image(resize_image(glob.glob(f"./_datasets/{dataset}/images/{st.session_state.selectedQuestionID}.*")[0], 300), caption=f"News image ({st.session_state.selectedQuestionID})")
+
+
+elif "211_EV_1x1" in mode:
+    def format_json_option(json_obj):
+        return json_obj['image'].split("/")[-1] 
+    
+    selectedEntityID = st.selectbox(
+        'entityID',
+        list(filter(lambda x: selectedQuestionID in x['image'].split("/")[-1], questions)),
+        format_func=format_json_option
+    )
+    st.image(resize_image(selectedEntityID["image"], 400), caption=f"News image (Top), Entity image (Bot)")
+
+
+elif "212_EV_1xN" in mode:
+    def format_json_option(json_obj):
+        return json_obj['image'].split("/")[-1] 
+    
+    selectedEntityID = st.selectbox(
+        'entityID',
+        list(filter(lambda x: selectedQuestionID in x['image'].split("/")[-1], questions)),
+        format_func=format_json_option
+    )
+    st.image(resize_image(selectedEntityID["image"], 400), caption=f"News image (Top), Entity image (Bot)")
+
+
+elif "221_EV_1x1" in mode:
+    def format_json_option(json_obj):
+        return json_obj['entity_image'].split("/")[-1] 
+    
+    selectedEntityID = st.selectbox(
+        'entityID',
+        list(filter(lambda x: selectedQuestionID in x["news_image"], questions)),
+        format_func=format_json_option
+    )
+
+    col1, col2 = st.columns(2)
+    with col1:
+        st.image(resize_image(selectedEntityID["news_image"], 300), caption=f"News image")
+    with col2:
+        st.image(resize_image(selectedEntityID["entity_image"], 300), caption=f"Entity image")    
+
+
+elif "222_EV_1xN" in mode:
+    def format_json_option(json_obj):
+        return json_obj['entity_image'].split("/")[-2]  + "/" + json_obj['entity_image'].split("/")[-1] 
+    
+    selectedEntityID = st.selectbox(
+        'entityID',
+        list(filter(lambda x: selectedQuestionID.split("_")[0] in x["news_image"] and selectedQuestionID.split("_")[1] in x["entity_image"], questions)),
+        format_func=format_json_option
+    )
+
+    col1, col2 = st.columns(2)
+    with col1:
+        st.image(resize_image(selectedEntityID["news_image"], 300), caption=f"News image")
+    with col2:
+        st.image(resize_image(selectedEntityID["entity_image"], 300), caption=f"Entity image") 
 
 
 # - - - - - - - - - - - - - - - - - - - - - -
@@ -107,6 +174,7 @@ with col2:
         (list(groupedModelAnswers[st.session_state.selectedQuestionID][selectedEntityType]))
     )
 
+
 # - - - - - - - - - - - - - - - - - - - - - -
 #       Grid
 # - - - - - - - - - - - - - - - - - - - - - -
@@ -121,18 +189,17 @@ def make_grid(cols,rows):
 # - - - - - - - - - - - - - - - - - - - - - -
 #       Max Scores
 # - - - - - - - - - - - - - - - - - - - - - -
-
-# find max prob val in all sets (text and test)
 maxScoreAnswer = {}
-for model in models:
-    # Filter objects with "yes" in the "response" key
-    filtered_objects = list(filter(lambda x: x["response"].lower().strip() == "yes", groupedModelAnswers[st.session_state.selectedQuestionID][selectedEntityType][selectedTestLabel][model][:]))
-    if filtered_objects:
-        # If there are objects with "yes" response, get the object with maximum value
-        maxScoreAnswer[model] = max(filtered_objects, key=lambda x: x["prob"])
-    else:
-        # If there are no objects with "yes" response, get the object with minimum value
-        maxScoreAnswer[model] = min(groupedModelAnswers[st.session_state.selectedQuestionID][selectedEntityType][selectedTestLabel][model][:], key=lambda x: x["prob"])
+if mode == "11_DV":
+    for model in models:
+        # Filter objects with "yes" in the "response" key
+        filtered_objects = list(filter(lambda x: x["response"].lower().strip() == "yes", groupedModelAnswers[st.session_state.selectedQuestionID][selectedEntityType][selectedTestLabel][model][:]))
+        if filtered_objects:
+            # If there are objects with "yes" response, get the object with maximum value
+            maxScoreAnswer[model] = max(filtered_objects, key=lambda x: x["prob"])
+        else:
+            # If there are no objects with "yes" response, get the object with minimum value
+            maxScoreAnswer[model] = min(groupedModelAnswers[st.session_state.selectedQuestionID][selectedEntityType][selectedTestLabel][model][:], key=lambda x: x["prob"])
 
 
 # - - - - - - - - - - - - - - - - - - - - - -
@@ -142,9 +209,13 @@ sets = ["text"]
 if mode == "11_DV":
     sets.append("test")
 
-if mode == "2_image_entity_verification":
+elif "211" in mode or "212" in mode:
     for model in models:
-        groupedModelAnswers[st.session_state.selectedQuestionID][selectedEntityType][selectedTestLabel][model] = list(filter(lambda x: selectedEntityID in x["image"], groupedModelAnswers[st.session_state.selectedQuestionID][selectedEntityType][selectedTestLabel][model]))
+        groupedModelAnswers[st.session_state.selectedQuestionID][selectedEntityType][selectedTestLabel][model] = list(filter(lambda x: selectedEntityID["image"] in x["image"], groupedModelAnswers[st.session_state.selectedQuestionID][selectedEntityType][selectedTestLabel][model]))
+
+elif "221" in mode or "222" in mode:
+    for model in models:
+        groupedModelAnswers[st.session_state.selectedQuestionID][selectedEntityType][selectedTestLabel][model] = list(filter(lambda x: selectedEntityID["entity_image"] in x["entity_image"], groupedModelAnswers[st.session_state.selectedQuestionID][selectedEntityType][selectedTestLabel][model]))
 
 for set in sets:
     cols = len([x for x in groupedModelAnswers[st.session_state.selectedQuestionID][selectedEntityType][selectedTestLabel][models[0]][:] if x['set'] == set]), # questions
@@ -156,34 +227,37 @@ for set in sets:
 
     for colCounter in range(cols[0] + 1):
         for rowCounter in range(rows):
-            answer = list([x for x in sorted(groupedModelAnswers[st.session_state.selectedQuestionID][selectedEntityType][selectedTestLabel][models[rowCounter-1]][:], key = lambda x: (x['set'], x['question'])) if x['set'] == set])[colCounter - 1].copy()
-            
-            # print header
-            if colCounter == 0:
-                if rowCounter == 0:
-                    grid_text[colCounter][rowCounter].write(f"Questions ({set})")
-                elif set == 'text':
-                    grid_text[colCounter][rowCounter].write(f":blue[{models[rowCounter-1]}]")
-                elif set == 'test':
-                    grid_text[colCounter][rowCounter].write(f":red[{models[rowCounter-1]}]")
-            
-            # print question
-            elif rowCounter == 0 and colCounter != 0:
-                grid_text[colCounter][rowCounter].write(f"{answer['question']} ({answer['gTruth']})")
+            try:
+                answer = list([x for x in sorted(groupedModelAnswers[st.session_state.selectedQuestionID][selectedEntityType][selectedTestLabel][models[rowCounter-1]][:], key = lambda x: (x['set'], x['question'])) if x['set'] == set])[colCounter - 1].copy()
                 
-            # print answers
-            else:
-                if mode == "0_document_verification":
-                    if answer == maxScoreAnswer[models[rowCounter-1]]:
-                        if set == "text":
-                            grid_text[colCounter][rowCounter].write(f":blue[{answer['response']} ({answer['prob']})]")
-                        elif set == "test":
-                            grid_text[colCounter][rowCounter].write(f":red[{answer['response']} ({answer['prob']})]")
-                    else:
-                        grid_text[colCounter][rowCounter].write(f"{answer['response']} ({answer['prob']})")
-
+                # print header
+                if colCounter == 0:
+                    if rowCounter == 0:
+                        grid_text[colCounter][rowCounter].write(f"Questions ({set})")
+                    elif set == 'text':
+                        grid_text[colCounter][rowCounter].write(f":blue[{models[rowCounter-1]}]")
+                    elif set == 'test':
+                        grid_text[colCounter][rowCounter].write(f":red[{models[rowCounter-1]}]")
+                
+                # print question
+                elif rowCounter == 0 and colCounter != 0:
+                    grid_text[colCounter][rowCounter].write(f"{answer['question']} ({answer['gTruth']})")
+                    
+                # print answers
                 else:
-                    if str(answer["gTruth"]) == str(answer["response"]).lower().strip():
-                        grid_text[colCounter][rowCounter].write(f":blue[{answer['response']} ({answer['prob']})]")
+                    if mode == "11_DV":
+                        if answer == maxScoreAnswer[models[rowCounter-1]]:
+                            if set == "text":
+                                grid_text[colCounter][rowCounter].write(f":blue[{answer['response']} ({answer['prob']})]")
+                            elif set == "test":
+                                grid_text[colCounter][rowCounter].write(f":red[{answer['response']} ({answer['prob']})]")
+                        else:
+                            grid_text[colCounter][rowCounter].write(f"{answer['response']} ({answer['prob']})")
+
                     else:
-                        grid_text[colCounter][rowCounter].write(f":red[{answer['response']} ({answer['prob']})]")
+                        if str(answer["gTruth"]) == str(answer["response"]).lower().strip():
+                            grid_text[colCounter][rowCounter].write(f":blue[{answer['response']} ({answer['prob']})]")
+                        else:
+                            grid_text[colCounter][rowCounter].write(f":red[{answer['response']} ({answer['prob']})]")
+            except:
+                grid_text[colCounter][rowCounter].write(f":red[ - ]")

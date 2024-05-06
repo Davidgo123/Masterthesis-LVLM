@@ -110,20 +110,21 @@ def createSingleEntityQuestions(args):
                 for testLabel in entityObject['test_labels']:                    
                     # save untampered question
                     question = baseQuestion.format(instance, extractNameById(entityID, entityObject['entities']))
-                    saveQuestion(args, str(lineObject['id']), str(question), str(instance), str(testLabel), "text", "yes", "no")
+                    saveQuestion(args, str(lineObject['id']), str(question), str(instance), str(testLabel), "text", str(entityID), "yes", "no")
 
                     # save tampered question 
-                    entity = extractNameById(getTamperedIDByInstance(entityObject['entities'], instance, testLabel, entityID), entityObject['entities'])
+                    tamperedEntityID = getTamperedIDByInstance(entityObject['entities'], instance, testLabel, entityID)
+                    entity = extractNameById(tamperedEntityID, entityObject['entities'])
                     question = baseQuestion.format(instance, entity)
-                    saveQuestion(args, str(lineObject['id']), str(question), str(instance), str(testLabel), "test", "no", "yes")
+                    saveQuestion(args, str(lineObject['id']), str(question), str(instance), str(testLabel), "test", str(tamperedEntityID), "no", "yes")
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-def saveQuestion(args, id, question, entity, testlabel, set, ground_truth, ground_wrong):
+def saveQuestion(args, id, question, entity, testlabel, set, entityID, ground_truth, ground_wrong):
     with open(args.question_file, "a") as outfile:
-        outfile.write("""{\"question_id\": \"%s\", \"image\": \"./_datasets/mmg/images/%s.jpg\", \"question\": %s, \"entity\": \"%s\", \"testlabel\": \"%s\", \"set\": \"%s\", \"gTruth\": \"%s\", \"gWrong\": \"%s\"} \n""" 
-                      % (id, id, question, entity, testlabel, set, ground_truth, ground_wrong))
+        outfile.write("""{\"question_id\": \"%s\", \"image\": \"./_datasets/mmg/images/%s.jpg\", \"question\": %s, \"entity\": \"%s\", \"testlabel\": \"%s\", \"set\": \"%s\", \"entityID\": \"%s\", \"gTruth\": \"%s\", \"gWrong\": \"%s\"} \n""" 
+                      % (id, id, question, entity, testlabel, set, entityID, ground_truth, ground_wrong))
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

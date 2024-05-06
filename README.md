@@ -62,4 +62,7 @@ To run all all experiments with SLURM, look at ./utils/batch_fulltest.sh
 
 ## 4. streamlit Demo
 Demo is created with [streamlit](https://streamlit.io/) and allows to examine results/answers of each model for each question/ data sample. It also contains the answers of the Baseline project [Link](https://github.com/TIBHannover/cross-modal_entity_consistency)
-It can be run with the following command: streamlit run app.py
+It can be run with the following command: 
+- streamlit run app.py
+- python -m streamlit run ./streamlitDemo/app.py
+- ssh -N -f -L localhost:8501:localhost:8501 devbox5

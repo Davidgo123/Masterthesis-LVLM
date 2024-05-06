@@ -43,12 +43,9 @@ def printResults(args):
                 resultsVLM[modelname].append(row)
 
     for entityType in resultsCNN:
-        sentence_1 = "%s & %s & %s & %s & %s \\\\" % (
+        sentence_1 = "%s & %s \\\\" % (
             getValue(resultsVLM[args.models[0]], entityType), 
-            getValue(resultsVLM[args.models[1]], entityType), 
-            getValue(resultsVLM[args.models[2]], entityType), 
-            getValue(resultsVLM[args.models[3]], entityType),
-            getValue(resultsVLM[args.models[4]], entityType))
+            getValue(resultsVLM[args.models[1]], entityType))
 
         maxValue = max([float(num) for num in re.findall(r'\d+\.\d+', sentence_1)])
         sentence_1 = sentence_1.replace(str(maxValue), r'\textbf{' + str(maxValue) + r'}')

@@ -18,7 +18,7 @@ fi
 
 # - - - - - - - - - -
 
-answerFile=02_22_EV_1x1-tamperednews-mantis
+answerFile=221_EV_1x1-tamperednews-mantis
 activeModels+=(${answerFile})
 if [ $3 -eq 1 ]
 then
@@ -27,7 +27,7 @@ then
     wait $PID
 fi
 
-answerFile=02_22_EV_1x1-tamperednews-deepseek
+answerFile=221_EV_1x1-tamperednews-deepseek
 activeModels+=(${answerFile})
 if [ $3 -eq 1 ]
 then

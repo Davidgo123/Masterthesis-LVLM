@@ -1,0 +1,4 @@
+entity,testlabel,modelname,correct,wrong,undefinied,documents
+persons,orginal,221_EV_1x1-tamperednews-deepseek,0.3,0.69,0.01,504
+locations,orginal,221_EV_1x1-tamperednews-deepseek,0.6,0.4,0.0,607
+events,orginal,221_EV_1x1-tamperednews-deepseek,0.73,0.26,0.01,135

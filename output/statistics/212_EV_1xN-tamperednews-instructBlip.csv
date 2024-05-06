@@ -1,0 +1,4 @@
+entity,testlabel,modelname,correct,wrong,undefinied,documents
+persons,orginal,212_EV_1xN-tamperednews-instructBlip,0.83,0.17,0.0,464
+locations,orginal,212_EV_1xN-tamperednews-instructBlip,0.17,0.83,0.0,607
+events,orginal,212_EV_1xN-tamperednews-instructBlip,0.28,0.72,0.0,134

@@ -138,8 +138,8 @@ def createSingleEntityQuestions(args):
     
 def saveQuestion(args, id, entityID, counter, question, entity, testlabel, set, ground_truth, ground_wrong):
     with open(args.question_file, "a") as outfile:
-        outfile.write("""{\"question_id\": \"%s_%s\", \"image\": \"%s/images/tamperednews/%s_%s-%s.jpg\", \"question\": %s, \"entity\": \"%s\", \"testlabel\": \"%s\", \"set\": \"%s\", \"gTruth\": \"%s\", \"gWrong\": \"%s\"} \n""" 
-                      % (id, entityID, args.base_path, id, entityID, counter, question, entity, testlabel, set, ground_truth, ground_wrong))
+        outfile.write("""{\"question_id\": \"%s_%s\", \"image\": \"%s/images/tamperednews/%s_%s-%s.jpg\", \"question\": %s, \"entity\": \"%s\", \"testlabel\": \"%s\", \"set\": \"%s\", \"entityID\": \"%s\", \"gTruth\": \"%s\", \"gWrong\": \"%s\"} \n""" 
+                      % (id, entityID, args.base_path, id, entityID, counter, question, entity, testlabel, set, entityID, ground_truth, ground_wrong))
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -

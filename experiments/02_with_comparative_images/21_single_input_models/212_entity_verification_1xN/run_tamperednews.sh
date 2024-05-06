@@ -18,7 +18,7 @@ fi
 
 # - - - - - - - - - -
 
-answerFile=21_EV_1xN-tamperednews-blip2
+answerFile=212_EV_1xN-tamperednews-blip2
 activeModels+=(${answerFile})
 if [ $3 -eq 1 ]
 then
@@ -27,7 +27,7 @@ then
     wait $PID
 fi
 
-answerFile=21_EV_1xN-tamperednews-instructBlip
+answerFile=212_EV_1xN-tamperednews-instructBlip
 activeModels+=(${answerFile})
 if [ $3 -eq 1 ]
 then
@@ -37,7 +37,7 @@ then
 fi
 
 modelPath=./models/llava-1.5-7b-hf/
-answerFile=21_EV_1xN-tamperednews-llava_15_7b
+answerFile=212_EV_1xN-tamperednews-llava_15_7b
 activeModels+=(${answerFile})
 if [ $3 -eq 1 ]
 then
@@ -47,7 +47,7 @@ then
 fi
 
 modelPath=./models/llava-1.5-13b-hf/
-answerFile=21_EV_1xN-tamperednews-llava_15_13b
+answerFile=212_EV_1xN-tamperednews-llava_15_13b
 activeModels+=(${answerFile})
 if [ $3 -eq 1 ]
 then
@@ -57,7 +57,7 @@ then
 fi
 
 modelPath=./models/llava-v1.6-mistral-7b-hf/
-answerFile=02_21_EV_1xN-tamperednews-llava_16_7b
+answerFile=212_EV_1xN-tamperednews-llava_16_7b
 activeModels+=(${answerFile})
 if [ $3 -eq 1 ]
 then

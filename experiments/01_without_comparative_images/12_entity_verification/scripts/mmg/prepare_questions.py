@@ -63,14 +63,14 @@ def createSingleEntityQuestions(args):
 
                 # save untampered question 
                 question = baseQuestion.format(instance, extractNameById(entityID, entityObject['entities']))
-                saveQuestion(args, str(lineObject['id']), str(question), str(entityObject['name']), str(instance), "text", "yes", "no")
+                saveQuestion(args, str(lineObject['id']), str(question), str(entityObject['name']), str(instance), "text", entityID, "yes", "no")
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
-def saveQuestion(args, id, question, entity, testlabel, set, ground_truth, ground_wrong):
+def saveQuestion(args, id, question, entity, testlabel, set, entityID, ground_truth, ground_wrong):
     with open(args.question_file, "a") as outfile:
-        outfile.write("""{\"question_id\": \"%s\", \"image\": \"./_datasets/mmg/images/%s.jpg\", \"question\": %s, \"entity\": \"%s\", \"testlabel\": \"%s\", \"set\": \"%s\", \"gTruth\": \"%s\", \"gWrong\": \"%s\"} \n""" 
-                      % (id, id, question, entity, testlabel, set, ground_truth, ground_wrong))
+        outfile.write("""{\"question_id\": \"%s\", \"image\": \"./_datasets/mmg/images/%s.jpg\", \"question\": %s, \"entity\": \"%s\", \"testlabel\": \"%s\", \"set\": \"%s\", \"entityID\": \"%s\", \"gTruth\": \"%s\", \"gWrong\": \"%s\"} \n""" 
+                      % (id, id, question, entity, testlabel, set, entityID, ground_truth, ground_wrong))
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

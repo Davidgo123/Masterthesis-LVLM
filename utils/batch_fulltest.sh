@@ -31,9 +31,9 @@ basePath=(
 # # # # # # # # # # # # # # # # # # # #
 #       01 - without images - EV      #
 # # # # # # # # # # # # # # # # # # # #
-# sbatch -w devbox5 -c 12 --mem 32G --gres=gpu:a3090:1 --output=./output/logs/12-EV-MMG.out ${basePath[1]}/run_mmg.sh ${basePath[1]} $createQuestions $runModels
-# sbatch -w devbox5 -c 12 --mem 32G --gres=gpu:a3090:1 --output=./output/logs/12-EV-News400.out ${basePath[1]}/run_news400.sh ${basePath[1]} $createQuestions $runModels
-# sbatch -w devbox5 -c 12 --mem 32G --gres=gpu:a3090:1 --output=./output/logs/12-EV-Tamperednews.out ${basePath[1]}/run_tamperednews.sh ${basePath[1]} $createQuestions $runModels
+sbatch -w devbox5 -c 12 --mem 32G --gres=gpu:a3090:1 --output=./output/logs/12-EV-MMG.out ${basePath[1]}/run_mmg.sh ${basePath[1]} $createQuestions $runModels
+sbatch -w devbox5 -c 12 --mem 32G --gres=gpu:a3090:1 --output=./output/logs/12-EV-News400.out ${basePath[1]}/run_news400.sh ${basePath[1]} $createQuestions $runModels
+sbatch -w devbox5 -c 12 --mem 32G --gres=gpu:a3090:1 --output=./output/logs/12-EV-Tamperednews.out ${basePath[1]}/run_tamperednews.sh ${basePath[1]} $createQuestions $runModels
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 

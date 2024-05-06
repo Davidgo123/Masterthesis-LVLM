@@ -1,0 +1,4 @@
+entity,testlabel,modelname,correct,wrong,undefinied,documents
+persons,orginal,211_EV_1x1-news400-blip2,0.29,0.59,0.12,656
+locations,orginal,211_EV_1x1-news400-blip2,0.3,0.64,0.06,483
+events,orginal,211_EV_1x1-news400-blip2,0.61,0.28,0.11,46

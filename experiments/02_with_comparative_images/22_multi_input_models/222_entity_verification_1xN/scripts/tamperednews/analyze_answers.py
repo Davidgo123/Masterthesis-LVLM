@@ -59,26 +59,31 @@ def computeAnswer(args):
                 for questionID in groupedModelAnswers[entityType][testlabel]:
 
                     # iterate over each question of same id and compute score
-                    maxValues = {
+                    probabilities = {
                         "yes": [],
                         "no": []
                     }
                     for question in groupedModelAnswers[entityType][testlabel][questionID]:
                         if simplifyAnswer(question['response']) == 'yes' and simplifyAnswer(question['probText']) == 'yes':
-                            maxValues['yes'].append(float(question['prob']))
+                            probabilities['yes'].append(float(question['prob']))
                         elif simplifyAnswer(question['response']) == 'no' and simplifyAnswer(question['probText']) == 'no':
-                            maxValues['no'].append(float(question['no']))
+                            probabilities['no'].append(float(question['no']))
 
+                    if len(probabilities['yes']) == 0:
+                        probabilities['yes'].append(0.0)
+                    if len(probabilities['no']) == 0:
+                        probabilities['no'].append(0.0)
+                        
                     # add counter to statistic if not exist
                     if testlabel not in model['statistic'][entityType]:
                         model['statistic'][entityType][testlabel] = (0, 0, 0)
                     current_tuple = model['statistic'][entityType][testlabel]
 
                     # check if model answer is correct  
-                    if mean(maxValues['yes']) > mean(maxValues['no']):
+                    if mean(probabilities['yes']) > mean(probabilities['no']):
                         model['statistic'][entityType][testlabel] = (current_tuple[0]+1, current_tuple[1], current_tuple[2])
                     # check if model answer is wrong
-                    if mean(maxValues['yes']) < mean(maxValues['no']):
+                    if mean(probabilities['yes']) < mean(probabilities['no']):
                         model['statistic'][entityType][testlabel] = (current_tuple[0]+1, current_tuple[1]+1, current_tuple[2])
                     # check if model answer is undef
                     else: 
