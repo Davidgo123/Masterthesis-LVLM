@@ -1,0 +1,31 @@
+You are using the default legacy behaviour of the <class 'transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast'>. This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565
+Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  1.28it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:01<00:00,  1.68it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:01<00:00,  1.60it/s]
+/nfs/home/ernstd/miniconda3/envs/transformer/lib/python3.12/site-packages/transformers/generation/utils.py:1156: UserWarning: Using the model-agnostic default `max_length` (=20) to control the generation length. We recommend setting `max_new_tokens` to control the maximum length of the generation.
+  warnings.warn(
+You are using the default legacy behaviour of the <class 'transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast'>. This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.30it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.03it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:03<00:01,  1.04s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.45it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.27it/s]
+/nfs/home/ernstd/miniconda3/envs/transformer/lib/python3.12/site-packages/transformers/generation/utils.py:1156: UserWarning: Using the model-agnostic default `max_length` (=20) to control the generation length. We recommend setting `max_new_tokens` to control the maximum length of the generation.
+  warnings.warn(
+Traceback (most recent call last):
+  File "/nfs/home/ernstd/masterthesis_scripts/./experiments/03_fine_tuning/311_document_verification/scripts/news400/analyze_answers.py", line 116, in <module>
+    computeAnswer(args)
+  File "/nfs/home/ernstd/masterthesis_scripts/./experiments/03_fine_tuning/311_document_verification/scripts/news400/analyze_answers.py", line 33, in computeAnswer
+    answerObject = json.loads(line)
+                   ^^^^^^^^^^^^^^^^
+  File "/nfs/home/ernstd/miniconda3/envs/transformer/lib/python3.12/json/__init__.py", line 346, in loads
+    return _default_decoder.decode(s)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nfs/home/ernstd/miniconda3/envs/transformer/lib/python3.12/json/decoder.py", line 337, in decode
+    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/nfs/home/ernstd/miniconda3/envs/transformer/lib/python3.12/json/decoder.py", line 353, in raw_decode
+    obj, end = self.scan_once(s, idx)
+               ^^^^^^^^^^^^^^^^^^^^^^
+json.decoder.JSONDecodeError: Invalid control character at: line 1 column 301 (char 300)
+Traceback (most recent call last):
+  File "/nfs/home/ernstd/masterthesis_scripts/./experiments/03_fine_tuning/311_document_verification/scripts/news400/printResultTable.py", line 70, in <module>
+    printResults(args)
+  File "/nfs/home/ernstd/masterthesis_scripts/./experiments/03_fine_tuning/311_document_verification/scripts/news400/printResultTable.py", line 42, in printResults
+    with open(f"./output/statistics/{modelname}.csv", 'r') as file:
+         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+FileNotFoundError: [Errno 2] No such file or directory: './output/statistics/311_DV-news400-instructBlip_base.csv'

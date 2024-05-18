@@ -1,0 +1,4 @@
+entity,testlabel,modelname,correct,wrong,undefinied,documents
+locations,country,32_EV-mmg-instructBlip_base,0.83,0.17,0.0,199
+locations,continent,32_EV-mmg-instructBlip_base,0.67,0.33,-0.0,193
+locations,city,32_EV-mmg-instructBlip_base,0.49,0.51,0.0,137

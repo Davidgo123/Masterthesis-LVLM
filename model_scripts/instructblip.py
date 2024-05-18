@@ -34,7 +34,7 @@ answerFullSet = {
 
 class instructBlipInstance:
     def __init__(self, args):
-        self.processor = InstructBlipProcessor.from_pretrained(args.model_path)
+        self.processor = InstructBlipProcessor.from_pretrained("./models/instructblip-vicuna-7b/")
         self.model = InstructBlipForConditionalGeneration.from_pretrained(args.model_path, torch_dtype=torch.float16)
         self.model.to(args.device)
 
@@ -68,16 +68,16 @@ class instructBlipInstance:
 
     # return answer of model
     def getResponse(self, args, prompt, image):
-        inputs = self.processor(images=image, text=prompt, return_tensors="pt").to(args.device, torch.float16)
+        inputs = self.processor(images=image, text=prompt, max_new_tokens=1, return_tensors="pt").to(args.device, torch.float16)
         with torch.no_grad():
             outputs = self.model.generate(**inputs, max_new_tokens=1)
         return self.processor.batch_decode(outputs, skip_special_tokens=True)[0]
 
     # return probability
     def getProbabilities(self, args, prompt, image):   
-        inputs = self.processor(images=image, text=prompt, return_tensors="pt").to(args.device, torch.float16)
+        inputs = self.processor(images=image, text=prompt, max_new_tokens=1, return_tensors="pt").to(args.device, torch.float16)
         with torch.no_grad():
-            outputs = self.model.generate(**inputs, max_new_tokens=1, output_scores=True, return_dict_in_generate=True)
+            outputs = self.model.generate(**inputs, output_scores=True, return_dict_in_generate=True)
             
         probas = outputs.scores[0][:, self.answer_sets_token_id[self.index2label.get(0)] + self.answer_sets_token_id[self.index2label.get(1)]].softmax(-1)
         label1_proba_matrix = probas[:, :len(self.answer_sets[self.index2label.get(0)])].sum(dim=1)

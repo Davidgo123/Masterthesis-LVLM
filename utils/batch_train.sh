@@ -1,0 +1,1 @@
+sbatch -w devbox5 -c 12 --mem 32G --gres=gpu:a3090:1 --output=./output/logs/03-train.out ./experiments/03_fine_tuning/310_train/runQformerTraining.sh
