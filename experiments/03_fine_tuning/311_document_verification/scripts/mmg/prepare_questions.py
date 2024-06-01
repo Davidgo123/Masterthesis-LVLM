@@ -96,10 +96,13 @@ def createSingleEntityQuestions(args):
         for line in file:
             # extract line
             lineObject = json.loads(line)
+            
+            # multi entity questions
+            if "Decide" in args.prompt:
+                createMultiEntityQuestions(args, lineObject, entityObject)
+                continue
 
-            baseQuestion = "\"Is the {} {} visible in this photo ?\""
-
-            # city, country, continent
+            # city, country, continent    
             for instance in entityObject['text_labels']:
 
                 entityID = lineObject['image_label'][instance]['id']
@@ -107,17 +110,61 @@ def createSingleEntityQuestions(args):
                     continue
                 
                 # random, ... 
-                for testLabel in entityObject['test_labels']:                    
+                for testLabel in entityObject['test_labels']:
                     # save untampered question
-                    question = baseQuestion.format(instance, extractNameById(entityID, entityObject['entities']))
+                    question = args.prompt.replace("<type>", instance)
+                    question = question.replace("<name>", extractNameById(entityID, entityObject['entities']))
                     saveQuestion(args, str(lineObject['id']), str(question), str(instance), str(testLabel), "text", str(entityID), "yes", "no")
 
                     # save tampered question 
                     tamperedEntityID = getTamperedIDByInstance(entityObject['entities'], instance, testLabel, entityID)
-                    entity = extractNameById(tamperedEntityID, entityObject['entities'])
-                    question = baseQuestion.format(instance, entity)
+                    if not tamperedEntityID:
+                        continue
+                    question = args.prompt.replace("<type>", instance)
+                    question = question.replace("<name>", extractNameById(tamperedEntityID, entityObject['entities']))
                     saveQuestion(args, str(lineObject['id']), str(question), str(instance), str(testLabel), "test", str(tamperedEntityID), "no", "yes")
 
+
+
+def createMultiEntityQuestions(args, lineObject, entityObject):
+    orginalEntityIDs = [] 
+
+    # city, country, continent    
+    for instance in entityObject['text_labels']:
+        entityID = lineObject['image_label'][instance]['id']
+        if extractNameById(entityID, entityObject['entities']):
+            orginalEntityIDs.append(entityID)
+
+    #getTamperedIDByInstance(entityObject['entities'], instance, testLabel, entityID)
+    for testLabel in entityObject['test_labels']:
+        if orginalEntityIDs:
+            if "name1" in args.prompt:
+                for orginalEntityID in orginalEntityIDs:
+
+                    tamperedEntityID = getTamperedIDByInstance(entityObject['entities'], instance, testLabel, orginalEntityID)
+                    if not tamperedEntityID:
+                        continue
+
+                    question = args.prompt.replace("<type>", entityObject['name'][:-1])
+                    if (random.randint(0,1) == 0):
+                        question = question.replace("<name1>", extractNameById(orginalEntityID, entityObject['entities']))
+                        question = question.replace("<name2>", extractNameById(tamperedEntityID, entityObject['entities']))
+                        saveQuestion(args, str(lineObject['id']), str(question), str(instance), str(testLabel), "-", entityID, "A", "B")
+                    else:
+                        question = question.replace("<name1>", extractNameById(tamperedEntityID, entityObject['entities']))
+                        question = question.replace("<name2>", extractNameById(orginalEntityID, entityObject['entities']))
+                        saveQuestion(args, str(lineObject['id']), str(question), str(instance), str(testLabel), "-", entityID, "B", "A")
+
+            elif "set1" in args.prompt:
+                question = args.prompt.replace("<types>", entityObject['name'])
+                if (random.randint(0,1) == 0):
+                    question = question.replace("<set1>", str([extractNameById(orginalEntityID, entityObject['entities']) for orginalEntityID in orginalEntityIDs]))
+                    question = question.replace("<set2>", str([extractNameById(getTamperedIDByInstance(entityObject['entities'], instance, testLabel, orginalEntityID), entityObject['entities']) for orginalEntityID in orginalEntityIDs]))
+                    saveQuestion(args, str(lineObject['id']), str(question), str(instance), str(testLabel), "-", entityID, "A", "B")
+                else:
+                    question = question.replace("<set1>", str([extractNameById(getTamperedIDByInstance(entityObject['entities'], instance, testLabel, orginalEntityID), entityObject['entities']) for orginalEntityID in orginalEntityIDs]))
+                    question = question.replace("<set2>", str([extractNameById(orginalEntityID, entityObject['entities']) for orginalEntityID in orginalEntityIDs]))
+                    saveQuestion(args, str(lineObject['id']), str(question), str(instance), str(testLabel), "-", entityID, "B", "A")
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -133,6 +180,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--question-file", type=str, default="")
     parser.add_argument("--base-path", type=str, default="")
+    parser.add_argument("--prompt", type=str, default="")
     args = parser.parse_args()
 
     # create new subsample from mmg dataset

@@ -4,7 +4,8 @@ import json
 import torch
 import random
 from transformers import AutoProcessor, AutoModelForPreTraining, BitsAndBytesConfig
-
+import logging
+from transformers import logging as transformers_logging
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
@@ -128,6 +129,8 @@ def run(args, answerFile):
 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.ERROR)
+    transformers_logging.set_verbosity_error()
     parser = argparse.ArgumentParser()
     parser.add_argument("--model-path", type=str, default="./models/llava-1.5-13b-hf/")
     parser.add_argument("--question-file", type=str, default="")

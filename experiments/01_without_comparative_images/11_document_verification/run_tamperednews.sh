@@ -1,77 +1,102 @@
 #!/bin/bash
 
-activeModels=()
-
-# - - - - - - - - - -
-
-questionFile=$1/_questions/questions_tamperednews.jsonl
 answerFilePath=./output/model_answers/
 
 # - - - - - - - - - -
 
-if [ $2 -eq 1 ]
-then
-    python $1/scripts/tamperednews/prepare_questions.py --base-path $1 --question-file $questionFile &
-    PID=$!
-    wait $PID
-fi
+prompts=(
+    "\"Is any <type> from the image consistent with <name>?\""
+    "\"Is <type> <name> visible in the image?\""
+    "\"Is <type> <name> shown in the image? Answer only with yes or no.\""
+    "\"Decide which <type> is more consistent to the image: A='<name1>' or B='<name2>'. Answer only with the name of the set.\""
+    "\"Decide which <type> is more consistent to the image: A='<name1>' or B='<name2>'. Answer only with the name of the set.\""
+    "\"Decide which <type> is more consistent to the image: A='<name1>' or B='<name2>'. Answer only with the name of the set.\""
+    "\"Decide which <types> set is more consistent to the image: A=<set1> or B=<set2>. Answer only with the name of the set.\""
+    "\"Decide which <types> set is more consistent to the image: A=<set1> or B=<set2>. Answer only with the name of the set.\""
+    "\"Decide which <types> set is more consistent to the image: A=<set1> or B=<set2>. Answer only with the name of the set.\""
+)
 
 # - - - - - - - - - -
 
-answerFile=11_DV-tamperednews-blip2
-activeModels+=(${answerFile})
-if [ $3 -eq 1 ]
-then
-    python ./model_scripts/blip2.py --question-file $questionFile --answer-file-path $answerFilePath --answer-file-name $answerFile &
+counter=0
+for prompt in "${prompts[@]}"; do
+    questionFile=$1/_questions/questions_tamperednews-$counter.jsonl
+
+    if [ $2 -eq 1 ]
+    then
+        python $1/scripts/tamperednews/prepare_questions.py --base-path $1 --question-file $questionFile --prompt "$prompt" &
+        PID=$!
+        wait $PID
+    fi
+    let counter++
+done
+
+for (( counter=0; counter<9; counter+=3 ))
+do
+    activeModels=()
+    newCounter=$((counter + 0))
+    questionFile=$1/_questions/questions_tamperednews-$newCounter.jsonl
+    answerFile=11_DV-tamperednews-blip2$counter
+    activeModels+=(${answerFile})
+    if [ $3 -eq 1 ]
+    then
+        python ./model_scripts/blip2.py --question-file $questionFile --answer-file-path $answerFilePath --answer-file-name $answerFile &
+        PID=$!
+        wait $PID
+    fi
+
+    newCounter=$((counter + 1))
+    questionFile=$1/_questions/questions_tamperednews-$newCounter.jsonl
+    answerFile=11_DV-tamperednews-instructBlip$counter
+    activeModels+=(${answerFile})
+    if [ $3 -eq 1 ]
+    then
+        python ./model_scripts/instructblip.py --question-file $questionFile --answer-file-path $answerFilePath --answer-file-name $answerFile &
+        PID=$!
+        wait $PID
+    fi
+
+    newCounter=$((counter + 2))
+    questionFile=$1/_questions/questions_tamperednews-$newCounter.jsonl
+    modelPath=./models/llava-1.5-7b-hf/
+    answerFile=11_DV-tamperednews-llava_15_7b$counter
+    activeModels+=(${answerFile})
+    if [ $3 -eq 1 ]
+    then
+        python ./model_scripts/llava.py --question-file $questionFile --answer-file-path $answerFilePath --model-path $modelPath --answer-file-name $answerFile &
+        PID=$!
+        wait $PID
+    fi
+
+    newCounter=$((counter + 2))
+    questionFile=$1/_questions/questions_tamperednews-$newCounter.jsonl
+    modelPath=./models/llava-1.5-13b-hf/
+    answerFile=11_DV-tamperednews-llava_15_13b$counter
+    activeModels+=(${answerFile})
+    if [ $3 -eq 1 ]
+    then
+        python ./model_scripts/llava-4bit.py --question-file $questionFile --answer-file-path $answerFilePath --model-path $modelPath --answer-file-name $answerFile &
+        PID=$!
+        wait $PID
+    fi
+
+    newCounter=$((counter + 2))
+    questionFile=$1/_questions/questions_tamperednews-$newCounter.jsonl
+    modelPath=./models/llava-v1.6-mistral-7b-hf/
+    answerFile=11_DV-tamperednews-llava_16_7b$counter
+    activeModels+=(${answerFile})
+    if [ $3 -eq 1 ]
+    then
+        python ./model_scripts/llava-1.6.py --question-file $questionFile --answer-file-path $answerFilePath --model-path $modelPath --answer-file-name $answerFile &
+        PID=$!
+        wait $PID
+    fi
+
+    python $1/scripts/tamperednews/analyze_answers.py --models ${activeModels[@]} &
     PID=$!
     wait $PID
-fi
 
-answerFile=11_DV-tamperednews-instructBlip
-activeModels+=(${answerFile})
-if [ $3 -eq 1 ]
-then
-    python ./model_scripts/instructblip.py --question-file $questionFile --answer-file-path $answerFilePath --answer-file-name $answerFile &
+    python $1/scripts/tamperednews/printResultTable.py --models ${activeModels[@]} &
     PID=$!
     wait $PID
-fi
-
-modelPath=./models/llava-1.5-7b-hf/
-answerFile=11_DV-tamperednews-llava_15_7b
-activeModels+=(${answerFile})
-if [ $3 -eq 1 ]
-then
-    python ./model_scripts/llava.py --question-file $questionFile --answer-file-path $answerFilePath --model-path $modelPath --answer-file-name $answerFile &
-    PID=$!
-    wait $PID
-fi
-
-modelPath=./models/llava-1.5-13b-hf/
-answerFile=11_DV-tamperednews-llava_15_13b
-activeModels+=(${answerFile})
-if [ $3 -eq 1 ]
-then
-    python ./model_scripts/llava-4bit.py --question-file $questionFile --answer-file-path $answerFilePath --model-path $modelPath --answer-file-name $answerFile &
-    PID=$!
-    wait $PID
-fi
-
-modelPath=./models/llava-v1.6-mistral-7b-hf/
-answerFile=11_DV-tamperednews-llava_16_7b
-activeModels+=(${answerFile})
-if [ $3 -eq 1 ]
-then
-    python ./model_scripts/llava.py --question-file $questionFile --answer-file-path $answerFilePath --model-path $modelPath --answer-file-name $answerFile &
-    PID=$!
-    wait $PID
-fi
-
-# - - - - - - - - - -
-
-python $1/scripts/tamperednews/analyze_answers.py --models ${activeModels[@]} &
-PID=$!
-wait $PID
-
-python $1/scripts/tamperednews/printResultTable.py --models ${activeModels[@]} &
-PID=$!
-wait $PID
+done

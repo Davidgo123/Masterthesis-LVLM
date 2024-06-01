@@ -48,15 +48,24 @@ def createSingleEntityQuestions(args):
             for entityObject in entityObjects:
                 if lineObject[entityObject['label']] == 1:
 
-                    baseQuestion = "\"Is the {} {} visible in this photo ?\""
-
                     # random, ...
                     for testLabel in entityObject['test_labels']:
                         if testLabel in lineObject['test_' + entityObject['name']]:
                             # text entites
                             if 'untampered' in lineObject['test_' + entityObject['name']]:
+
+                                # multi entity questions
+                                if "Decide" in args.prompt:
+                                    createMultiEntityQuestions(args, lineObject, entityObject, testLabel)
+                                    continue
+                                    
+                                # single entity questions
                                 for entityID in lineObject['test_' + entityObject['name']]['untampered']:
-                                    question = baseQuestion.format(entityObject['name'][:-1], extractNameById(entityID, entityObject['entities']))
+                                    question = args.prompt.replace("<type>", entityObject['name'][:-1])
+                                    orgID = extractNameById(entityID, entityObject['entities'])
+                                    if not orgID:
+                                        continue
+                                    question = question.replace("<name>", orgID)
                                     # text entites (validated visible)
                                     if 'visible' in lineObject['test_' + entityObject['name']]:
                                         if entityID in lineObject['test_' + entityObject['name']]['visible']:
@@ -68,8 +77,76 @@ def createSingleEntityQuestions(args):
                             
                             # test entites
                             for entityID in lineObject['test_' + entityObject['name']][testLabel]:
-                                question = baseQuestion.format(entityObject['name'][:-1], extractNameById(entityID, entityObject['entities']))
+                                question = args.prompt.replace("<type>", entityObject['name'][:-1])
+                                orgID = extractNameById(entityID, entityObject['entities'])
+                                if not orgID:
+                                    continue
+                                question = question.replace("<name>", orgID)
                                 saveQuestion(args, str(lineObject['id']), str(question), entityObject['name'], testLabel, "test", entityID, "no", "yes")
+
+
+
+def createMultiEntityQuestions(args, lineObject, entityObject, testLabel):
+    orginalEntityIDs = [] 
+    visibleEntityIDs = []
+    tamperedEntityIDs = []
+
+    for entityID in lineObject['test_' + entityObject['name']]['untampered']:
+        orginalEntityIDs.append(entityID)
+        if 'visible' in lineObject['test_' + entityObject['name']]:
+            if entityID in lineObject['test_' + entityObject['name']]['visible']:
+                visibleEntityIDs.append(entityID)            
+    
+    for entityID in lineObject['test_' + entityObject['name']][testLabel]:
+        tamperedEntityIDs.append(entityID)
+
+    if visibleEntityIDs and tamperedEntityIDs:
+        if "name1" in args.prompt:
+            for visibleEntity in visibleEntityIDs:
+                index = orginalEntityIDs.index(visibleEntity)
+                
+                if index >= len(tamperedEntityIDs):
+                    continue
+
+                question = args.prompt.replace("<type>", entityObject['name'][:-1])
+                orgID = extractNameById(orginalEntityIDs[index], entityObject['entities'])
+                tampID = extractNameById(tamperedEntityIDs[index], entityObject['entities'])
+                
+                if not orgID or not tampID:
+                    continue
+
+                if (random.randint(0,1) == 0):
+                    question = question.replace("<name1>", orgID)
+                    question = question.replace("<name2>", tampID)
+                    saveQuestion(args, str(lineObject['id']), str(question), str(entityObject['name']), str(testLabel), "-", entityID, "A", "B")
+                else:
+                    question = question.replace("<name1>", tampID)
+                    question = question.replace("<name2>", orgID)
+                    saveQuestion(args, str(lineObject['id']), str(question), str(entityObject['name']), str(testLabel), "-", entityID, "B", "A")
+
+        elif "set1" in args.prompt:
+            indices = []
+            for visibleEntity in visibleEntityIDs:
+                indices.append(orginalEntityIDs.index(visibleEntity))
+
+            if max(indices) >= len(tamperedEntityIDs):
+                return
+
+            question = args.prompt.replace("<types>", entityObject['name'])
+            orgIDs = str([extractNameById(orginalEntityIDs[i], entityObject['entities']) for i in indices])
+            tampIDs = str([extractNameById(tamperedEntityIDs[i], entityObject['entities']) for i in indices])
+
+            if not orgIDs or not tampIDs:
+                return
+            
+            if (random.randint(0,1) == 0):
+                question = question.replace("<set1>", orgIDs)
+                question = question.replace("<set2>", tampIDs)
+                saveQuestion(args, str(lineObject['id']), str(question), str(entityObject['name']), str(testLabel), "-", entityID, "A", "B")
+            else:
+                question = question.replace("<set1>", tampIDs)
+                question = question.replace("<set2>", orgIDs)
+                saveQuestion(args, str(lineObject['id']), str(question), str(entityObject['name']), str(testLabel), "-", entityID, "B", "A")
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
     
@@ -86,6 +163,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--question-file", type=str, default="")
     parser.add_argument("--base-path", type=str, default="")
+    parser.add_argument("--prompt", type=str, default="")
     args = parser.parse_args()
 
     open(args.question_file, 'w').close()

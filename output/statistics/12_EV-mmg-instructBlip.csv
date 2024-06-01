@@ -1,4 +1,4 @@
 entity,testlabel,modelname,correct,wrong,undefinied,documents
-locations,city,12_EV-mmg-instructBlip,0.3,0.68,0.02,137
-locations,continent,12_EV-mmg-instructBlip,0.6,0.39,0.01,193
-locations,country,12_EV-mmg-instructBlip,0.59,0.4,0.01,199
+locations,continent,12_EV-mmg-instructBlip,0.59,0.39,0.02,193
+locations,country,12_EV-mmg-instructBlip,0.63,0.37,0.0,199
+locations,city,12_EV-mmg-instructBlip,0.3,0.69,0.01,137

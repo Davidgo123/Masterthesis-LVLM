@@ -54,6 +54,7 @@ def printResults(args):
                 getValue(resultsVLM[args.models[2]], entityType, category), 
                 getValue(resultsVLM[args.models[3]], entityType, category),
                 getValue(resultsVLM[args.models[4]], entityType, category))
+            
             maxValue = max([float(num) for num in re.findall(r'\d+\.\d+', sentence_1)])
             sentence_1 = sentence_1.replace(str(maxValue), r'\textbf{' + str(maxValue) + r'}')
 

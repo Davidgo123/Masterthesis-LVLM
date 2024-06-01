@@ -1,4 +1,4 @@
 entity,testlabel,modelname,correct,wrong,undefinied,documents
-persons,orginal,212_EV_1xN-tamperednews-llava_15_7b,0.31,0.69,0.0,464
-locations,orginal,212_EV_1xN-tamperednews-llava_15_7b,0.07,0.93,-0.0,607
-events,orginal,212_EV_1xN-tamperednews-llava_15_7b,0.01,0.99,0.0,134
+persons,orginal,212_EV_1xN-tamperednews-llava_15_7b,0.0,0.37,0.63,464
+locations,orginal,212_EV_1xN-tamperednews-llava_15_7b,0.0,0.07,0.93,607
+events,orginal,212_EV_1xN-tamperednews-llava_15_7b,0.0,0.01,0.99,134

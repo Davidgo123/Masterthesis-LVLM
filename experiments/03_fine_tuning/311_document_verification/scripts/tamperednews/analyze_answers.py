@@ -78,6 +78,17 @@ def computeAnswer(args):
                             else:
                                 scoreTest.append(0.00)
 
+                        if question['set'] == "-":
+                            if simplifyAnswer(question['response']) == simplifyAnswer(question['gTruth']): #and simplifyAnswer(question['probText']) == simplifyAnswer(question['gTruth']):
+                                scoreText.append(float(question['prob']))
+                                scoreTest.append(0.0)
+                            elif simplifyAnswer(question['response']) == simplifyAnswer(question['gWrong']): #and simplifyAnswer(question['probText']) == simplifyAnswer(question['gWrong']):
+                                scoreText.append(0.0)
+                                scoreTest.append(float(question['prob']))
+                            else:
+                                scoreText.append(0.00)
+                                scoreTest.append(0.00)
+                                
                     # add counter to statistic if not exist
                     if testlabel not in model['statistic'][entityType]:
                         model['statistic'][entityType][testlabel] = (0, 0, 0)

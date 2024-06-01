@@ -122,9 +122,17 @@ def createSingleEntityQuestions(args):
                             else:
                                 entityFiles = glob.glob(f"/nfs/data/image_repurposing/BreakingNews/reference_images/wd_{str(entityObject['name']).upper()}/{entityID}/google_*.jpg")
                             
+                            if len(entityFiles) == 0:
+                                continue
+
                             for counter, entityFile in enumerate(entityFiles):
                                 generate1x1Image(args, f"./_datasets/tamperednews/images/{str(lineObject['id'])}.jpg", entityFile, str(lineObject['id']), str(entityID), str(counter))
-                                question = baseQuestion.format(entityObject['name'][:-1])
+                                
+                                # TODO
+                                #question = baseQuestion.format(entityObject['name'][:-1])
+                                question = args.prompt.replace("<type>", entityObject['name'][:-1])
+                                question = question.replace("<name>", extractNameById(entityID, entityObject['entities']))
+
                                 # text entites (validated visible)
                                 if 'visible' in lineObject['test_' + entityObject['name']]:
                                     if entityID in lineObject['test_' + entityObject['name']]['visible']:
@@ -149,6 +157,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--question-file", type=str, default="")
     parser.add_argument("--base-path", type=str, default="")
+    parser.add_argument("--prompt", type=str, default="")
     args = parser.parse_args()
 
     open(args.question_file, 'w').close()

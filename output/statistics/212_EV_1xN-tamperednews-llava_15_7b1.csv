@@ -1,0 +1,4 @@
+entity,testlabel,modelname,correct,wrong,undefinied,documents
+persons,orginal,212_EV_1xN-tamperednews-llava_15_7b1,0.48,0.51,0.01,464
+locations,orginal,212_EV_1xN-tamperednews-llava_15_7b1,0.32,0.68,-0.0,607
+events,orginal,212_EV_1xN-tamperednews-llava_15_7b1,0.72,0.27,0.01,134

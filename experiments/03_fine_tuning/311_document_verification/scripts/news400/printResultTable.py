@@ -48,12 +48,9 @@ def printResults(args):
         for category in resultsCNN[entityType]:
 
             sentence_0 = ("%s & %s & " % (category, resultsCNN[entityType][category])).replace('_', '-')
-            sentence_1 = "%s & %s & %s & %s & %s \\\\" % (
+            sentence_1 = "%s & %s \\\\" % (
                 getValue(resultsVLM[args.models[0]], entityType, category), 
-                getValue(resultsVLM[args.models[1]], entityType, category), 
-                getValue(resultsVLM[args.models[2]], entityType, category), 
-                getValue(resultsVLM[args.models[3]], entityType, category),
-                getValue(resultsVLM[args.models[4]], entityType, category))
+                getValue(resultsVLM[args.models[1]], entityType, category))
 
             maxValue = max([float(num) for num in re.findall(r'\d+\.\d+', sentence_1)])
             sentence_1 = sentence_1.replace(str(maxValue), r'\textbf{' + str(maxValue) + r'}')

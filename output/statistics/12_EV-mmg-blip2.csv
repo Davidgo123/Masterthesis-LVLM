@@ -1,4 +1,4 @@
 entity,testlabel,modelname,correct,wrong,undefinied,documents
-locations,continent,12_EV-mmg-blip2,0.24,0.7,0.06,193
-locations,city,12_EV-mmg-blip2,0.24,0.72,0.04,137
-locations,country,12_EV-mmg-blip2,0.34,0.56,0.1,199
+locations,continent,12_EV-mmg-blip2,0.0,1.0,0.0,193
+locations,city,12_EV-mmg-blip2,0.0,1.0,0.0,137
+locations,country,12_EV-mmg-blip2,0.0,0.99,0.01,199

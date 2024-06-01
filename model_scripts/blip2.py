@@ -4,6 +4,8 @@ import json
 import torch
 import random
 from transformers import AutoProcessor, Blip2ForConditionalGeneration
+import logging
+from transformers import logging as transformers_logging
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
@@ -116,6 +118,9 @@ def run(args, answerFile):
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.ERROR)
+    transformers_logging.set_verbosity_error()
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--model-path", type=str, default="./models/blip2-opt-6.7b/")
     parser.add_argument("--question-file", type=str, default="")

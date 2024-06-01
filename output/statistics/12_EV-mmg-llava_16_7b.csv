@@ -1,4 +1,4 @@
 entity,testlabel,modelname,correct,wrong,undefinied,documents
-locations,continent,12_EV-mmg-llava_16_7b,0.64,0.35,0.01,193
-locations,city,12_EV-mmg-llava_16_7b,0.53,0.34,0.13,137
-locations,country,12_EV-mmg-llava_16_7b,0.71,0.27,0.02,199
+locations,continent,12_EV-mmg-llava_16_7b,0.3,0.7,0.0,193
+locations,country,12_EV-mmg-llava_16_7b,0.55,0.45,-0.0,199
+locations,city,12_EV-mmg-llava_16_7b,0.26,0.74,0.0,137

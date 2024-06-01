@@ -1,0 +1,11 @@
+entity,category,modelname,correct,wrong,undefinied,documents
+persons,country-gender-sensitive,11_DV-tamperednews-instructBlip0,0.79,0.21,-0.0,101
+persons,country-sensitive,11_DV-tamperednews-instructBlip0,0.86,0.13,0.01,101
+persons,random,11_DV-tamperednews-instructBlip0,0.86,0.13,0.01,101
+persons,gender-sensitive,11_DV-tamperednews-instructBlip0,0.84,0.16,0.0,101
+locations,city-region,11_DV-tamperednews-instructBlip0,0.87,0.13,0.0,100
+locations,region-country,11_DV-tamperednews-instructBlip0,0.91,0.08,0.01,100
+locations,random,11_DV-tamperednews-instructBlip0,0.91,0.07,0.02,100
+locations,country-continent,11_DV-tamperednews-instructBlip0,0.93,0.06,0.01,100
+events,random,11_DV-tamperednews-instructBlip0,0.89,0.11,-0.0,94
+events,same_instance,11_DV-tamperednews-instructBlip0,0.9,0.1,-0.0,94

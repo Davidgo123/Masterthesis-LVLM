@@ -1,0 +1,4 @@
+entity,testlabel,modelname,correct,wrong,undefinied,documents
+persons,orginal,222_EV_1xN-tamperednews-mantis2,0.83,0.16,0.01,464
+locations,orginal,222_EV_1xN-tamperednews-mantis2,0.74,0.26,0.0,607
+events,orginal,222_EV_1xN-tamperednews-mantis2,0.31,0.69,0.0,134

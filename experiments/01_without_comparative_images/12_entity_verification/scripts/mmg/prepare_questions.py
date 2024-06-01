@@ -52,8 +52,6 @@ def createSingleEntityQuestions(args):
             # extract line
             lineObject = json.loads(line)
 
-            baseQuestion = "\"Is the {} {} visible in this photo ?\""
-
             # city, country, continent
             for instance in entityObject['test_labels']:
 
@@ -62,7 +60,8 @@ def createSingleEntityQuestions(args):
                     continue
 
                 # save untampered question 
-                question = baseQuestion.format(instance, extractNameById(entityID, entityObject['entities']))
+                question = args.prompt.replace("<type>", instance)
+                question = question.replace("<name>", extractNameById(entityID, entityObject['entities']))
                 saveQuestion(args, str(lineObject['id']), str(question), str(entityObject['name']), str(instance), "text", entityID, "yes", "no")
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
@@ -79,6 +78,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--question-file", type=str, default="")
     parser.add_argument("--base-path", type=str, default="")
+    parser.add_argument("--prompt", type=str, default="")
     args = parser.parse_args()
 
     # create new subsample from mmg dataset

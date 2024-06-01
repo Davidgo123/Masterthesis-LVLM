@@ -45,12 +45,16 @@ def createSingleEntityQuestions(args):
             for entityObject in entityObjects:
                 if lineObject[entityObject['label']] == 1:
 
-                    baseQuestion = "\"Is the {} {} visible in this photo ?\""
-
                     # text entites
                     if 'untampered' in lineObject['test_' + entityObject['name']]:
                         for entityID in lineObject['test_' + entityObject['name']]['untampered']:
-                            question = baseQuestion.format(entityObject['name'][:-1], extractNameById(entityID, entityObject['entities']))
+                            question = args.prompt.replace("<type>", entityObject['name'][:-1])
+
+                            if not extractNameById(entityID, entityObject['entities']):
+                                continue
+                            
+                            question = question.replace("<name>", extractNameById(entityID, entityObject['entities']))
+                            
                             # text entites (validated visible)
                             if 'visible' in lineObject['test_' + entityObject['name']]:
                                 if entityID in lineObject['test_' + entityObject['name']]['visible']:
@@ -75,6 +79,7 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--question-file", type=str, default="")
     parser.add_argument("--base-path", type=str, default="")
+    parser.add_argument("--prompt", type=str, default="")
     args = parser.parse_args()
 
     open(args.question_file, 'w').close()

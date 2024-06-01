@@ -1,11 +1,13 @@
-You are using the default legacy behaviour of the <class 'transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast'>. This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565
-Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:03,  1.14s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.44it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:01<00:00,  1.78it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  2.50it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:02<00:00,  1.93it/s]
-/nfs/home/ernstd/miniconda3/envs/transformer/lib/python3.12/site-packages/transformers/generation/utils.py:1156: UserWarning: Using the model-agnostic default `max_length` (=20) to control the generation length. We recommend setting `max_new_tokens` to control the maximum length of the generation.
-  warnings.warn(
-Traceback (most recent call last):
-  File "/nfs/home/ernstd/masterthesis_scripts/./experiments/03_fine_tuning/311_document_verification/scripts/tamperednews/printResultTable.py", line 69, in <module>
-    printResults(args)
-  File "/nfs/home/ernstd/masterthesis_scripts/./experiments/03_fine_tuning/311_document_verification/scripts/tamperednews/printResultTable.py", line 53, in printResults
-    getValue(resultsVLM[args.models[1]], entityType, category), 
-                        ~~~~~~~~~~~^^^
-IndexError: list index out of range
+        random & 0.95 & \textbf{0.59} & 0.49 \\
+        country-sensitive & 0.92 & 0.45 & \textbf{0.53} \\
+        gender-sensitive & 0.95 & 0.54 & \textbf{0.55} \\
+        country-gender-sensitive & 0.92 & \textbf{0.54} & \textbf{0.54} \\
+
+        random & 0.85 & \textbf{0.62} & 0.49 \\
+        city-region & 0.74 & 0.46 & \textbf{0.55} \\
+        country-continent & 0.84 & \textbf{0.54} & 0.43 \\
+        region-country & 0.80 & \textbf{0.59} & 0.45 \\
+
+        random & 1.00 & \textbf{0.52} & 0.38 \\
+        same-instance & 0.74 & \textbf{0.63} & 0.51 \\
+

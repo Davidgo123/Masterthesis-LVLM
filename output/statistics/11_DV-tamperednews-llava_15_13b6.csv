@@ -1,0 +1,11 @@
+entity,category,modelname,correct,wrong,undefinied,documents
+persons,random,11_DV-tamperednews-llava_15_13b6,0.86,0.14,0.0,94
+persons,gender-sensitive,11_DV-tamperednews-llava_15_13b6,0.81,0.19,-0.0,94
+persons,country-gender-sensitive,11_DV-tamperednews-llava_15_13b6,0.78,0.22,-0.0,94
+persons,country-sensitive,11_DV-tamperednews-llava_15_13b6,0.84,0.16,0.0,94
+locations,country-continent,11_DV-tamperednews-llava_15_13b6,0.93,0.07,-0.0,94
+locations,random,11_DV-tamperednews-llava_15_13b6,0.93,0.07,-0.0,94
+locations,region-country,11_DV-tamperednews-llava_15_13b6,0.9,0.1,-0.0,94
+locations,city-region,11_DV-tamperednews-llava_15_13b6,0.89,0.11,-0.0,94
+events,same_instance,11_DV-tamperednews-llava_15_13b6,0.94,0.06,0.0,94
+events,random,11_DV-tamperednews-llava_15_13b6,0.97,0.03,0.0,94

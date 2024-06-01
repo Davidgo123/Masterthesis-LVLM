@@ -4,7 +4,8 @@ import json
 import torch
 import random
 from transformers import InstructBlipProcessor, InstructBlipForConditionalGeneration
-
+import logging
+from transformers import logging as transformers_logging
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
@@ -34,10 +35,10 @@ answerFullSet = {
 
 class instructBlipInstance:
     def __init__(self, args):
-        self.processor = InstructBlipProcessor.from_pretrained("./models/instructblip-vicuna-7b/")
+        self.processor = InstructBlipProcessor.from_pretrained('./models/instructblip-vicuna-7b/')
         self.model = InstructBlipForConditionalGeneration.from_pretrained(args.model_path, torch_dtype=torch.float16)
         self.model.to(args.device)
-
+        
     # - - - - - - - - - - - - - - - -
 
     # clean up answer file
@@ -68,18 +69,18 @@ class instructBlipInstance:
 
     # return answer of model
     def getResponse(self, args, prompt, image):
-        inputs = self.processor(images=image, text=prompt, max_new_tokens=1, return_tensors="pt").to(args.device, torch.float16)
+        inputs = self.processor(images=image, text=prompt, return_tensors="pt").to(args.device, torch.float16)
         with torch.no_grad():
             outputs = self.model.generate(**inputs, max_new_tokens=1)
         return self.processor.batch_decode(outputs, skip_special_tokens=True)[0]
 
     # return probability
     def getProbabilities(self, args, prompt, image):   
-        inputs = self.processor(images=image, text=prompt, max_new_tokens=1, return_tensors="pt").to(args.device, torch.float16)
+        inputs = self.processor(images=image, text=prompt, return_tensors="pt").to(args.device, torch.float16)
         with torch.no_grad():
-            outputs = self.model.generate(**inputs, output_scores=True, return_dict_in_generate=True)
-            
-        probas = outputs.scores[0][:, self.answer_sets_token_id[self.index2label.get(0)] + self.answer_sets_token_id[self.index2label.get(1)]].softmax(-1)
+            outputs = self.model.generate(**inputs, max_new_tokens=1, output_scores=True, return_dict_in_generate=True)
+        
+        probas = outputs.scores[0][:, self.answer_sets_token_id[self.index2label.get(0)] + self.answer_sets_token_id[self.index2label.get(1)]].softmax(-1)       
         label1_proba_matrix = probas[:, :len(self.answer_sets[self.index2label.get(0)])].sum(dim=1)
         label2_proba_matrix = probas[:, len(self.answer_sets[self.index2label.get(0)]):].sum(dim=1)
         label_probas = torch.cat((label1_proba_matrix.reshape(-1, 1), label2_proba_matrix.reshape(-1, 1)), -1)
@@ -120,6 +121,9 @@ def run(args, answerFile):
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.ERROR)
+    transformers_logging.set_verbosity_error()
+
     parser = argparse.ArgumentParser()
     parser.add_argument("--model-path", type=str, default="./models/instructblip-vicuna-7b/")
     parser.add_argument("--question-file", type=str, default="")

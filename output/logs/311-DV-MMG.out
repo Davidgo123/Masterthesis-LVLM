@@ -1,31 +1,16 @@
-You are using the default legacy behaviour of the <class 'transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast'>. This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565
-Loading checkpoint shards:   0%|          | 0/2 [00:00<?, ?it/s]Loading checkpoint shards:  50%|█████     | 1/2 [00:00<00:00,  1.19it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:01<00:00,  1.50it/s]Loading checkpoint shards: 100%|██████████| 2/2 [00:01<00:00,  1.45it/s]
-/nfs/home/ernstd/miniconda3/envs/transformer/lib/python3.12/site-packages/transformers/generation/utils.py:1156: UserWarning: Using the model-agnostic default `max_length` (=20) to control the generation length. We recommend setting `max_new_tokens` to control the maximum length of the generation.
-  warnings.warn(
-You are using the default legacy behaviour of the <class 'transformers.models.llama.tokenization_llama_fast.LlamaTokenizerFast'>. This is expected, and simply means that the `legacy` (previous) behavior will be used so nothing changes for you. If you want to use the new behaviour, set `legacy=False`. This should only be set if you understand what it means, and thoroughly read the reason why this was added as explained in https://github.com/huggingface/transformers/pull/24565
-Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:00<00:02,  1.36it/s]Loading checkpoint shards:  50%|█████     | 2/4 [00:01<00:01,  1.74it/s]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:01<00:00,  1.91it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  2.61it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:01<00:00,  2.19it/s]
-/nfs/home/ernstd/miniconda3/envs/transformer/lib/python3.12/site-packages/transformers/generation/utils.py:1156: UserWarning: Using the model-agnostic default `max_length` (=20) to control the generation length. We recommend setting `max_new_tokens` to control the maximum length of the generation.
-  warnings.warn(
-Traceback (most recent call last):
-  File "/nfs/home/ernstd/masterthesis_scripts/./experiments/03_fine_tuning/311_document_verification/scripts/mmg/analyze_answers.py", line 115, in <module>
-    computeAnswer(args)
-  File "/nfs/home/ernstd/masterthesis_scripts/./experiments/03_fine_tuning/311_document_verification/scripts/mmg/analyze_answers.py", line 31, in computeAnswer
-    answerObject = json.loads(line)
-                   ^^^^^^^^^^^^^^^^
-  File "/nfs/home/ernstd/miniconda3/envs/transformer/lib/python3.12/json/__init__.py", line 346, in loads
-    return _default_decoder.decode(s)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/nfs/home/ernstd/miniconda3/envs/transformer/lib/python3.12/json/decoder.py", line 337, in decode
-    obj, end = self.raw_decode(s, idx=_w(s, 0).end())
-               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "/nfs/home/ernstd/miniconda3/envs/transformer/lib/python3.12/json/decoder.py", line 353, in raw_decode
-    obj, end = self.scan_once(s, idx)
-               ^^^^^^^^^^^^^^^^^^^^^^
-json.decoder.JSONDecodeError: Invalid control character at: line 1 column 283 (char 282)
-Traceback (most recent call last):
-  File "/nfs/home/ernstd/masterthesis_scripts/./experiments/03_fine_tuning/311_document_verification/scripts/mmg/printResultTable.py", line 74, in <module>
-    printResults(args)
-  File "/nfs/home/ernstd/masterthesis_scripts/./experiments/03_fine_tuning/311_document_verification/scripts/mmg/printResultTable.py", line 46, in printResults
-    with open(f"./output/statistics/{modelname}.csv", 'r') as file:
-         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-FileNotFoundError: [Errno 2] No such file or directory: './output/statistics/311_DV-mmg-instructBlip_base.csv'
+{'city': {'random': '0.85', 'city-region': '0.74', 'country-continent': '0.84', 'region-country': '0.80'}, 'country': {'random': '0.85', 'city-region': '0.74', 'country-continent': '0.84', 'region-country': '0.80'}, 'continent': {'random': '0.85', 'city-region': '0.74', 'country-continent': '0.84', 'region-country': '0.80'}}
+        random & 0.85 & None & None \\
+        city-region & 0.74 & None & None \\
+        country-continent & 0.84 & None & None \\
+        region-country & 0.80 & None & None \\
+
+        random & 0.85 & None & None \\
+        city-region & 0.74 & None & None \\
+        country-continent & 0.84 & None & None \\
+        region-country & 0.80 & None & None \\
+
+        random & 0.85 & 0.73 & 0.53 \\
+        city-region & 0.74 & 0.77 & 0.5 \\
+        country-continent & 0.84 & 0.73 & 0.52 \\
+        region-country & 0.80 & 0.7 & 0.54 \\
+

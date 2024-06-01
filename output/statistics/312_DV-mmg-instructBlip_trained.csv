@@ -1,0 +1,5 @@
+entity,category,modelname,correct,wrong,undefinied,documents
+continent,country-continent,312_DV-mmg-instructBlip_trained,0.52,0.48,0.0,200
+continent,city-region,312_DV-mmg-instructBlip_trained,0.5,0.5,0.0,200
+continent,random,312_DV-mmg-instructBlip_trained,0.53,0.47,0.0,200
+continent,region-country,312_DV-mmg-instructBlip_trained,0.54,0.46,-0.0,200

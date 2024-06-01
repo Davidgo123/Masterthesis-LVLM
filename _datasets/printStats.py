@@ -51,7 +51,7 @@ def count(dataset):
                 for entity in entities:
                     if "annotation_" + entity in lineObject:
                         # documents
-                        if lineObject["annotation_" + entity]:
+                        if lineObject["annotation_" + entity] == 1:
                             countedDocuments[entity] = countedDocuments[entity] + 1
                         # entities
                         if "test_" + entity in lineObject:

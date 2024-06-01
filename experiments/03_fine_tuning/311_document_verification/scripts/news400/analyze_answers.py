@@ -56,8 +56,9 @@ def computeAnswer(args):
         # evaluation for each entity type (person, location, event)
         for entityType in groupedModelAnswers:
             for testlabel in groupedModelAnswers[entityType]:
+
+                # iterate over each question of same id and compute score
                 for questionID in groupedModelAnswers[entityType][testlabel]:
-                    # iterate over each question of same id and compute score
                     scoreText = []
                     scoreTest = []
                     for question in groupedModelAnswers[entityType][testlabel][questionID]:
@@ -75,6 +76,17 @@ def computeAnswer(args):
                             elif simplifyAnswer(question['response']) == 'no' and simplifyAnswer(question['probText']) == 'no':
                                 scoreTest.append(1.0 - float(question['prob']))
                             else:
+                                scoreTest.append(0.00)
+                        
+                        if question['set'] == "-":
+                            if simplifyAnswer(question['response']) == simplifyAnswer(question['gTruth']): #and simplifyAnswer(question['probText']) == simplifyAnswer(question['gTruth']):
+                                scoreText.append(float(question['prob']))
+                                scoreTest.append(0.0)
+                            elif simplifyAnswer(question['response']) == simplifyAnswer(question['gWrong']): #and simplifyAnswer(question['probText']) == simplifyAnswer(question['gWrong']):
+                                scoreText.append(0.0)
+                                scoreTest.append(float(question['prob']))
+                            else:
+                                scoreText.append(0.00)
                                 scoreTest.append(0.00)
 
                     # add counter to statistic if not exist

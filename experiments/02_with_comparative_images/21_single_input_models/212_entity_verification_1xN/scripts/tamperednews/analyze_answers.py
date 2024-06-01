@@ -64,9 +64,9 @@ def computeAnswer(args):
                         "no": []
                     }
                     for question in groupedModelAnswers[entityType][testlabel][questionID]:
-                        if simplifyAnswer(question['response']) == 'yes' and simplifyAnswer(question['probText']) == 'yes':
+                        if simplifyAnswer(question['response']) == simplifyAnswer(question['gTruth']) and simplifyAnswer(question['probText']) == simplifyAnswer(question['gTruth']):
                             probabilities['yes'].append(float(question['prob']))
-                        elif simplifyAnswer(question['response']) == 'no' and simplifyAnswer(question['probText']) == 'no':
+                        elif simplifyAnswer(question['response']) == simplifyAnswer(question['gWrong']) and simplifyAnswer(question['probText']) == simplifyAnswer(question['gWrong']):
                             probabilities['no'].append(float(question['prob']))
 
                     if len(probabilities['yes']) == 0:
@@ -79,15 +79,15 @@ def computeAnswer(args):
                         model['statistic'][entityType][testlabel] = (0, 0, 0)
                     current_tuple = model['statistic'][entityType][testlabel]
 
-                    # check if model answer is correct  
-                    if mean(probabilities['yes']) > mean(probabilities['no']):
-                        model['statistic'][entityType][testlabel] = (current_tuple[0]+1, current_tuple[1], current_tuple[2])
-                    # check if model answer is wrong
-                    if mean(probabilities['yes']) < mean(probabilities['no']):
+                  # check if model answer is correct  
+                    if len(probabilities['yes']) > len(probabilities['no']):
                         model['statistic'][entityType][testlabel] = (current_tuple[0]+1, current_tuple[1]+1, current_tuple[2])
+                    # check if model answer is wrong
+                    elif len(probabilities['yes']) < len(probabilities['no']):
+                        model['statistic'][entityType][testlabel] = (current_tuple[0]+1, current_tuple[1], current_tuple[2]+1)
                     # check if model answer is undef
                     else: 
-                        model['statistic'][entityType][testlabel] = (current_tuple[0]+1, current_tuple[1], current_tuple[2]+1)
+                        model['statistic'][entityType][testlabel] = (current_tuple[0]+1, current_tuple[1], current_tuple[2])
                 
         # prepare evaluation file for questionType
         answerFile = open(f"./output/statistics/{modelname}.csv", 'w', newline ='')

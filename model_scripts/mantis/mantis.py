@@ -12,6 +12,8 @@ from conversation import conv_mllava_v1_mmtag as default_conv_mmtag
 from preprocess_util import preprocess_interleaved_images_and_text
 from typing import List, Tuple, Union, Tuple
 from PIL import Image
+import logging
+from transformers import logging as transformers_logging
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
@@ -230,6 +232,8 @@ def run(args, answerFile):
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - 
 
 if __name__ == "__main__":
+    logging.basicConfig(level=logging.ERROR)
+    transformers_logging.set_verbosity_error()
     parser = argparse.ArgumentParser()
     parser.add_argument("--model-path", type=str, default="./models/Mantis-llava-7b/")
     parser.add_argument("--question-file", type=str, default="")
