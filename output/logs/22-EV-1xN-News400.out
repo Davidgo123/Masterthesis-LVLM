@@ -1,0 +1,9 @@
+        persons & 656 & \textbf{0.78} & \textbf{0.78} \\
+        locations & 483 & \textbf{0.7} & 0.64 \\
+        events & 46 & \textbf{0.2} & 0.17 \\
+        persons & 656 & \textbf{0.5} & 0.25 \\
+        locations & 483 & \textbf{0.71} & 0.48 \\
+        events & 46 & 0.35 & \textbf{0.76} \\
+        persons & 656 & \textbf{0.8} & 0.28 \\
+        locations & 483 & \textbf{0.7} & 0.32 \\
+        events & 46 & 0.22 & \textbf{0.76} \\

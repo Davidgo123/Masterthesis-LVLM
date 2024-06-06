@@ -1,2 +1,2 @@
 size=30000 
-sbatch -w gpu2 -c 12 --mem 32G --gres=gpu:h100:1 --output=./output/logs/310-vicuna-train.out ./experiments/03_fine_tuning/310_train/InstructBLIP_PEFT/run_scripts/instructblip/train/run_finetune_instructblip_experiments.sh tamperedNews 37 $size
+sbatch -w gpu2 -c 12 --mem 32G --gres=gpu:h100:1 --output=./output/logs/31-vicuna-train.out ./experiments/03_fine_tuning/31_train/InstructBLIP_PEFT/run_scripts/instructblip/train/run_finetune_instructblip_experiments.sh tamperedNews 37 $size

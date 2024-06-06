@@ -16,15 +16,16 @@ counter=0
 for prompt in "${prompts[@]}"; do
     activeModels=()
 
-    questionFile=$1/_questions/questions_tamperednews-$counter.jsonl
+    questionFile=$1/_questions/questions_news400-$counter.jsonl
     if [ $2 -eq 1 ]
     then
-        python $1/scripts/tamperednews/prepare_questions.py --base-path $1 --question-file $questionFile --prompt "$prompt" &
+        python $1/scripts/news400/prepare_questions.py --base-path $1 --question-file $questionFile --prompt "$prompt" &
         PID=$!
         wait $PID
     fi
 
-    answerFile=212_EV_1xN-tamperednews-blip2$counter
+
+    answerFile=21_EV_1xN-news400-blip2$counter
     activeModels+=(${answerFile})
     if [ $3 -eq 1 ]
     then
@@ -33,7 +34,7 @@ for prompt in "${prompts[@]}"; do
         wait $PID
     fi
 
-    answerFile=212_EV_1xN-tamperednews-instructBlip$counter
+    answerFile=21_EV_1xN-news400-instructBlip$counter
     activeModels+=(${answerFile})
     if [ $3 -eq 1 ]
     then
@@ -43,7 +44,7 @@ for prompt in "${prompts[@]}"; do
     fi
 
     modelPath=./models/llava-1.5-7b-hf/
-    answerFile=212_EV_1xN-tamperednews-llava_15_7b$counter
+    answerFile=21_EV_1xN-news400-llava_15_7b$counter
     activeModels+=(${answerFile})
     if [ $3 -eq 1 ]
     then
@@ -53,7 +54,7 @@ for prompt in "${prompts[@]}"; do
     fi
 
     modelPath=./models/llava-1.5-13b-hf/
-    answerFile=212_EV_1xN-tamperednews-llava_15_13b$counter
+    answerFile=21_EV_1xN-news400-llava_15_13b$counter
     activeModels+=(${answerFile})
     if [ $3 -eq 1 ]
     then
@@ -63,7 +64,7 @@ for prompt in "${prompts[@]}"; do
     fi
 
     modelPath=./models/llava-v1.6-mistral-7b-hf/
-    answerFile=212_EV_1xN-tamperednews-llava_16_7b$counter
+    answerFile=21_EV_1xN-news400-llava_16_7b$counter
     activeModels+=(${answerFile})
     if [ $3 -eq 1 ]
     then
@@ -72,13 +73,15 @@ for prompt in "${prompts[@]}"; do
         wait $PID
     fi
 
-    python $1/scripts/tamperednews/analyze_answers.py --models ${activeModels[@]} &
+    python $1/scripts/news400/analyze_answers.py --models ${activeModels[@]} &
     PID=$!
     wait $PID
 
-    python $1/scripts/tamperednews/printResultTable.py --models ${activeModels[@]} &
+    python $1/scripts/news400/printResultTable.py --models ${activeModels[@]} &
     PID=$!
     wait $PID
 
     let counter++
 done
+
+

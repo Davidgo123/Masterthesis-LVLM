@@ -60,6 +60,7 @@ def printResults(args):
 
             print("        " + sentence_0 + sentence_1)
         print()
+    print("------------------------------")
         
 # - - - - - - - - - - - - - - - - - - - - - -
 

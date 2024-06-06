@@ -1,77 +1,77 @@
-Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:05,  1.89s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:03<00:03,  1.65s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:04<00:01,  1.57s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:05<00:00,  1.11s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:05<00:00,  1.31s/it]
-Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:04,  1.46s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.42s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:04<00:01,  1.42s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.00s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.16s/it]
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:31<01:34, 31.50s/it]Loading checkpoint shards:  50%|█████     | 2/4 [01:02<01:02, 31.10s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [01:28<00:28, 28.97s/it]Loading checkpoint shards: 100%|██████████| 4/4 [01:35<00:00, 20.22s/it]Loading checkpoint shards: 100%|██████████| 4/4 [01:35<00:00, 23.89s/it]
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:37<01:53, 37.73s/it]Loading checkpoint shards:  50%|█████     | 2/4 [01:05<01:03, 31.70s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [01:32<00:29, 29.72s/it]Loading checkpoint shards: 100%|██████████| 4/4 [01:37<00:00, 20.10s/it]Loading checkpoint shards: 100%|██████████| 4/4 [01:37<00:00, 24.48s/it]
 /nfs/home/ernstd/miniconda3/envs/transformer/lib/python3.12/site-packages/transformers/models/llava/configuration_llava.py:100: FutureWarning: The `vocab_size` argument is deprecated and will be removed in v4.42, since it can be inferred from the `text_config`. Passing this argument has no effect
   warnings.warn(
-Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:00<00:01,  1.03it/s]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:01<00:00,  1.05it/s]Loading checkpoint shards: 100%|██████████| 3/3 [00:02<00:00,  1.08it/s]Loading checkpoint shards: 100%|██████████| 3/3 [00:02<00:00,  1.07it/s]
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [01:06<02:12, 66.03s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [02:19<01:10, 70.25s/it]Loading checkpoint shards: 100%|██████████| 3/3 [03:04<00:00, 58.90s/it]Loading checkpoint shards: 100%|██████████| 3/3 [03:04<00:00, 61.54s/it]
 model: 01_EV-news400-instructBlip0
-{'yes': 453, 'no': 736}
+{'no': 736, 'yes': 453}
 model: 01_EV-news400-blip20
-{'no': 359, 'yes': 827, 'jo': 1, 'ke': 1, 'rot': 1}
+{'yes': 827, 'no': 359, 'rot': 1, 'ke': 1, 'jo': 1}
 model: 01_EV-news400-llava1570
 {'yes': 819, 'no': 368, 'the': 2}
-Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:04,  1.48s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.48s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:04<00:01,  1.44s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.01s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.17s/it]
-Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:04,  1.43s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.38s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:04<00:01,  1.37s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.03it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.12s/it]
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:32<01:37, 32.36s/it]Loading checkpoint shards:  50%|█████     | 2/4 [01:02<01:02, 31.07s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [01:28<00:28, 28.94s/it]Loading checkpoint shards: 100%|██████████| 4/4 [01:35<00:00, 20.11s/it]Loading checkpoint shards: 100%|██████████| 4/4 [01:35<00:00, 23.88s/it]
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [01:04<03:12, 64.12s/it]Loading checkpoint shards:  50%|█████     | 2/4 [01:29<01:22, 41.39s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [01:55<00:34, 34.42s/it]Loading checkpoint shards: 100%|██████████| 4/4 [02:00<00:00, 22.87s/it]Loading checkpoint shards: 100%|██████████| 4/4 [02:00<00:00, 30.22s/it]
 /nfs/home/ernstd/miniconda3/envs/transformer/lib/python3.12/site-packages/transformers/models/llava/configuration_llava.py:100: FutureWarning: The `vocab_size` argument is deprecated and will be removed in v4.42, since it can be inferred from the `text_config`. Passing this argument has no effect
   warnings.warn(
-Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:00<00:01,  1.04it/s]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:01<00:00,  1.05it/s]Loading checkpoint shards: 100%|██████████| 3/3 [00:02<00:00,  1.11it/s]Loading checkpoint shards: 100%|██████████| 3/3 [00:02<00:00,  1.09it/s]
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [01:18<02:37, 78.76s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [02:34<01:17, 77.21s/it]Loading checkpoint shards: 100%|██████████| 3/3 [02:41<00:00, 45.13s/it]Loading checkpoint shards: 100%|██████████| 3/3 [02:41<00:00, 53.95s/it]
 model: 01_EV-news400-instructBlip1
-{'yes': 396, 'no': 793}
+{'no': 793, 'yes': 396}
 model: 01_EV-news400-blip21
-{'no': 388, 'yes': 801}
+{'yes': 801, 'no': 388}
 model: 01_EV-news400-llava1571
 {'yes': 828, 'no': 361}
-Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:04,  1.49s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.46s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:04<00:01,  1.44s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.00s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.17s/it]
-Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:04,  1.43s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.36s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:04<00:01,  1.37s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.04it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.11s/it]
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:10<00:32, 10.79s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:22<00:22, 11.10s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:32<00:10, 10.61s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:33<00:00,  6.91s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:33<00:00,  8.34s/it]
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:08<00:25,  8.37s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:20<00:20, 10.35s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:31<00:10, 10.64s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:34<00:00,  7.62s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:34<00:00,  8.52s/it]
 /nfs/home/ernstd/miniconda3/envs/transformer/lib/python3.12/site-packages/transformers/models/llava/configuration_llava.py:100: FutureWarning: The `vocab_size` argument is deprecated and will be removed in v4.42, since it can be inferred from the `text_config`. Passing this argument has no effect
   warnings.warn(
-Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:00<00:01,  1.03it/s]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:01<00:00,  1.03it/s]Loading checkpoint shards: 100%|██████████| 3/3 [00:02<00:00,  1.11it/s]Loading checkpoint shards: 100%|██████████| 3/3 [00:02<00:00,  1.09it/s]
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:04<00:08,  4.35s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:08<00:04,  4.11s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:15<00:00,  5.32s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:15<00:00,  5.02s/it]
 model: 01_EV-news400-instructBlip2
 {'no': 622, 'yes': 567}
 model: 01_EV-news400-blip22
-{'yes': 716, 'no': 468, 'jo': 1, 'mate': 1, 'the': 2, 'col': 1}
+{'no': 468, 'yes': 716, 'mate': 1, 'jo': 1, 'the': 2, 'col': 1}
 model: 01_EV-news400-llava1572
-{'yes': 999, 'no': 183, 'the': 7}
-Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:04,  1.50s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.42s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:04<00:01,  1.42s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.01it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.15s/it]
-Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:04,  1.42s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.35s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:04<00:01,  1.38s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.03it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.12s/it]
+{'no': 183, 'yes': 999, 'the': 7}
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:12<00:36, 12.01s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:20<00:20, 10.23s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:32<00:10, 10.93s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:34<00:00,  7.11s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:34<00:00,  8.50s/it]
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:22<01:06, 22.02s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:36<00:35, 17.70s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:42<00:12, 12.08s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:43<00:00,  7.70s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:43<00:00, 10.77s/it]
 /nfs/home/ernstd/miniconda3/envs/transformer/lib/python3.12/site-packages/transformers/models/llava/configuration_llava.py:100: FutureWarning: The `vocab_size` argument is deprecated and will be removed in v4.42, since it can be inferred from the `text_config`. Passing this argument has no effect
   warnings.warn(
-Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:00<00:01,  1.00it/s]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:01<00:00,  1.06it/s]Loading checkpoint shards: 100%|██████████| 3/3 [00:02<00:00,  1.07it/s]Loading checkpoint shards: 100%|██████████| 3/3 [00:02<00:00,  1.06it/s]
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:07<00:14,  7.42s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:15<00:07,  7.79s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:18<00:00,  5.75s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:18<00:00,  6.27s/it]
 model: 01_EV-news400-instructBlip3
 {'no': 561, 'yes': 628}
 model: 01_EV-news400-blip23
-{'no': 164, 'yes': 1025}
+{'yes': 1025, 'no': 164}
 model: 01_EV-news400-llava1573
-{'no': 645, 'yes': 544}
-Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:04,  1.50s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.48s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:04<00:01,  1.47s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.02s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.19s/it]
-Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:04,  1.44s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.41s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:04<00:01,  1.41s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.00s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.15s/it]
+{'yes': 544, 'no': 645}
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:11<00:33, 11.30s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:21<00:21, 10.71s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:30<00:09,  9.96s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:31<00:00,  6.47s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:31<00:00,  7.94s/it]
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:17<00:52, 17.45s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:29<00:28, 14.36s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:40<00:12, 12.53s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:43<00:00,  8.82s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:43<00:00, 10.78s/it]
 /nfs/home/ernstd/miniconda3/envs/transformer/lib/python3.12/site-packages/transformers/models/llava/configuration_llava.py:100: FutureWarning: The `vocab_size` argument is deprecated and will be removed in v4.42, since it can be inferred from the `text_config`. Passing this argument has no effect
   warnings.warn(
-Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:00<00:01,  1.02it/s]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:01<00:00,  1.05it/s]Loading checkpoint shards: 100%|██████████| 3/3 [00:02<00:00,  1.08it/s]Loading checkpoint shards: 100%|██████████| 3/3 [00:02<00:00,  1.07it/s]
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:10<00:21, 10.63s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:14<00:06,  6.63s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:20<00:00,  6.56s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:20<00:00,  6.98s/it]
 model: 01_EV-news400-instructBlip4
 {'yes': 582, 'no': 607}
 model: 01_EV-news400-blip24
 {'yes': 953, 'no': 236}
 model: 01_EV-news400-llava1574
-{'no': 617, 'yes': 572}
-Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:04,  1.52s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:03<00:02,  1.50s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:04<00:01,  1.49s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.03s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.20s/it]
-Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:04,  1.45s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.43s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:04<00:01,  1.44s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.01s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.17s/it]
+{'yes': 572, 'no': 617}
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:12<00:36, 12.18s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:20<00:20, 10.10s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:31<00:10, 10.47s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:32<00:00,  6.67s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:32<00:00,  8.15s/it]
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:09<00:27,  9.32s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:22<00:23, 11.81s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:29<00:09,  9.60s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:31<00:00,  6.34s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:31<00:00,  7.80s/it]
 /nfs/home/ernstd/miniconda3/envs/transformer/lib/python3.12/site-packages/transformers/models/llava/configuration_llava.py:100: FutureWarning: The `vocab_size` argument is deprecated and will be removed in v4.42, since it can be inferred from the `text_config`. Passing this argument has no effect
   warnings.warn(
-Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:00<00:01,  1.01it/s]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:01<00:00,  1.04it/s]Loading checkpoint shards: 100%|██████████| 3/3 [00:02<00:00,  1.08it/s]Loading checkpoint shards: 100%|██████████| 3/3 [00:02<00:00,  1.07it/s]
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:06<00:12,  6.46s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:09<00:04,  4.69s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:13<00:00,  4.03s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:13<00:00,  4.39s/it]
 model: 01_EV-news400-instructBlip5
 {'yes': 718, 'no': 471}
 model: 01_EV-news400-blip25
-{'yes': 991, 'no': 182, 'the': 12, 'mate': 1, 'jo': 1, 'eh': 1, 'ge': 1}
+{'yes': 991, 'no': 182, 'the': 12, 'eh': 1, 'jo': 1, 'mate': 1, 'ge': 1}
 model: 01_EV-news400-llava1575
-{'yes': 1005, 'the': 59, 'no': 125}
-Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:04,  1.52s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.49s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:04<00:01,  1.47s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.02s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.19s/it]
-Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:01<00:04,  1.45s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:02<00:02,  1.42s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:04<00:01,  1.42s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.00it/s]Loading checkpoint shards: 100%|██████████| 4/4 [00:04<00:00,  1.15s/it]
+{'no': 125, 'yes': 1005, 'the': 59}
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:11<00:34, 11.64s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:21<00:21, 10.73s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:34<00:11, 11.47s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:35<00:00,  7.42s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:35<00:00,  8.82s/it]
+Loading checkpoint shards:   0%|          | 0/4 [00:00<?, ?it/s]Loading checkpoint shards:  25%|██▌       | 1/4 [00:03<00:11,  3.70s/it]Loading checkpoint shards:  50%|█████     | 2/4 [00:05<00:05,  2.62s/it]Loading checkpoint shards:  75%|███████▌  | 3/4 [00:06<00:02,  2.04s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.41s/it]Loading checkpoint shards: 100%|██████████| 4/4 [00:07<00:00,  1.84s/it]
 /nfs/home/ernstd/miniconda3/envs/transformer/lib/python3.12/site-packages/transformers/models/llava/configuration_llava.py:100: FutureWarning: The `vocab_size` argument is deprecated and will be removed in v4.42, since it can be inferred from the `text_config`. Passing this argument has no effect
   warnings.warn(
-Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:00<00:01,  1.02it/s]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:01<00:00,  1.04it/s]Loading checkpoint shards: 100%|██████████| 3/3 [00:02<00:00,  1.09it/s]Loading checkpoint shards: 100%|██████████| 3/3 [00:02<00:00,  1.07it/s]
+Loading checkpoint shards:   0%|          | 0/3 [00:00<?, ?it/s]Loading checkpoint shards:  33%|███▎      | 1/3 [00:05<00:11,  5.92s/it]Loading checkpoint shards:  67%|██████▋   | 2/3 [00:09<00:04,  4.36s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:11<00:00,  3.64s/it]Loading checkpoint shards: 100%|██████████| 3/3 [00:11<00:00,  3.99s/it]
 model: 01_EV-news400-instructBlip6
-{'yes': 508, 'no': 681}
+{'no': 681, 'yes': 508}
 model: 01_EV-news400-blip26
-{'no': 1162, 'mate': 1, 'jo': 1, 'kim': 1, 'bal': 1, 'brand': 1, 'yes': 20, 'the': 2}
+{'no': 1162, 'yes': 20, 'the': 2, 'brand': 1, 'mate': 1, 'kim': 1, 'jo': 1, 'bal': 1}
 model: 01_EV-news400-llava1576
-{'yes': 776, 'based': 32, 'no': 328, 'the': 49, 'while': 4}
+{'yes': 776, 'the': 49, 'no': 328, 'based': 32, 'while': 4}

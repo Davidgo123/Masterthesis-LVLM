@@ -149,22 +149,22 @@ def createMultiEntityQuestions(args, lineObject, entityObject):
                     if (random.randint(0,1) == 0):
                         question = question.replace("<name1>", extractNameById(orginalEntityID, entityObject['entities']))
                         question = question.replace("<name2>", extractNameById(tamperedEntityID, entityObject['entities']))
-                        saveQuestion(args, str(lineObject['id']), str(question), str(instance), str(testLabel), "-", entityID, "A", "B")
+                        saveQuestion(args, str(lineObject['id']), str(question), str(entityObject['name']), str(testLabel), "-", entityID, "A", "B")
                     else:
                         question = question.replace("<name1>", extractNameById(tamperedEntityID, entityObject['entities']))
                         question = question.replace("<name2>", extractNameById(orginalEntityID, entityObject['entities']))
-                        saveQuestion(args, str(lineObject['id']), str(question), str(instance), str(testLabel), "-", entityID, "B", "A")
+                        saveQuestion(args, str(lineObject['id']), str(question), str(entityObject['name']), str(testLabel), "-", entityID, "B", "A")
 
             elif "set1" in args.prompt:
                 question = args.prompt.replace("<types>", entityObject['name'])
                 if (random.randint(0,1) == 0):
                     question = question.replace("<set1>", str([extractNameById(orginalEntityID, entityObject['entities']) for orginalEntityID in orginalEntityIDs]))
                     question = question.replace("<set2>", str([extractNameById(getTamperedIDByInstance(entityObject['entities'], instance, testLabel, orginalEntityID), entityObject['entities']) for orginalEntityID in orginalEntityIDs]))
-                    saveQuestion(args, str(lineObject['id']), str(question), str(instance), str(testLabel), "-", entityID, "A", "B")
+                    saveQuestion(args, str(lineObject['id']), str(question), str(entityObject['name']), str(testLabel), "-", entityID, "A", "B")
                 else:
                     question = question.replace("<set1>", str([extractNameById(getTamperedIDByInstance(entityObject['entities'], instance, testLabel, orginalEntityID), entityObject['entities']) for orginalEntityID in orginalEntityIDs]))
                     question = question.replace("<set2>", str([extractNameById(orginalEntityID, entityObject['entities']) for orginalEntityID in orginalEntityIDs]))
-                    saveQuestion(args, str(lineObject['id']), str(question), str(instance), str(testLabel), "-", entityID, "B", "A")
+                    saveQuestion(args, str(lineObject['id']), str(question), str(entityObject['name']), str(testLabel), "-", entityID, "B", "A")
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 

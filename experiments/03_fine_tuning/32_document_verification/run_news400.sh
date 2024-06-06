@@ -23,7 +23,7 @@ fi
 # - - - - - - - - - -
 
 modelPath=./models/instructblip-vicuna-7b/
-answerFile=312_DV-news400-instructBlip_base
+answerFile=32_DV-news400-instructBlip_base
 activeModels+=(${answerFile})
 if [ $3 -eq 1 ]
 then
@@ -33,7 +33,7 @@ then
 fi
 
 modelPath=./models/instructblip-vicuna-trained-backup/
-answerFile=312_DV-news400-instructBlip_trained
+answerFile=32_DV-news400-instructBlip_trained
 activeModels+=(${answerFile})
 if [ $3 -eq 1 ]
 then

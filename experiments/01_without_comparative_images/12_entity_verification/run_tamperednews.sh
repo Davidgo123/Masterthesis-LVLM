@@ -28,7 +28,7 @@ done
 # - - - - - - - - - -
 
 answerFile=12_EV-tamperednews-blip2
-questionFile=$1/_questions/questions_news400-0.jsonl
+questionFile=$1/_questions/questions_tamperednews-0.jsonl
 activeModels+=(${answerFile})
 if [ $3 -eq 1 ]
 then
@@ -38,7 +38,7 @@ then
 fi
 
 answerFile=12_EV-tamperednews-instructBlip
-questionFile=$1/_questions/questions_news400-1.jsonl
+questionFile=$1/_questions/questions_tamperednews-1.jsonl
 activeModels+=(${answerFile})
 if [ $3 -eq 1 ]
 then
@@ -49,7 +49,7 @@ fi
 
 modelPath=./models/llava-1.5-7b-hf/
 answerFile=12_EV-tamperednews-llava_15_7b
-questionFile=$1/_questions/questions_news400-2.jsonl
+questionFile=$1/_questions/questions_tamperednews-2.jsonl
 activeModels+=(${answerFile})
 if [ $3 -eq 1 ]
 then
@@ -60,7 +60,7 @@ fi
 
 modelPath=./models/llava-1.5-13b-hf/
 answerFile=12_EV-tamperednews-llava_15_13b
-questionFile=$1/_questions/questions_news400-2.jsonl
+questionFile=$1/_questions/questions_tamperednews-2.jsonl
 activeModels+=(${answerFile})
 if [ $3 -eq 1 ]
 then
@@ -71,7 +71,7 @@ fi
 
 modelPath=./models/llava-v1.6-mistral-7b-hf/
 answerFile=12_EV-tamperednews-llava_16_7b
-questionFile=$1/_questions/questions_news400-2.jsonl
+questionFile=$1/_questions/questions_tamperednews-2.jsonl
 activeModels+=(${answerFile})
 if [ $3 -eq 1 ]
 then

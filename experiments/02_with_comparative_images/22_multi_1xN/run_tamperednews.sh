@@ -15,16 +15,16 @@ counter=0
 
 for prompt in "${prompts[@]}"; do
     activeModels=()
-    questionFile=$1/_questions/questions_news400-$counter.jsonl
+    questionFile=$1/_questions/questions_tamperednews-$counter.jsonl
 
     if [ $2 -eq 1 ]
     then
-        python $1/scripts/news400/prepare_questions.py --base-path $1 --question-file $questionFile --prompt "$prompt" &
+        python $1/scripts/tamperednews/prepare_questions.py --base-path $1 --question-file $questionFile --prompt "$prompt" &
         PID=$!
         wait $PID
     fi
 
-    answerFile=222_EV_1xN-news400-mantis$counter
+    answerFile=22_EV_1xN-tamperednews-mantis$counter
     activeModels+=(${answerFile})
     if [ $3 -eq 1 ]
     then
@@ -33,7 +33,7 @@ for prompt in "${prompts[@]}"; do
         wait $PID
     fi
 
-    answerFile=222_EV_1xN-news400-deepseek$counter
+    answerFile=22_EV_1xN-tamperednews-deepseek$counter
     activeModels+=(${answerFile})
     if [ $3 -eq 1 ]
     then
@@ -42,16 +42,13 @@ for prompt in "${prompts[@]}"; do
         wait $PID
     fi
 
-    python $1/scripts/news400/analyze_answers.py --models ${activeModels[@]} &
+    python $1/scripts/tamperednews/analyze_answers.py --models ${activeModels[@]} &
     PID=$!
     wait $PID
 
-    python $1/scripts/news400/printResultTable.py --models ${activeModels[@]} &
+    python $1/scripts/tamperednews/printResultTable.py --models ${activeModels[@]} &
     PID=$!
     wait $PID
 
     let counter++
 done
-
-# - - - - - - - - - -
-

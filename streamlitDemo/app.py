@@ -33,6 +33,8 @@ with maincol1:
     # - - - - - - - - - - - - - - - - - - - - - -
     #       Variables
 
+    allQuestions = {}
+
     questions = []
     baseline = {}
     groupedModelAnswers = {}
@@ -41,10 +43,6 @@ with maincol1:
 
     answerFiles = []
     for files in glob.glob("./output/model_answers/*"):
-        if "311" in files.split("\\")[-1] or "312" in files.split("\\")[-1]: # ignore train data
-            continue
-        if "1x1" in files.split("\\")[-1]: # ignore single evidence image data
-            continue
         answerFiles.append(files.split("\\")[-1])
 
     # - - - - - - - - - - - - - - - - - - - - - -
@@ -63,27 +61,40 @@ with maincol1:
     #       extract Answers
     # - - - - - - - - - - - - - - - - - - - - - -
     if mode and dataset:
-        models = sorted(set([i.split("-")[2].split(".")[0] for i in answerFiles if mode in i and dataset in i]))
-        
+        models = sorted(set([i.split("-")[2].split(".")[0][:-1] for i in answerFiles if mode in i and dataset in i]))
+
         questionPath = ""
         for root, dirs, files in os.walk("./experiments/"):
             questionPath = next((s for s in dirs if mode.split("_")[0] in s), None)
+            if root[len("./experiments/"):].count(os.sep) > 3:
+                continue
+            
             if questionPath:
                 questionPath = os.path.join(root, questionPath)
                 break
-            
-        with open(f"./{questionPath}/_questions/questions_{dataset}.jsonl", mode='r', encoding="utf-8") as file:
-            for line in file:
-                questions.append(json.loads(line))
+        
+        templates = [item[1] for item in json.load(open(f"./{questionPath}/questionTemplates.json", 'r'))]
+        selectedTemplate = st.selectbox('Question Template', (templates))
+
+        questionfiles = os.listdir(f"./{questionPath}/_questions/")
+        for questionfile in questionfiles:
+            if questionfile not in allQuestions:
+                allQuestions[questionfile] = []
+
+            with open(f"./{questionPath}/_questions/{questionfile}", mode='r', encoding="utf-8") as file:
+                for line in file:
+                    allQuestions[questionfile].append(json.loads(line))                
+        
+        questions = allQuestions[f"questions_{dataset}-{templates.index(selectedTemplate)}.jsonl"]
 
         if (mode == "11_DV" or mode == "12_EV") and (dataset == "news400" or dataset == "tamperednews"):
             if "baseline" not in models:
                 models.append("baseline")
-        print(models)
+
         # iterate over all models
         for modelname in models:  
             # get all model answers and group them by entity type (location)
-            with open(f"./output/model_answers/{mode}-{dataset}-{modelname}.jsonl", mode='r', encoding="utf-8") as file:
+            with open(f"./output/model_answers/{mode}-{dataset}-{modelname}{templates.index(selectedTemplate)}.jsonl", mode='r', encoding="utf-8") as file:
                 for line in file:
                     answerObject = json.loads(line)
                     entityType = answerObject['entity']
@@ -127,11 +138,11 @@ with maincol2:
             resized_img = img.resize((new_width, new_height))
             return resized_img
 
-    if mode == "11_DV" or mode == "12_EV":
+    if mode == "00_EV" or mode == "11_DV" or mode == "12_EV":
         st.image(resize_image(glob.glob(f"./_datasets/{dataset}/images/{st.session_state.selectedQuestionID}.*")[0], 300), caption=f"News image ({st.session_state.selectedQuestionID})")
 
 
-    elif "212_EV_1xN" in mode:
+    elif "21_EV_1xN" in mode:
         def format_json_option(json_obj):
             return json_obj['image'].split("/")[-1] 
         with maincol1:
@@ -143,7 +154,7 @@ with maincol2:
         st.image(resize_image(selectedEntityID["image"], 400), caption=f"News image (Top), Entity image (Bot)")
 
 
-    elif "222_EV_1xN" in mode:
+    elif "22_EV_1xN" in mode:
         def format_json_option(json_obj):
             return json_obj['entity_image'].split("/")[-2]  + "/" + json_obj['entity_image'].split("/")[-1] 
         with maincol1:
@@ -206,11 +217,11 @@ sets = ["text"]
 if mode == "11_DV":
     sets.append("test")
 
-elif "211" in mode or "212" in mode:
+elif "21" in mode:
     for model in models:
         groupedModelAnswers[st.session_state.selectedQuestionID][selectedEntityType][selectedTestLabel][model] = list(filter(lambda x: selectedEntityID["image"] in x["image"], groupedModelAnswers[st.session_state.selectedQuestionID][selectedEntityType][selectedTestLabel][model]))
 
-elif "221" in mode or "222" in mode:
+elif "22" in mode:
     for model in models:
         groupedModelAnswers[st.session_state.selectedQuestionID][selectedEntityType][selectedTestLabel][model] = list(filter(lambda x: selectedEntityID["entity_image"] in x["entity_image"], groupedModelAnswers[st.session_state.selectedQuestionID][selectedEntityType][selectedTestLabel][model]))
 
@@ -250,7 +261,7 @@ for set in sets:
                         else:
                             grid_text[colCounter][rowCounter].write(updateText(f"{answer['response']} ({answer['prob']})", None), unsafe_allow_html=True)
 
-                    elif mode == "222_EV_1xN":
+                    elif mode == "22_EV_1xN":
                         if str(answer["gTruth"]) == str(answer["response"]).lower().strip():
                             grid_text[colCounter][rowCounter].write(updateText(f"{answer['response']}", "blue"), unsafe_allow_html=True)
                         else:

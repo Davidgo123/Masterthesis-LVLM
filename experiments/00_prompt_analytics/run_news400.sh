@@ -28,7 +28,7 @@ for prompt in "${prompts[@]}"; do
         wait $PID
     fi
 
-    answerFile=01_EV-news400-instructBlip$counter
+    answerFile=00_EV-news400-instructBlip$counter
     activeModels+=(${answerFile})
     if [ $3 -eq 1 ]
     then
@@ -37,7 +37,7 @@ for prompt in "${prompts[@]}"; do
         wait $PID
     fi
 
-    answerFile=01_EV-news400-blip2$counter
+    answerFile=00_EV-news400-blip2$counter
     activeModels+=(${answerFile})
     if [ $3 -eq 1 ]
     then
@@ -46,7 +46,7 @@ for prompt in "${prompts[@]}"; do
         wait $PID
     fi
 
-    answerFile=01_EV-news400-llava157$counter
+    answerFile=00_EV-news400-llava157$counter
     activeModels+=(${answerFile})
     if [ $3 -eq 1 ]
     then
